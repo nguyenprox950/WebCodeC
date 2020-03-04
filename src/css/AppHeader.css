@@ -1,0 +1,10 @@
+.btn-secondary {
+  border-color: #f8f9fa !important; 
+  background-color: #f8f9fa !important;
+}
+
+.Header {
+  z-index: 10000;
+  position: fixed !important;
+  width: 100%;
+}
