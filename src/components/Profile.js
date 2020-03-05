@@ -7,16 +7,39 @@ import { MyInput } from './MyInput'
 import {firebaseApp} from '../components/Firebase'
 import {ButtonToggle} from 'reactstrap';
 import { Formik, Form } from 'formik'
+import Swal from 'sweetalert2'
 import * as yup from 'yup'
 
-let fullName, birthday, studentID, email, phoneNumber, password;
-
-const { SubMenu } = Menu;
-
-
 export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        userShow: true,
+        changePassword: false,
+        fullName: 'Nguyễn Trần Khánh Nguyên',
+        birthday: '1998-02-19',
+        email: 'ntknguyen19@gmail.com',
+        studentID: '1613125',
+        phoneNumber: '0337136060',
+        password: 'helobanga',
+
+    }
+}
+
   handleClick = e => {
     console.log('click ', e);
+    if (e.key === '1') {
+      this.setState ({
+        userShow: true,
+        changePassword: false
+      })
+    }
+    else if (e.key === '2') {
+      this.setState ({
+        userShow: false,
+        changePassword: true
+      })
+    }
   };
 
   validationSchema = yup.object({
@@ -46,6 +69,16 @@ export default class Profile extends Component {
     .min(10,"Số điện thoại bao gồm 10 số")
   })
 
+  validationPassword = yup.object({
+    password:yup.string()
+    .min(6,"Mật khẩu quá ngắn")
+    .required('Vui lòng nhập mật khẩu'),
+ 
+    password2:yup.string()
+    .oneOf([yup.ref('password')], 'Mật khẩu không giống mật khẩu đã nhập')
+    .required('Vui lòng nhập lại mật khẩu'),
+  })
+
   enableForm = () => {
     document.getElementById("fullName").disabled = false;
     document.getElementById("birthday").disabled = false;
@@ -56,35 +89,8 @@ export default class Profile extends Component {
   }
 
   setData = () =>{
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('fullName').on('value', function(snapshot){
-      document.getElementById('fullName').value = snapshot.val()
-        fullName = snapshot.val()
+    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('fullName').on('value', function(snapshot) {
     })
-
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('birthday').on('value', function(snapshot){
-      document.getElementById('birthday').value = snapshot.val()
-      birthday = snapshot.val()
-    })
-
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('email').on('value', function(snapshot){
-      document.getElementById('email').value = snapshot.val()
-      email = snapshot.val()
-    })
-
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('studentID').on('value', function(snapshot){
-      document.getElementById('studentID').value = snapshot.val()
-      studentID = snapshot.val()
-    })
-
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('phoneNumber').on('value', function(snapshot){
-      document.getElementById('phoneNumber').value = snapshot.val()
-      phoneNumber = snapshot.val()
-    })
-
-    firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('password').on('value', function(snapshot){
-      password = snapshot.val()
-    })
-
   }
 
   handleSuccess = (values) => {
@@ -103,12 +109,93 @@ export default class Profile extends Component {
       email: values.email, 
       studentID: values.studentID,         
       phoneNumber: values.phoneNumber, 
-      password : password
+      password : this.state.password
     })
   }
 
+  handelChangePassword = (values) => {
+    var user = firebaseApp.auth().currentUser;
+    user.updatePassword(values.password).then(function() {
+      Swal.fire(
+        'Chúc mừng!',
+        'Bạn đã thay đổi mật khẩu thành công!',
+        'success'
+      )
+    }).catch(function(error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Thất bại',
+        text: 'Không thay đổi được mật khẩu!',
+    })
+    });
+  }
+
+  componentDidMount () {
+    this.setData();
+  }
+
   render() {
-    this.setData()
+    let rightProfile;
+    if (this.state.userShow) {
+        rightProfile = [
+          <Formik
+            const initialValues = {
+                {
+                    fullName: this.state.fullName,
+                    birthday: this.state.birthday,
+                    email: this.state.email,
+                    studentID: this.state.studentID,
+                    phoneNumber: this.state.phoneNumber,
+                }
+            }
+            validationSchema = { this.validationSchema }
+            onSubmit = {values => this.handleSuccess(values)}> 
+            {({ handelSubmit }) =>
+              <div>
+                <Form className = "formikProfile">
+                  <p>Họ và Tên:</p>
+                  <MyInput id="fullName" type = "text" name= "fullName" variant="outlined" disabled/>
+                  <p>Ngày sinh:</p>
+                  <MyInput id="birthday" type = "date" name= "birthday" variant="outlined" disabled/>
+                  <p>Email:(Không thể thay đổi)</p>
+                  <MyInput id="email" type = "email" name= "email" variant="outlined" />
+                  <p>Mã số sinh viên:</p>
+                  <MyInput id="studentID" type = "text" name= "studentID" variant="outlined" disabled/>
+                  <p>Số điện thoại:</p>
+                  <MyInput id="phoneNumber" type = "text" name= "phoneNumber" variant="outlined" disabled/>
+                  <ButtonToggle id="accept" color="primary" onClick={handelSubmit} hidden>Xác nhận</ButtonToggle>
+                  <ButtonToggle id="changeInform" color="primary" onClick={this.enableForm} >Thay đổi thông tin</ButtonToggle>
+                </Form> 
+              </div>                 
+            } 
+          </Formik>              
+        ]
+    }
+    else if (this.state.changePassword) {
+      rightProfile = [
+        <Formik
+          const newPassword = {
+              {
+                  password: '',
+                  password2: '',
+              }
+          }
+          validationSchema = { this.validationPassword }
+          onSubmit = {values => this.handelChangePassword(values)}>  
+          {({ handelSubmit }) =>
+            <div>
+              <Form className = "formikProfile">
+                <p>Mật khẩu mới:</p>
+                <MyInput id="password" type = "text" name= "password" variant="outlined"/>
+                <p>Xác nhận mật khẩu:</p>
+                <MyInput id="password2" type = "text" name= "password2" variant="outlined"/>
+                <ButtonToggle id="accept" color="primary" onClick={handelSubmit}>Xác nhận</ButtonToggle>
+              </Form> 
+            </div>                 
+          } 
+        </Formik>              
+      ]
+    }
     return (
       <div>
         <div>
@@ -128,37 +215,7 @@ export default class Profile extends Component {
             </Menu>
           </div>
           <div id ="rightProfile">
-            <Formik
-              const initialValues = {
-                  {
-                      fullName: fullName,
-                      birthday: birthday,
-                      email: email,
-                      studentID: studentID,
-                      phoneNumber: phoneNumber,
-                  }
-              }
-              validationSchema = { this.validationSchema }
-              onSubmit = {values => this.handleSuccess(values)}> 
-              {({ handelSubmit }) =>
-                <div>
-                  <Form className = "formikProfile">
-                    <p>Họ và Tên:</p>
-                    <MyInput id="fullName" type = "text" name= "fullName" variant="outlined" disabled/>
-                    <p>Ngày sinh:</p>
-                    <MyInput id="birthday" type = "date" name= "birthday" variant="outlined" disabled/>
-                    <p>Email:(Không thể thay đổi)</p>
-                    <MyInput id="email" type = "email" name= "email" variant="outlined" />
-                    <p>Mã số sinh viên:</p>
-                    <MyInput id="studentID" type = "text" name= "studentID" variant="outlined" disabled/>
-                    <p>Số điện thoại:</p>
-                    <MyInput id="phoneNumber" type = "text" name= "phoneNumber" variant="outlined" disabled/>
-                    <ButtonToggle id="accept" color="primary" onClick={handelSubmit} hidden>Xác nhận</ButtonToggle>
-                    <ButtonToggle id="changeInform" color="primary" onClick={this.enableForm} >Thay đổi thông tin</ButtonToggle>
-                  </Form> 
-                </div>                 
-              } 
-            </Formik>                       
+              {rightProfile}
           </div>
         </div>
       </div>
