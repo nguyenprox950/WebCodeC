@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import "../css/AppHeader.css";
 import {
   Collapse,
@@ -15,10 +15,18 @@ import {
   ButtonToggle
 } from "reactstrap";
 import { useSelector } from "react-redux";
+import { firebaseApp } from "./Firebase";
 
-const AppHeader = (props) => {
-
+const AppHeader = props => {
   const { userInform } = useSelector(state => state.userReducer);
+
+  const handleLogOut = () => {
+    firebaseApp.auth().signOut().then(function() {
+      localStorage.removeItem("user");
+      window.location.reload()
+    }).catch(function(error) {
+    });
+  }
 
   return (
     <div>
@@ -43,17 +51,15 @@ const AppHeader = (props) => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <NavLink href="/Profile/ProfileInform">Thông tin cá nhân</NavLink>
+                  <NavLink>
+                    <Link to="/Profile/ProfileInform">Thông tin cá nhân</Link>
+                  </NavLink>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  <NavLink
-                    href="/Home"
-                    onClick={() => {
-                      localStorage.removeItem("user");
-                    }}
+                  <NavLink onClick= {handleLogOut}
                   >
-                    Đăng xuất
+                    <Link to="/Home" >Đăng xuất</Link>
                   </NavLink>
                 </DropdownItem>
               </DropdownMenu>

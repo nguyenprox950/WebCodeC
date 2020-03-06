@@ -41,23 +41,23 @@ const ProfileInform = props => {
       .min(10, "Số điện thoại bao gồm 10 số")
   });
 
-  const enableForm = () => {
-    document.getElementById("fullName").disabled = false;
-    document.getElementById("birthday").disabled = false;
-    document.getElementById("studentID").disabled = false;
-    document.getElementById("phoneNumber").disabled = false;
-    document.getElementById("changeInform").hidden = true;
-    document.getElementById("accept").hidden = false;
-  };
+//   const enableForm = () => {
+//     document.getElementById("fullName").disabled = false;
+//     document.getElementById("birthday").disabled = false;
+//     document.getElementById("studentID").disabled = false;
+//     document.getElementById("phoneNumber").disabled = false;
+//     document.getElementById("changeInform").hidden = true;
+//     document.getElementById("accept").hidden = false;
+//   };
 
-  const handelSuccess = () => {
-    document.getElementById("fullName").disabled = true;
-    document.getElementById("birthday").disabled = true;
-    document.getElementById("studentID").disabled = true;
-    document.getElementById("phoneNumber").disabled = true;
-    document.getElementById("changeInform").hidden = false;
-    document.getElementById("accept").hidden = true;
-  }
+//   const handelSuccess = () => {
+//     document.getElementById("fullName").disabled = true;
+//     document.getElementById("birthday").disabled = true;
+//     document.getElementById("studentID").disabled = true;
+//     document.getElementById("phoneNumber").disabled = true;
+//     document.getElementById("changeInform").hidden = false;
+//     document.getElementById("accept").hidden = true;
+//   }
 
   return (
     <div className="Profile">
@@ -73,7 +73,7 @@ const ProfileInform = props => {
             password: userInform.password
           }}
           validationSchema={validationSchema}
-          onSubmit = {values => dispatch(changeInform(values, handelSuccess))} >
+          onSubmit = {values => dispatch(changeInform(values))} >
           {({ handelSubmit }) => (
             <div>
               <Form className="formikProfile">
@@ -83,7 +83,6 @@ const ProfileInform = props => {
                   type="text"
                   name="fullName"
                   variant="outlined"
-                  disabled
                 />
                 <p>Ngày sinh:</p>
                 <MyInput
@@ -91,7 +90,6 @@ const ProfileInform = props => {
                   type="date"
                   name="birthday"
                   variant="outlined"
-                  disabled
                 />
                 <p>Email:(Không thể thay đổi)</p>
                 <MyInput
@@ -107,7 +105,6 @@ const ProfileInform = props => {
                   type="text"
                   name="studentID"
                   variant="outlined"
-                  disabled
                 />
                 <p>Số điện thoại:</p>
                 <MyInput
@@ -115,7 +112,6 @@ const ProfileInform = props => {
                   type="text"
                   name="phoneNumber"
                   variant="outlined"
-                  disabled
                 />
                 <p>Mật khẩu</p>
                 <MyInput
@@ -128,16 +124,8 @@ const ProfileInform = props => {
                   id="accept"
                   color="primary"
                   onClick={handelSubmit}
-                  hidden
                 >
-                  Xác nhận
-                </ButtonToggle>
-                <ButtonToggle
-                  id="changeInform"
-                  color="primary"
-                  onClick={enableForm}
-                >
-                  Thay đổi thông tin
+                  Cập nhật thông tin
                 </ButtonToggle>
               </Form>
             </div>

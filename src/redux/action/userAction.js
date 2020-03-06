@@ -52,7 +52,7 @@ export const signIn = (values, handleSuccess) => {
     }
 }
 
-export const changeInform = (values, handleSuccess) => {
+export const changeInform = (values) => {
     return dispatch => {
         var emailID = values.email.slice(0, values.email.indexOf("."))
         firebaseApp.database().ref('userInform/' + emailID).set ({
@@ -69,7 +69,6 @@ export const changeInform = (values, handleSuccess) => {
                 'Bạn đã thay đổi thông tin thành công!',
                 'success'
             )
-            handleSuccess()
             localStorage.setItem('user', JSON.stringify(snapshot.val()))
             dispatch(signInAction(snapshot.val()))
         })
