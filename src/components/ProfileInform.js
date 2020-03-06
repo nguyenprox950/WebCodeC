@@ -5,7 +5,7 @@ import { ButtonToggle } from "reactstrap";
 import "../css/Profile.css";
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
-import { changeInform } from "../redux/action/userAction";
+import { changeInform } from "../redux/action/changeInformUser";
 
 const ProfileInform = props => {
   const { userInform } = useSelector(state => state.userReducer);
@@ -119,6 +119,7 @@ const ProfileInform = props => {
                   type="text"
                   name="password"
                   variant="outlined"
+                  hidden
                 />
                 <ButtonToggle
                   id="accept"

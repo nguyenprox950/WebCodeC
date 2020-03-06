@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { MyInput } from "./MyInput";
 import { ButtonToggle } from "reactstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { changePassword } from '../redux/action/userAction';
+import { changePassword } from '../redux/action/changeInformUser';
 
 const ProfileChangePassword = (props) => {
 
