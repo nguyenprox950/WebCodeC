@@ -5,6 +5,8 @@ import '../css/SignUp.css'
 import {firebaseApp} from '../components/Firebase'
 import Swal from 'sweetalert2'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { signUp } from '../redux/action/userAction'
 
 const validationSchema = yup.object({
   fullName:yup.string()
@@ -43,57 +45,12 @@ const validationSchema = yup.object({
 
 const SignUp = (props) => {
 
-  const [userInfor, setUserInfor] = useState({
-    fullName: '',
-    birthday: '',
-    email: '',
-    studentID: '',
-    phoneNumber: '',
-    password: '',
-    password2: ''
-  })
+  const dispatch = useDispatch()
 
-  const handleSuccess = (values) => {
-    setUserInfor({
-      fullName: values.fullName, 
-      birthday: values.birthday, 
-      email: values.email, 
-      studentID: values.studentID,         
-      phoneNumber: values.phoneNumber, 
-      password: values.password,
-      password2: values.password2
-    })
-
-    firebaseApp.auth().createUserWithEmailAndPassword(values.email, values.password)
-    .then(()=> {
-      Swal.fire(
-        'Chúc mừng!',
-        'Bạn đã đăng ký thành công!',
-        'success'
-      )
-    .then((result) => {
-      var firstEmail = values.email;
-      var emailID = firstEmail.slice(0, firstEmail.indexOf("."))
-      firebaseApp.database().ref('userInform/' + emailID).set ({
-        fullName : values.fullName,
-        birthday: values.birthday, 
-        email: values.email, 
-        studentID: values.studentID,         
-        phoneNumber: values.phoneNumber, 
-        password: values.password
-    })
-        props.history.push('/SignIn')
-    });
-  })
-    .catch(function(error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Thất bại',
-        text: 'Email đã tồn tại!',
-      })
-    // document.getElementById("email").value = '';
-  });
+  const handleSuccess = () => {
+    props.history.push('/SignIn')
 }
+
   return (
     <div>
       <Formik
@@ -106,9 +63,8 @@ const SignUp = (props) => {
           password: '',
           password2: '',
         }}
-        setUserInfor = {setUserInfor}
         validationSchema={validationSchema} 
-        onSubmit={values=> handleSuccess(values)}>
+        onSubmit={values => dispatch(signUp(values, handleSuccess))}>
         {({handelSubmit})=>
         <div className="signUpBody">
           <title>Đăng kí</title>

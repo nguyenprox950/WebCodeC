@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Formik, Form } from 'formik'
 import { MyInput } from './MyInput'
 import '../css/SignIn.css'
-import { firebaseApp } from '../components/Firebase'
-import Swal from 'sweetalert2'
 import * as yup from 'yup'
+import { signIn } from '../redux/action/userAction'
+import { useDispatch } from 'react-redux'
 
 
 const validationSchema = yup.object({
@@ -17,38 +17,13 @@ const validationSchema = yup.object({
 })
 
 const SignIn = (props) => {
-    const [userInfor, setUserInfor] = useState({
-        email: '',
-        password: '',
-    })
+    
+    const dispatch = useDispatch()
 
-    const handleSuccess = (values) => {
-        setUserInfor({
-            email: values.email,
-            password: values.password,
-        })
-        firebaseApp.auth().signInWithEmailAndPassword(values.email, values.password)
-            .then(() => {
-                var emailID = values.email.slice(0, values.email.indexOf("."))
-                console.log(emailID)
-                firebaseApp.database().ref('userInform/' + emailID).child('fullName').on('value', function(snapshot) {
-                    Swal.fire(
-                        'Chào mừng \n' + snapshot.val(),
-                        'Đã đăng nhập thành công!',
-                        'success'
-                    )
-                })
-                localStorage.setItem('login', emailID)
-                props.history.push('/Home')
-            })
-            .catch(function(error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Thất bại',
-                    text: 'Tài khoản hoặc mật khẩu không đúng!',
-                })
-            });
+    const handleSuccess = () => {
+        props.history.replace('/Home')
     }
+
     return ( 
     <div >
         <Formik
@@ -59,7 +34,7 @@ const SignIn = (props) => {
             }
         }
         validationSchema = { validationSchema }
-        onSubmit = { values => handleSuccess(values)}> 
+        onSubmit = { values => dispatch(signIn(values, handleSuccess))}> 
         {({ handelSubmit }) =>
             <div className = "signInBody">
               <div className = "toSignIn">
