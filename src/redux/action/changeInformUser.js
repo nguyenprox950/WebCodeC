@@ -13,12 +13,12 @@ export const changeInform = (values) => {
             phoneNumber: values.phoneNumber, 
             password: values.password
         })
+        Swal.fire(
+            'Chúc mừng ',
+            'Bạn đã thay đổi thông tin thành công!',
+            'success'
+        )
         firebaseApp.database().ref('userInform/' + emailID).on('value', function(snapshot) {
-            Swal.fire(
-                'Chúc mừng ',
-                'Bạn đã thay đổi thông tin thành công!',
-                'success'
-            )
             localStorage.setItem('user', JSON.stringify(snapshot.val()))
             dispatch(changeInformUser(snapshot.val()))
         })

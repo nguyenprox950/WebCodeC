@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 import { changeInform } from "../redux/action/changeInformUser";
 
-const ProfileInform = props => {
+const ProfileInform = (props) => {
   const { userInform } = useSelector(state => state.userReducer);
   const dispatch = useDispatch()
 
