@@ -22,6 +22,13 @@ export const signUp = (values, handleSuccess) => {
              })
              handleSuccess()
         })
+        .catch(function(error){
+            Swal.fire({
+                icon: 'error',
+                title: 'Thất bại',
+                text: 'Email đã tồn tại!',
+            })
+        })
     }  
 }
 

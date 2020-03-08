@@ -1,0 +1,17 @@
+#home{
+    padding: 0;
+    overflow: hidden;
+    position:relative
+}
+
+.home-pattern {
+	height:100%;
+	position:absolute;
+	width:100%;
+	z-index:1;
+	left:0;
+	bottom:0;
+	background-image:url(../img/home-pattern.png);
+	background-repeat:repeat;
+	opacity:0.2;
+}

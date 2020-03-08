@@ -1,5 +1,5 @@
-import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../css/AppHeader.css";
 import {
   Collapse,
@@ -12,12 +12,13 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  ButtonToggle
+  ButtonToggle,
+  NavbarToggler
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { firebaseApp } from "./Firebase";
 
-const AppHeader = props => {
+const AppHeader = (props) => {
   const { userInform } = useSelector(state => state.userReducer);
 
   const handleLogOut = () => {
@@ -27,15 +28,19 @@ const AppHeader = props => {
     }).catch(function(error) {
     });
   }
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
     <div>
       <Navbar color="light" light expand="md" className="Header">
         <NavbarBrand href="/Home">Code C</NavbarBrand>
-        <Collapse navbar>
+        <NavbarToggler onClick={toggle}/>
+        <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Hướng dẫn</NavLink>
+              <NavLink href="/Home">Trang chủ</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="https://github.com/reactstrap/reactstrap">
@@ -78,4 +83,4 @@ const AppHeader = props => {
   );
 };
 
-export default withRouter(AppHeader);
+export default (AppHeader);

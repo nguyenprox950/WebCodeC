@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import '../css/mystyle.css'
-export default class Carousel extends Component {
-    render() {
-        return (
-            <div id="banner"><img src="../img/banner.png" /></div>
-        )
-    }
+import '../css/Carousel.css'
+
+const Carousel = (props) => {
+    return (
+        <section id="home">
+            <div class="home-pattern"></div>
+
+        </section>
+    )
 }
+
+export default Carousel

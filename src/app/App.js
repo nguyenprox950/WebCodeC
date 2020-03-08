@@ -28,8 +28,8 @@ function App() {
     <Route exact path="/SignUp" component={SignUp} />
     <UserLayout path="/">
       <Switch>
-      <Route exact path="/Home" component={Home} />
       <Route exact path="/" component={Home} />
+      <Route exact path="/Home" component={Home} />
       <Route exact path="/Introduction" component={Introduction} />
       <ProfileLayout path="/Profile">
         <Switch>
