@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../css/Carousel.css'
-
 const Carousel = (props) => {
-    return (
-        <section id="home">
-            <div class="home-pattern"></div>
-
-        </section>
-    )
-}
+        return (
+            <div id="banner"><img src="../img/banner.png" /></div>
+        )
+    }
 
 export default Carousel
+

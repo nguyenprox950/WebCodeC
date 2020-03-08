@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Carousel from './Carousel'
 import Welcome from './Welcome'
+import Service from './Service'
 
 export default class Home extends Component {
     render() {
@@ -8,6 +9,7 @@ export default class Home extends Component {
             <div>
                 <Carousel/>
                 <Welcome/>
+                <Service/>
             </div>
         )
     }

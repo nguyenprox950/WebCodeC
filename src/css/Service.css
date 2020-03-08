@@ -1,0 +1,110 @@
+#services {
+    background-image: url("../service-bg.jpg");
+    color:#fff;
+    text-align:center;
+    background-color:	#0A0A13;
+}
+
+.services {
+	display:block;
+	overflow:hidden;
+	margin-top:50px
+}
+
+.parallax-section{
+	min-height: 300px;
+	width: 100%;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.title-one {
+    margin-top: 20px;
+	color: #fff;
+	display: inline-block;
+	font-size: 32px;
+	font-weight: 600;
+	padding-bottom:10px;
+	text-align: center;
+	text-transform: uppercase;
+	position:relative
+}
+
+.title-one:after {
+	color: #fc7700;
+	content: "||";
+	position: absolute;
+	right: -40px;
+	top: -2px;
+}
+
+.title-one:before {
+	color: #fc7700;
+	content: "||";
+	left: -40px;
+	position: absolute;
+	top: 0;
+}
+
+#services h2{
+    color: #fff;
+    border-color: #fff;
+    margin-bottom:35px
+  }
+  
+  .single-service {
+      background-color: rgba(0, 0, 0, 0.39);
+      padding:25px;
+      transition: all 0.9s ease 0s;
+      -moz-transition: all 0.9s ease 0s;
+      -webkit-transition: all 0.9s ease 0s;
+      -o-transition: all 0.9s ease 0s;
+      max-width: 30%;
+      float: left;
+      margin-left: 34px;
+      margin-bottom: 20px;
+  }
+  
+  .single-service p {
+      text-align:justify;
+  }
+  
+  .single-service i {
+      text-align:center;
+      font-size:80px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      height: 150px;
+      line-height: 150px;
+      width: 150px;
+      color:#43484E;
+      transition: all 0.9s ease 0s;
+      -moz-transition: all 0.9s ease 0s;
+      -webkit-transition: all 0.9s ease 0s;
+      -o-transition: all 0.9s ease 0s;
+  }
+  
+  .single-service:hover {
+      background-color: #fc7700;
+  }
+  
+  .single-service:hover i {
+      color:#fc7700;
+      -moz-transform: scale(1.1) rotate(360deg);
+      -webkit-transform: scale(1.1) rotate(360deg);
+      -o-transform: scale(1.1) rotate(360deg);
+      -ms-transform: scale(1.1) rotate(360deg);
+      transform: scale(1.1) rotate(360deg);
+  }
+  .single-service p{
+   font-size: 20px;
+   font-weight: 600;
+}
+
+.titleServices2 p{
+    font-size: 20px;
+    font-weight: 600;
+}
