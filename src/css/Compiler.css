@@ -1,0 +1,17 @@
+.language_id_form {
+    padding-top: 100px;
+    width: 200px;
+    margin-left: 200px;
+}
+
+.compiler {
+    margin-top: 20px;
+    margin-left: 200px;
+    width: 1000px;
+}
+
+#runCode {
+    margin-top: 10px;
+    margin-left: 200px;
+}
+

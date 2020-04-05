@@ -41,29 +41,10 @@ const ProfileInform = (props) => {
       .min(10, "Số điện thoại bao gồm 10 số")
   });
 
-//   const enableForm = () => {
-//     document.getElementById("fullName").disabled = false;
-//     document.getElementById("birthday").disabled = false;
-//     document.getElementById("studentID").disabled = false;
-//     document.getElementById("phoneNumber").disabled = false;
-//     document.getElementById("changeInform").hidden = true;
-//     document.getElementById("accept").hidden = false;
-//   };
-
-//   const handelSuccess = () => {
-//     document.getElementById("fullName").disabled = true;
-//     document.getElementById("birthday").disabled = true;
-//     document.getElementById("studentID").disabled = true;
-//     document.getElementById("phoneNumber").disabled = true;
-//     document.getElementById("changeInform").hidden = false;
-//     document.getElementById("accept").hidden = true;
-//   }
-
   return (
     <div className="Profile">
       <div id="rightProfile">
         <Formik
-          const
           initialValues={{
             fullName: userInform.fullName,
             birthday: userInform.birthday,

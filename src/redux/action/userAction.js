@@ -44,10 +44,10 @@ export const signIn = (values, handleSuccess) => {
                         'success'
                     )
                     console.log(snapshot.val())
-                    handleSuccess()
                     localStorage.setItem('user', JSON.stringify(snapshot.val()))
                     dispatch(signInAction(snapshot.val()))
                 })
+                handleSuccess()
             })
             .catch(function(error) {
                 Swal.fire({

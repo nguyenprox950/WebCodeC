@@ -11,6 +11,7 @@ import UserLayout from '../layout/UserLayout';
 import ProfileLayout from '../layout/ProfileLayout';
 import ProfileInform from '../components/ProfileInform';
 import ProfileChangePassword from '../components/ProfileChangePassword';
+import Compiler from '../components/Compiler'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/Home" component={Home} />
       <Route exact path="/Introduction" component={Introduction} />
+      <Route exact path="/Compiler" component={Compiler} />
       <ProfileLayout path="/Profile">
         <Switch>
           <Route path="/Profile/ProfileInform" component={ProfileInform} />

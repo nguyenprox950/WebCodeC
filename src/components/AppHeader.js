@@ -43,8 +43,8 @@ const AppHeader = (props) => {
               <NavLink href="/Home">Trang chủ</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
+              <NavLink>
+              <Link to="/Compiler">DevC</Link>
               </NavLink>
             </NavItem>
           </Nav>
@@ -72,7 +72,8 @@ const AppHeader = (props) => {
           ) : (
             <ButtonToggle
               color="primary"
-              onClick={() => props.history.push("/SignIn")}
+              tag={Link}
+              to="/SignIn"
             >
               Đăng nhập
             </ButtonToggle>
