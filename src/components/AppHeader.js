@@ -23,7 +23,7 @@ const AppHeader = (props) => {
 
   const handleLogOut = () => {
     firebaseApp.auth().signOut().then(function() {
-      localStorage.removeItem("user");
+      localStorage.clear();
       window.location.reload()
     }).catch(function(error) {
     });
@@ -45,6 +45,16 @@ const AppHeader = (props) => {
             <NavItem>
               <NavLink>
               <Link to="/Compiler">DevC</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+              <Link to="/Test">Bài lập</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+              <Link to="/Translate">Dịch code</Link>
               </NavLink>
             </NavItem>
           </Nav>

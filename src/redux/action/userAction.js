@@ -45,6 +45,7 @@ export const signIn = (values, handleSuccess) => {
                     )
                     console.log(snapshot.val())
                     localStorage.setItem('user', JSON.stringify(snapshot.val()))
+                    localStorage.setItem('emailID', emailID)
                     dispatch(signInAction(snapshot.val()))
                 })
                 handleSuccess()

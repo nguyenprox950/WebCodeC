@@ -1,15 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react';
 import '../css/Compiler.css'
-import * as yup from "yup";
-import { Formik, Form } from "formik";
-import { MyInput } from "./MyInput";
+import Swal from 'sweetalert2'
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { ButtonToggle } from "reactstrap";
-import { useDispatch, useSelector } from 'react-redux';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import axios from 'axios';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/cmake/cmake';
+import 'codemirror/theme/material.css';
 var defaultUrl = "https://api.judge0.com";
 var apiUrl = defaultUrl;
 
@@ -19,7 +16,17 @@ const data = {
   stdin:''
 }
 
+
 const Compiler = (props) => {
+
+  const [source, setSource] = useState();
+
+  const codeMirrorOptions = {
+    theme: 'material',
+    lineNumbers: true,
+    lineWrapping: true,
+    scrollbarStyle: null,
+  };
 
   const getCode = (token) => {
     axios.request ({
@@ -32,7 +39,8 @@ const Compiler = (props) => {
             document.getElementById('output').value = result.data.status.description
             setTimeout(getCode.bind(null, result.data.token));
           } else  {
-            document.getElementById('output').value = decode(result.data.stdout)
+            console.log(decode(result.data.stdout))
+            document.getElementById('output').value = "Code của bạn đã được chạy trong "+ result.data.time + "s\n"+ decode(result.data.stdout)
           } 
         }).catch(error => {
           console.log(error)
@@ -63,20 +71,31 @@ const Compiler = (props) => {
       }
   }
   const handelSubmit = () => {
-    data.source_code = document.getElementById('source_code').value;
-    data.stdin = document.getElementById('stdin').value;
-    var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
-    var input = btoa(unescape(encodeURIComponent(data.stdin || "")));
-    console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
+    data.source_code = source;
+    console.log(source)
+    if(data.source_code === ''){
+      Swal.fire({
+        icon: 'error',
+        title: 'Thất bại',
+        text: 'Code không được bỏ trống',
+    })
+    }
+    else {
+      data.stdin = document.getElementById('stdin').value;
+      var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
+      console.log(data.stdin)
+      var input = btoa(unescape(encodeURIComponent(data.stdin || "")));
+      console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
 
-    var dataSubmit = {
-      source_code: code,
-      language_id: 50,
-      stdin: input,
-      compiler_options: '',
-      command_line_arguments: '',
-    };
-    sendCode(dataSubmit)
+      var dataSubmit = {
+        source_code: code,
+        language_id: 50,
+        stdin: input,
+        compiler_options: '',
+        command_line_arguments: '',
+      };
+      sendCode(dataSubmit)
+    }
   }
 
   return (
@@ -87,7 +106,17 @@ const Compiler = (props) => {
             </div>
               <div className='compiler'>
               <label>Write Your Code</label>
-              <textarea class="form-control"  id='source_code' name="source_code" rows="10" cols="50"/>
+              <CodeMirror
+              id = 'source_code'
+              value={source}
+              options={{
+                mode: 'cmake',
+                ...codeMirrorOptions,
+              }}
+              onBeforeChange={(editor, data, source) => {
+                setSource(source)
+              }}
+            />              
               <label>Input</label>
               <textarea class="form-control"  id='stdin' name="stdin" rows="3" cols="50"/>
               <label>Output</label>

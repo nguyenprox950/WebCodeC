@@ -15,3 +15,7 @@
     margin-left: 200px;
 }
 
+.CodeMirror {
+    resize: vertical;
+    overflow: auto !important;
+}

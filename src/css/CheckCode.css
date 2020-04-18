@@ -1,0 +1,54 @@
+.checkCode .homeWork {
+    margin-left: 256px;
+}
+
+.checkCode .homeWork h3 {
+    text-align: center;
+}
+
+.checkCode .require {
+    font-size: 20px;
+    margin-left: 30px;
+    float: left;
+    font-weight: bold;
+}
+.checkCode .test {
+    font-size: 20px;
+    float: left;
+    margin-left: 5px;
+}
+.checkCodeApi {
+    padding-top: 100px;
+    margin-left: 300px;
+    width: 1100px;
+}
+
+#check {
+    margin-top: 10px;
+    margin-left: 44px;
+}
+
+#history {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#clear {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.modalHistory {
+    margin-top: 150px;
+}
+
+.form-control {
+    background-color: #364956 !important;
+    color: white !important;
+    overflow: scroll !important;
+}
+
+.historyOfCode {
+    margin-top: 10px;
+    margin-left: 44px;
+}
