@@ -36,7 +36,7 @@ const testMenu = () => {
         >
           <h4>Bài tập về nhập xuất</h4>
           <Menu.Item key='1'>
-          <Link style={{ color: setColor(1)}} to='/Test/CheckCode'>1. Hello, World</Link>
+          <Link style={{ color: setColor(1)}} to='/Test/CheckCode'>1. Hello World</Link>
           </Menu.Item>
           <Menu.Item key='2'>
           <Link style={{ color: setColor(2)}} to='/Test/CheckCode'>2. Tam giác cân</Link>
@@ -56,6 +56,22 @@ const testMenu = () => {
           </Menu.Item>
           <Menu.Item key='7'>
           <Link  style={{ color: setColor(7)}}to='/Test/CheckCode'>7. Max 3</Link>
+          </Menu.Item>
+          <Menu.Item key='8'>
+          <Link  style={{ color: setColor(8)}}to='/Test/CheckCode'>8. Phương trình bậc 2</Link>
+          </Menu.Item>
+          <h4>Bài tập về vòng lập</h4>
+          <Menu.Item key='9'>
+          <Link  style={{ color: setColor(9)}}to='/Test/CheckCode'>9. In các số từ 1 đến n</Link>
+          </Menu.Item>
+          <Menu.Item key='10'>
+          <Link  style={{ color: setColor(10)}}to='/Test/CheckCode'>10. Tổng các số từ 1 đến n</Link>
+          </Menu.Item>
+          <Menu.Item key='11'>
+          <Link  style={{ color: setColor(11)}}to='/Test/CheckCode'>11. Kiểm tra số nguyên tố</Link>
+          </Menu.Item>
+          <Menu.Item key='12'>
+          <Link  style={{ color: setColor(12)}}to='/Test/CheckCode'>12. Chữ số lớn nhất</Link>
           </Menu.Item>
         </Menu>
       </div>

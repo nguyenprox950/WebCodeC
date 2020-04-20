@@ -8,6 +8,7 @@ import Introduction from '../components/Introduction'
 import { useDispatch } from 'react-redux'
 import { signInAction } from '../redux/action/userAction'
 import UserLayout from '../layout/UserLayout'
+import LectureLayout from '../layout/LectureLayout'
 import ProfileLayout from '../layout/ProfileLayout'
 import ProfileInform from '../components/ProfileInform'
 import ProfileChangePassword from '../components/ProfileChangePassword'
@@ -15,8 +16,7 @@ import Compiler from '../components/Compiler'
 import TestLayout from '../layout/TestLayout'
 import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
-import Test from '../components/Test'
-
+import LecturePage1 from '../components/Lecture/LecturePage1'
 function App() {
 
   const dispatch = useDispatch()
@@ -50,6 +50,9 @@ function App() {
             <Route path="/Test/CheckCode" component={CheckCode} />
           </Switch>
       </TestLayout>
+      <LectureLayout path="/StudyC">
+      <Route path="/StudyC/Page1" component={LecturePage1} />
+      </LectureLayout>
     </Switch>
     </UserLayout>
     </Switch>

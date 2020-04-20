@@ -54,6 +54,11 @@ const AppHeader = (props) => {
             </NavItem>
             <NavItem>
               <NavLink>
+              <Link to="/StudyC">Học C</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
               <Link to="/Translate">Dịch code</Link>
               </NavLink>
             </NavItem>

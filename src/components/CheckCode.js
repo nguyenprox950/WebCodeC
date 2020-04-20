@@ -14,14 +14,10 @@ var apiUrl = defaultUrl;
 
 const data = {
   source_code: '',
-  language_id: 50,
+  language_id: 54,
   stdin:''
 }
 
-var today = new Date();
-var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date+' '+time;
 
 var Title, Introduct;
 
@@ -75,6 +71,10 @@ const getInform = (Number) => {
 }
 
 const saveCode = (code) => {
+  var today = new Date();
+  var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
   firebaseApp.database().ref('historyCode/' + localStorage.getItem('emailID') + "/Test" + localStorage.getItem('testKey')).set ({
       history: code,
       time : dateTime,
@@ -116,6 +116,11 @@ const setRight = (Right) => {
 
 export const CheckCode = (props) => {
 
+  const clear = () => {
+    setSource(cSource)
+    document.getElementById('output').hidden = true;
+  }
+
   const [source, setSource] = useState();
 
   const codeMirrorOptions = {
@@ -141,16 +146,17 @@ export const CheckCode = (props) => {
             method: 'GET',
             async: true,
             }).then (result => {
-              console.log(result.data)
+              // console.log(result.data)
               if(result.data.status.id <= 2){
                 // document.getElementById('output').value = result.data.status.description
                 setTimeout(getCode.bind(null, result.data.token, step));
               } else if (result.data.status.id === 3) {
                 Right = Right+1;
-                console.log(step + " " + Step + " "+ Right)
+                // console.log(step + " " + Step + " "+ Right)
                 if (Right === Step) {
                   setRight("right");
-                  // document.getElementById('output').value = "Chính xác"
+                  document.getElementById('output').value = "Chính xác"
+                  document.getElementById('output').hidden = true;
                   Swal.fire(
                     'Chính xác',
                     '',
@@ -158,24 +164,15 @@ export const CheckCode = (props) => {
                   )
                 } else {
                   setRight("wrong");
-                  if (step === Step){
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Sai rồi'
-                    })
-                    }
                 }
               } else if (result.data.status.id === 4){
                 setRight("wrong");
-                if (step === Step){
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Sai rồi'
-                })
-                }
-                // document.getElementById('output').value = result.data.status.description
+                document.getElementById('output').value = result.data.status.description
+                document.getElementById('output').hidden = false;
               }
               else {
+                document.getElementById('output').value = result.data.status.description
+                document.getElementById('output').hidden = false;
                 setRight("wrong");
                 if (step === Step){
                   Swal.fire({
@@ -191,7 +188,7 @@ export const CheckCode = (props) => {
     
       const sendCode = (dataCode, step) => {
         localStorage.setItem("state", step);
-        console.log(Right+" "+step)
+        // console.log(Right+" "+step)
         axios.request ({
             url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
             method: 'POST',
@@ -210,17 +207,17 @@ export const CheckCode = (props) => {
         data.source_code = source;
           var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
           saveCode(code);
-          console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
+          // console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
         for (var i=1; i <= Step; i++) {
           getTestInform(testNumber, i);
           console.log(testNumber + " "+ i);
           var dataSubmit = {
             source_code: code,
-            language_id: 50,
+            language_id: 54,
             stdin: btoa(unescape(encodeURIComponent(Input || ""))),
             expected_output: Output
           };
-          console.log(dataSubmit)
+          // console.log(dataSubmit)
           sendCode(dataSubmit, i)
         }
         Right = 0;
@@ -253,12 +250,12 @@ export const CheckCode = (props) => {
                 setSource(source)
               }}
             />              
-            {/* <label>Output</label>
-              <textarea class="form-control" id='output' name="output" rows="2" cols="50"></textarea> */}
+            {/* <label>Output</label> */}
+              <textarea class="form-control" id='output' name="output" rows="2" cols="50" hidden></textarea>
             </div>
             <Button id="check" type='submit' color="primary" onClick={checkCode}>Chấm code</Button>
             <Button id ="history" color="info" onClick={toggle}>Lịch sử</Button>
-            <Button id ="clear" color="danger" onClick={()=> setSource(cSource)}>Xoá code</Button>
+            <Button id ="clear" color="danger" onClick={()=> clear()}>Xoá code</Button>
             <div>
             <Modal isOpen={modal} toggle={toggle} className='modalHistory'>
               <ModalHeader toggle={toggle}>{time}</ModalHeader>

@@ -89,7 +89,7 @@ const Compiler = (props) => {
 
       var dataSubmit = {
         source_code: code,
-        language_id: 50,
+        language_id: 54,
         stdin: input,
         compiler_options: '',
         command_line_arguments: '',
