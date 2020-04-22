@@ -1,10 +1,10 @@
 import React from 'react'
-import StudyC from '../components/StudyC'
+import StudyCMenu from '../components/StudyCMenu'
 
 const ProfileLayout = (props) => {
     return (
         <React.Fragment>
-            <StudyC/>
+            <StudyCMenu/>
             {props.children}
         </React.Fragment>
     )

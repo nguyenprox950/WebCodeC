@@ -16,7 +16,7 @@ import Compiler from '../components/Compiler'
 import TestLayout from '../layout/TestLayout'
 import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
-import LecturePage1 from '../components/Lecture/LecturePage1'
+import Lecture from '../components/Lecture'
 function App() {
 
   const dispatch = useDispatch()
@@ -51,7 +51,7 @@ function App() {
           </Switch>
       </TestLayout>
       <LectureLayout path="/StudyC">
-      <Route path="/StudyC/Page1" component={LecturePage1} />
+      <Route exact path="/StudyC/Lecture" component={Lecture} />
       </LectureLayout>
     </Switch>
     </UserLayout>
