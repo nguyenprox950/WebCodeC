@@ -237,7 +237,6 @@ export const CheckCode = (props) => {
             </div>
             <div className='checkCodeApi'>
               <h6>Nhập code của bạn</h6>
-            {/* <textarea class="form-control" id='output' name="output" rows="2" cols="50"></textarea> */}
               <CodeMirror
               id = 'source_code'
               value={source}

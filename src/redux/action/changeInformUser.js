@@ -14,7 +14,6 @@ export const changeInform = (values) => {
             password: values.password
         })
         dispatch(changeInformUser(values))
-        // localStorage.setItem('user', JSON.stringify(values))
         Swal.fire(
             'Chúc mừng ',
             'Bạn đã thay đổi thông tin thành công!',
@@ -43,7 +42,6 @@ export const changePassword = (values) => {
                 password: values.password2
             })
             firebaseApp.database().ref('userInform/' + emailID).on('value', function(snapshot) {
-                localStorage.setItem('user', JSON.stringify(snapshot.val()))
                 dispatch(changeInformUser(snapshot.val()))
             })
         }).catch(function(error) {

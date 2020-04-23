@@ -94,7 +94,7 @@ const ProfileInform = (props) => {
                   name="phoneNumber"
                   variant="outlined"
                 />
-                <p>Mật khẩu</p>
+                <p hidden>Mật khẩu</p>
                 <MyInput
                   id="password"
                   type="text"

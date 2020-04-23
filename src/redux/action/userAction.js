@@ -18,7 +18,8 @@ export const signUp = (values, handleSuccess) => {
                 email: values.email, 
                 studentID: values.studentID,         
                 phoneNumber: values.phoneNumber, 
-                password: values.password
+                password: values.password,
+                role: "student"
              })
              handleSuccess()
         })
@@ -46,6 +47,7 @@ export const signIn = (values, handleSuccess) => {
                     console.log(snapshot.val())
                     localStorage.setItem('user', JSON.stringify(snapshot.val()))
                     localStorage.setItem('emailID', emailID)
+                    localStorage.setItem('role', snapshot.val().role)
                     dispatch(signInAction(snapshot.val()))
                 })
                 handleSuccess()
