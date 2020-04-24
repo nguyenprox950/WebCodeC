@@ -58,9 +58,23 @@ const AppHeader = (props) => {
               </NavLink>
             </NavItem>
             <NavItem>
+              <NavLink>
+              <Link to="/HomeWorkStudent">Bài tập về nhà (Student)</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
               {localStorage.getItem("role") === "admin" ? (
               <NavLink>
               <Link to="/Translate">Dịch code</Link>
+              </NavLink>
+              ) : (
+                <div></div>
+              )}
+            </NavItem>
+            <NavItem>
+              {localStorage.getItem("role") === "admin" ? (
+              <NavLink>
+              <Link to="/HomeWork">Bài tập về nhà (Set up)</Link>
               </NavLink>
               ) : (
                 <div></div>

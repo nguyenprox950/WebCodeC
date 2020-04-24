@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import {Formik, Form} from 'formik'
 import { MyInput } from './MyInput'
+import * as yup from 'yup'
 import '../css/SignUp.css'
 import {firebaseApp} from '../components/Firebase'
 import Swal from 'sweetalert2'
-import * as yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { signUp } from '../redux/action/userAction'
 
@@ -54,7 +54,7 @@ const SignUp = (props) => {
   return (
     <div>
       <Formik
-        const initialValues = {{
+        initialValues = {{
           fullName: '',
           birthday: '',
           email: '',

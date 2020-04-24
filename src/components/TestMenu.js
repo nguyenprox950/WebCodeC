@@ -11,15 +11,15 @@ const testMenu = () => {
   };
   const setColor = (key) => {
     var condition;
-    firebaseApp.database().ref("historyCode/"+ localStorage.getItem('emailID') + "/Test" + key + "/right/right").on('value', function(snapshot) {
+    firebaseApp.database().ref("historyCode/"+ localStorage.getItem('emailID') + "/Test" + key + "/Right/isRight").on('value', function(snapshot) {
       if (snapshot.exists){
         condition = snapshot.val()
       }
     })
-    if (condition === "wrong") {
+    if (condition === false) {
       return "red";
     }
-    else if (condition === "right"){
+    else if (condition === true){
       return "green";
     } else {
       return null;

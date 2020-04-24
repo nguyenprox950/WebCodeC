@@ -10,7 +10,7 @@ export const Lecture = () => {
     }
     return (
         <div className="Lecture">
-            <iframe src={setPDF()} width ="1100px" height="765px"></iframe>
+            <iframe src={setPDF()} width ="1075px" height="765px"></iframe>
         </div>
     )
 }

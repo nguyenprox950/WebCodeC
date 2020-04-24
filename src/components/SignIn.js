@@ -42,7 +42,7 @@ const SignIn = (props) => {
                   <h2 > Đăng nhập </h2> 
                   <img src = "../img/2.png" />
                   <Form className = "Formik">
-                    <MyInput type = "email"name = "email"label = "Email" />
+                    <MyInput type = "email" name = "email"label = "Email" />
                     <MyInput type = "password" name = "password"label = "Mật khẩu" />
                     <button id = "signIn1"type = "submit"name = "SignIn" onClick = { handelSubmit }>Đăng nhập</button> 
                   </Form> 

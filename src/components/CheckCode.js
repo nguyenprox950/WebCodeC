@@ -18,6 +18,7 @@ const data = {
   stdin:''
 }
 
+var load = 1;
 
 var Title, Introduct;
 
@@ -82,7 +83,7 @@ const saveCode = (code) => {
 }
 
 const getTestInform = (Number, Step) => {
-  console.log(Input + " " + Output);
+  // console.log(Input + " " + Output);
   firebaseApp.database().ref('Test/Test' + Number).child("Expected_Output/Expect"+ Step + "/Input").on('value', function(snapshot) {
     if (snapshot.exists){
       Input = snapshot.val()
@@ -109,8 +110,8 @@ const getHistory = () => {
 }
 
 const setRight = (Right) => {
-  firebaseApp.database().ref('historyCode/' + localStorage.getItem('emailID') + "/Test" + localStorage.getItem('testKey')+ "/right").set ({
-    right : Right
+  firebaseApp.database().ref('historyCode/' + localStorage.getItem('emailID') + "/Test" + localStorage.getItem('testKey')+ "/Right").set ({
+    isRight : Right
  })
 }
 
@@ -140,21 +141,22 @@ export const CheckCode = (props) => {
   testNumber = localStorage.getItem('testKey')
   getInform(testNumber);
   getTestInform(testNumber, 1);
+
     const getCode = (token, step) => {
         axios.request ({
             url: apiUrl + "/submissions/" + token + "?base64_encoded=true",
             method: 'GET',
             async: true,
             }).then (result => {
-              // console.log(result.data)
+              console.log(result.data)
               if(result.data.status.id <= 2){
                 // document.getElementById('output').value = result.data.status.description
                 setTimeout(getCode.bind(null, result.data.token, step));
               } else if (result.data.status.id === 3) {
                 Right = Right+1;
-                // console.log(step + " " + Step + " "+ Right)
+                console.log(step + " " + Step + " "+ Right)
                 if (Right === Step) {
-                  setRight("right");
+                  setRight(true);
                   document.getElementById('output').value = "Chính xác"
                   document.getElementById('output').hidden = true;
                   Swal.fire(
@@ -166,14 +168,14 @@ export const CheckCode = (props) => {
                   setRight("wrong");
                 }
               } else if (result.data.status.id === 4){
-                setRight("wrong");
+                setRight(false);
                 document.getElementById('output').value = result.data.status.description
                 document.getElementById('output').hidden = false;
               }
               else {
                 document.getElementById('output').value = result.data.status.description
                 document.getElementById('output').hidden = false;
-                setRight("wrong");
+                setRight(false);
                 if (step === Step){
                   Swal.fire({
                     icon: 'error',
@@ -211,13 +213,14 @@ export const CheckCode = (props) => {
         for (var i=1; i <= Step; i++) {
           getTestInform(testNumber, i);
           console.log(testNumber + " "+ i);
+          console.log(Input + " Output:" + Output)
           var dataSubmit = {
             source_code: code,
             language_id: 54,
             stdin: btoa(unescape(encodeURIComponent(Input || ""))),
             expected_output: Output
           };
-          // console.log(dataSubmit)
+           console.log(dataSubmit)
           sendCode(dataSubmit, i)
         }
         Right = 0;
@@ -249,7 +252,6 @@ export const CheckCode = (props) => {
                 setSource(source)
               }}
             />              
-            {/* <label>Output</label> */}
               <textarea class="form-control" id='output' name="output" rows="2" cols="50" hidden></textarea>
             </div>
             <Button id="check" type='submit' color="primary" onClick={checkCode}>Chấm code</Button>
@@ -266,7 +268,8 @@ export const CheckCode = (props) => {
                 mode: 'cmake',
                 ...codeMirrorOptions,
               }}
-            />              </ModalBody>
+            />              
+            </ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={toggle}>Cancel</Button>
               </ModalFooter>

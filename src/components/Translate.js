@@ -18,7 +18,7 @@ export const Translate = (props) => {
               <label>Encode</label>
               <textarea class="form-control" id='output' name="output" rows="2" cols="50"></textarea>
               </div>
-              <ButtonToggle id="runCode" type='submit' color="primary" onClick={handelSubmit}>Chạy code</ButtonToggle>
+              <ButtonToggle id="runCode" type='submit' color="primary" onClick={handelSubmit}>Encode</ButtonToggle>
             </div> 
           </div>                 
     )

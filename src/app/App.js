@@ -17,6 +17,10 @@ import TestLayout from '../layout/TestLayout'
 import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
 import Lecture from '../components/Lecture'
+import HomeWork from '../components/HomeWork'
+import HomeWorkStudent from '../components/HomeWorkStudent'
+import Bang from '../components/Bang'
+
 function App() {
 
   const dispatch = useDispatch()
@@ -39,6 +43,8 @@ function App() {
       <Route exact path="/Introduction" component={Introduction} />
       <Route exact path="/Compiler" component={Compiler} />
       <Route exact path="/Translate" component={Translate} />
+      <Route exact path="/HomeWork" component={HomeWork} />
+      <Route exact path="/HomeWorkStudent" component={HomeWorkStudent} />
       <ProfileLayout path="/Profile">
         <Switch>
           <Route path="/Profile/ProfileInform" component={ProfileInform} />
