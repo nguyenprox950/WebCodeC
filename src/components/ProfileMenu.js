@@ -2,11 +2,9 @@ import React from "react";
 import "antd/dist/antd.css";
 import "../css/Profile.css";
 import { Menu } from "antd";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 const ProfileMenu = (props) => {
-
   return (
     <div className="Profile">
       <div id="leftProfile">
@@ -16,11 +14,11 @@ const ProfileMenu = (props) => {
           defaultOpenKeys={["sub1"]}
           mode="inline"
         >
-          <Menu.Item key='1'>
-          <Link to="/Profile/ProfileInform">Thông tin cơ bản</Link>
+          <Menu.Item key="1">
+            <Link to="/profile/inform">Thông tin cơ bản</Link>
           </Menu.Item>
-          <Menu.Item key='2'>
-          <Link to="/Profile/ProfileChangePassword">Đổi mật khẩu</Link>
+          <Menu.Item key="2">
+            <Link to="/profile/changepassword">Đổi mật khẩu</Link>
           </Menu.Item>
         </Menu>
       </div>
@@ -28,53 +26,53 @@ const ProfileMenu = (props) => {
   );
 };
 
-export default ProfileMenu
+export default ProfileMenu;
 
-  // validationSchema = yup.object({
-  //   fullName:yup.string()
-  //   .required("Vui lòng nhập đầy đủ họ tên")
-  //   .matches(/^([^0-9]*)$/,"Tên chỉ bao gồm ký tự từ a-z")
-  //   .max(30,"Tên quá dài")
-  //   .min(5,"Tên quá ngắn"),
+// validationSchema = yup.object({
+//   fullName:yup.string()
+//   .required("Vui lòng nhập đầy đủ họ tên")
+//   .matches(/^([^0-9]*)$/,"Tên chỉ bao gồm ký tự từ a-z")
+//   .max(30,"Tên quá dài")
+//   .min(5,"Tên quá ngắn"),
 
-  //   birthday:yup.string()
-  //   .required("Vui lòng nhập ngày sinh"),
+//   birthday:yup.string()
+//   .required("Vui lòng nhập ngày sinh"),
 
-  //   email:yup.string()
-  //   .email('Email không hợp lệ')
-  //   .required("Vui lòng nhập email"),
+//   email:yup.string()
+//   .email('Email không hợp lệ')
+//   .required("Vui lòng nhập email"),
 
-  //   studentID:yup.string()
-  //   .required('Vui lòng nhập mã số sinh viên')
-  //   .matches(/^([^a-z]*)$/,"Mã số sinh viên chỉ gồm 7 số từ 0-9")
-  //   .max(7,"Mã số sinh viên bao gồm 7 số")
-  //   .min(7,"Mã số sinh viên bao gồm 7 số"),
+//   studentID:yup.string()
+//   .required('Vui lòng nhập mã số sinh viên')
+//   .matches(/^([^a-z]*)$/,"Mã số sinh viên chỉ gồm 7 số từ 0-9")
+//   .max(7,"Mã số sinh viên bao gồm 7 số")
+//   .min(7,"Mã số sinh viên bao gồm 7 số"),
 
-  //   phoneNumber:yup.string()
-  //   .required('Vui lòng nhập mã số điện thoại')
-  //   .matches(/^([^a-z]*)$/,"Số điện thoại chỉ gồm 10 số từ 0-9")
-  //   .max(10,"Số điện thoại bao gồm 10 số")
-  //   .min(10,"Số điện thoại bao gồm 10 số")
-  // })
+//   phoneNumber:yup.string()
+//   .required('Vui lòng nhập mã số điện thoại')
+//   .matches(/^([^a-z]*)$/,"Số điện thoại chỉ gồm 10 số từ 0-9")
+//   .max(10,"Số điện thoại bao gồm 10 số")
+//   .min(10,"Số điện thoại bao gồm 10 số")
+// })
 
-  // validationPassword = yup.object({
-  //   password:yup.string()
-  //   .min(6,"Mật khẩu quá ngắn")
-  //   .required('Vui lòng nhập mật khẩu'),
+// validationPassword = yup.object({
+//   password:yup.string()
+//   .min(6,"Mật khẩu quá ngắn")
+//   .required('Vui lòng nhập mật khẩu'),
 
-  //   password2:yup.string()
-  //   .oneOf([yup.ref('password')], 'Mật khẩu không giống mật khẩu đã nhập')
-  //   .required('Vui lòng nhập lại mật khẩu'),
-  // })
+//   password2:yup.string()
+//   .oneOf([yup.ref('password')], 'Mật khẩu không giống mật khẩu đã nhập')
+//   .required('Vui lòng nhập lại mật khẩu'),
+// })
 
-  // enableForm = () => {
-  //   document.getElementById("fullName").disabled = false;
-  //   document.getElementById("birthday").disabled = false;
-  //   document.getElementById("studentID").disabled = false;
-  //   document.getElementById("phoneNumber").disabled = false;
-  //   document.getElementById("changeInform").hidden = true;
-  //   document.getElementById("accept").hidden = false;
-  // }
+// enableForm = () => {
+//   document.getElementById("fullName").disabled = false;
+//   document.getElementById("birthday").disabled = false;
+//   document.getElementById("studentID").disabled = false;
+//   document.getElementById("phoneNumber").disabled = false;
+//   document.getElementById("changeInform").hidden = true;
+//   document.getElementById("accept").hidden = false;
+// }
 
 //   setData = () =>{
 //     firebaseApp.database().ref('userInform/' + localStorage.getItem('login')).child('fullName').on('value', function(snapshot) {

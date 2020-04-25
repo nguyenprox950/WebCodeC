@@ -21,7 +21,7 @@ const SignIn = (props) => {
     const dispatch = useDispatch()
 
     const handleSuccess = () => {
-        props.history.replace('/Home')
+        props.history.replace('/home')
     }
 
     return ( 
@@ -46,7 +46,7 @@ const SignIn = (props) => {
                     <MyInput type = "password" name = "password"label = "Mật khẩu" />
                     <button id = "signIn1"type = "submit"name = "SignIn" onClick = { handelSubmit }>Đăng nhập</button> 
                   </Form> 
-                    <button id = "signIn2" type = "submit" name = "Back" value = "Đăng ký" onClick = {() => props.history.push('/SignUp') }>Đăng ký</button> 
+                    <button id = "signIn2" type = "submit" name = "Back" value = "Đăng ký" onClick = {() => props.history.push('/signup') }>Đăng ký</button> 
                 </div> 
               </div> 
             </div>

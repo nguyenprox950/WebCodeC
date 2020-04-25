@@ -24,7 +24,7 @@ var Title, Introduct;
 
 var Step , Input = '', Output = '';
 
-var Right = 0;
+var Right = 0 , Wrong = 0, Error = 0;
 
 var testNumber;
 
@@ -165,18 +165,26 @@ export const CheckCode = (props) => {
                     'success'
                   )
                 } else {
-                  setRight("wrong");
+                  setRight(false);
                 }
               } else if (result.data.status.id === 4){
+                Wrong = Wrong+1;
                 setRight(false);
+                if (Wrong === Step){
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Code sai'
+                  })
+                }
                 document.getElementById('output').value = result.data.status.description
                 document.getElementById('output').hidden = false;
               }
               else {
+                Error = Error+1;
                 document.getElementById('output').value = result.data.status.description
                 document.getElementById('output').hidden = false;
                 setRight(false);
-                if (step === Step){
+                if (Error === Step){
                   Swal.fire({
                     icon: 'error',
                     title: 'Code lỗi'
@@ -224,6 +232,8 @@ export const CheckCode = (props) => {
           sendCode(dataSubmit, i)
         }
         Right = 0;
+        Wrong = 0;
+        Error = 0;
         }
     return (
         <div className="checkCode">

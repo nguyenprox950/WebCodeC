@@ -35,37 +35,37 @@ const AppHeader = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md" className="Header">
-        <NavbarBrand href="/Home">Code C</NavbarBrand>
+        <NavbarBrand href="/home">Code C</NavbarBrand>
         <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/Home">Trang chủ</NavLink>
+              <NavLink href="/home">Trang chủ</NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-              <Link to="/Compiler">DevC</Link>
+              <Link to="/compiler">DevC</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-              <Link to="/Test">Bài lập</Link>
+              <Link to="/test">Bài lập</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-              <Link to="/StudyC">Học C</Link>
+              <Link to="/studyc">Học C</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-              <Link to="/HomeWorkStudent">Bài tập về nhà (Student)</Link>
+              <Link to="/homeworkstudent">Bài tập về nhà (Student)</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
               <NavLink>
-              <Link to="/Translate">Dịch code</Link>
+              <Link style = {{color : "Orange"}} to="/translate">Dịch code</Link>
               </NavLink>
               ) : (
                 <div></div>
@@ -74,7 +74,7 @@ const AppHeader = (props) => {
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
               <NavLink>
-              <Link to="/HomeWork">Bài tập về nhà (Set up)</Link>
+              <Link style = {{color : "Orange"}} to="/homework">Bài tập về nhà (Set up)</Link>
               </NavLink>
               ) : (
                 <div></div>
@@ -90,14 +90,14 @@ const AppHeader = (props) => {
               <DropdownMenu right>
                 <DropdownItem>
                   <NavLink>
-                    <Link to="/Profile/ProfileInform">Thông tin cá nhân</Link>
+                    <Link to="/profile/inform">Thông tin cá nhân</Link>
                   </NavLink>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
                   <NavLink onClick= {handleLogOut}
                   >
-                    <Link to="/Home" >Đăng xuất</Link>
+                    <Link to="/home" >Đăng xuất</Link>
                   </NavLink>
                 </DropdownItem>
               </DropdownMenu>
@@ -106,7 +106,7 @@ const AppHeader = (props) => {
             <ButtonToggle
               color="primary"
               tag={Link}
-              to="/SignIn"
+              to="/signin"
             >
               Đăng nhập
             </ButtonToggle>

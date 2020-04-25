@@ -20,7 +20,7 @@ var date;
 
 var Title, Introduct;
 
-var Right = 0;
+var Right = 0, Wrong = 0, Error = 0;
 
 var Step , Input = '', Output = '';
 
@@ -222,7 +222,7 @@ export const HomeWorkStudent = () => {
               else {
                 document.getElementById('output').value = result.data.status.description
                 document.getElementById('output').hidden = false;
-                // setRight("wrong");
+                setRight(false);
                 if (step === Step){
                   Swal.fire({
                     icon: 'error',

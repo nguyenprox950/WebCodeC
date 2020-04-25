@@ -48,7 +48,7 @@ const SignUp = (props) => {
   const dispatch = useDispatch()
 
   const handleSuccess = () => {
-    props.history.push('/SignIn')
+    props.history.push('/signin')
 }
 
   return (
@@ -82,7 +82,7 @@ const SignUp = (props) => {
                 <MyInput type="password" name="password2" label="Nhập lại mật khẩu"/>
                 <button id="register1" type="submit" name="SignIn" onClick={handelSubmit}>Đăng ký</button>
             </Form>
-            <button id="register2" name="Back" onClick={() => props.history.push('/SignIn')}>Trở lại</button> 
+            <button id="register2" name="Back" onClick={() => props.history.push('/signin')}>Trở lại</button> 
           </div>
         </div>
         </div>

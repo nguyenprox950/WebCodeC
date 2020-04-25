@@ -21,6 +21,14 @@ import HomeWork from '../components/HomeWork'
 import HomeWorkStudent from '../components/HomeWorkStudent'
 import Bang from '../components/Bang'
 
+var test = [];
+
+const setComponent = () => {
+  if(localStorage.getItem("emailID") === null) {
+    test = <Route exact path="/" component={Home} />
+  } 
+}
+
 function App() {
 
   const dispatch = useDispatch()
@@ -34,30 +42,30 @@ function App() {
   return (
     <Switch>
     {/* <Route exact path="/Test" component={Test} /> */}
-    <Route exact path="/SignIn" component={SignIn} />
-    <Route exact path="/SignUp" component={SignUp} />
+    <Route exact path="/signin" component={SignIn} />
+    <Route exact path="/signup" component={SignUp} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/Home" component={Home} />
-      <Route exact path="/Introduction" component={Introduction} />
-      <Route exact path="/Compiler" component={Compiler} />
-      <Route exact path="/Translate" component={Translate} />
-      <Route exact path="/HomeWork" component={HomeWork} />
-      <Route exact path="/HomeWorkStudent" component={HomeWorkStudent} />
-      <ProfileLayout path="/Profile">
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/introduction" component={Introduction} />
+      <Route exact path="/compiler" component={Compiler} />
+      <Route exact path="/translate" component={Translate} />
+      <Route exact path="/homework" component={HomeWork} />
+      <Route exact path="/homeworkstudent" component={HomeWorkStudent} />
+      <ProfileLayout path="/profile">
         <Switch>
-          <Route path="/Profile/ProfileInform" component={ProfileInform} />
-          <Route path="/Profile/ProfileChangePassword" component={ProfileChangePassword} />
+          <Route path="/profile/inform" component={ProfileInform} />
+          <Route path="/profile/changepassword" component={ProfileChangePassword} />
         </Switch>
       </ProfileLayout>
-      <TestLayout path="/Test">
+      <TestLayout path="/test">
         <Switch>
-            <Route path="/Test/CheckCode" component={CheckCode} />
+            <Route path="/test/checkcode" component={CheckCode} />
           </Switch>
       </TestLayout>
-      <LectureLayout path="/StudyC">
-      <Route exact path="/StudyC/Lecture" component={Lecture} />
+      <LectureLayout path="/studyc">
+      <Route exact path="/studyc/lecture" component={Lecture} />
       </LectureLayout>
     </Switch>
     </UserLayout>
