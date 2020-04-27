@@ -48,6 +48,10 @@ const setStop = (stop) => {
   });
 };
 
+const deleteHistory = () => {
+  firebaseApp.database().ref("homeWork/CodeHistory(student)").remove();
+};
+
 const getStop = () => {
   firebaseApp
     .database()
@@ -135,6 +139,7 @@ export const HomeWork = () => {
     setDate(values.deadLine);
     setStop(1);
     setHomeWork(values);
+    deleteHistory();
   };
   return (
     <div className="demo">

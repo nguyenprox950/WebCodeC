@@ -22,14 +22,6 @@ import HomeWorkStudent from '../components/HomeWorkStudent'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
 
-var test = [];
-
-const setComponent = () => {
-  if(localStorage.getItem("emailID") === null) {
-    test = <Route exact path="/" component={Home} />
-  } 
-}
-
 function App() {
 
   const dispatch = useDispatch()
@@ -52,7 +44,7 @@ function App() {
       <UserAuth exact path="/compiler" component={Compiler} />
       <UserAuth exact path="/translate" component={Translate} />
       <UserAuth exact path="/homework" component={HomeWork} />
-      <Route exact path="/bang" component={Bang} />
+      <Route exact path="/mustsignin" component={Bang} />
       <UserAuth exact path="/homeworkstudent" component={HomeWorkStudent} />
       <ProfileLayout path="/profile">
         <Switch>
