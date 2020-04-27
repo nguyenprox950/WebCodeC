@@ -8,8 +8,8 @@ import * as yup from "yup";
 import { changeInform } from "../redux/action/changeInformUser";
 
 const ProfileInform = (props) => {
-  const { userInform } = useSelector(state => state.userReducer);
-  const dispatch = useDispatch()
+  const { userInform } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   const validationSchema = yup.object({
     fullName: yup
@@ -38,7 +38,7 @@ const ProfileInform = (props) => {
       .required("Vui lòng nhập mã số điện thoại")
       .matches(/^([^a-z]*)$/, "Số điện thoại chỉ gồm 10 số từ 0-9")
       .max(10, "Số điện thoại bao gồm 10 số")
-      .min(10, "Số điện thoại bao gồm 10 số")
+      .min(10, "Số điện thoại bao gồm 10 số"),
   });
 
   return (
@@ -51,10 +51,11 @@ const ProfileInform = (props) => {
             email: userInform.email,
             studentID: userInform.studentID,
             phoneNumber: userInform.phoneNumber,
-            password: userInform.password
+            password: userInform.password,
           }}
           validationSchema={validationSchema}
-          onSubmit = {values => dispatch(changeInform(values))} >
+          onSubmit={(values) => dispatch(changeInform(values))}
+        >
           {({ handelSubmit }) => (
             <div>
               <Form className="formikProfile">

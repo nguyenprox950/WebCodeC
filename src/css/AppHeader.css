@@ -1,5 +1,5 @@
 .btn-secondary {
-  border-color: #f8f9fa !important; 
+  border-color: #f8f9fa !important;
   background-color: #f8f9fa !important;
 }
 
@@ -9,3 +9,7 @@
   width: 100%;
 }
 
+.active, .item:hover {
+  background-color: orange;
+  color: white;
+}

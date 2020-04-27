@@ -13,21 +13,24 @@ import {
   DropdownMenu,
   DropdownItem,
   ButtonToggle,
-  NavbarToggler
+  NavbarToggler,
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { firebaseApp } from "./Firebase";
 
 const AppHeader = (props) => {
-  const { userInform } = useSelector(state => state.userReducer);
+  const { userInform } = useSelector((state) => state.userReducer);
 
   const handleLogOut = () => {
-    firebaseApp.auth().signOut().then(function() {
-      localStorage.clear();
-      window.location.reload()
-    }).catch(function(error) {
-    });
-  }
+    firebaseApp
+      .auth()
+      .signOut()
+      .then(function () {
+        localStorage.clear();
+        window.location.reload();
+      })
+      .catch(function (error) {});
+  };
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -35,47 +38,47 @@ const AppHeader = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md" className="Header">
-        <NavbarBrand href="/home">Code C</NavbarBrand>
-        <NavbarToggler onClick={toggle}/>
+        <NavbarBrand href="/">Code C</NavbarBrand>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/home">Trang chủ</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink>
-              <Link to="/compiler">DevC</Link>
+              <NavLink className="item">
+                <Link to="/compiler">DevC</Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink>
-              <Link to="/test">Bài lập</Link>
+              <NavLink className="item">
+                <Link to="/test">Bài lập</Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink>
-              <Link to="/studyc">Học C</Link>
+              <NavLink className="item">
+                <Link to="/studyc">Học C</Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink>
-              <Link to="/homeworkstudent">Bài tập về nhà (Student)</Link>
+              <NavLink className="item">
+                <Link to="/homeworkstudent">Bài tập về nhà (Student)</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
-              <NavLink>
-              <Link style = {{color : "Orange"}} to="/translate">Dịch code</Link>
-              </NavLink>
+                <NavLink className="item">
+                  <Link to="/translate">
+                    Dịch code
+                  </Link>
+                </NavLink>
               ) : (
                 <div></div>
               )}
             </NavItem>
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
-              <NavLink>
-              <Link style = {{color : "Orange"}} to="/homework">Bài tập về nhà (Set up)</Link>
-              </NavLink>
+                <NavLink className="item">
+                  <Link to="/homework">
+                    Bài tập về nhà (Set up)
+                  </Link>
+                </NavLink>
               ) : (
                 <div></div>
               )}
@@ -95,19 +98,14 @@ const AppHeader = (props) => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  <NavLink onClick= {handleLogOut}
-                  >
-                    <Link to="/home" >Đăng xuất</Link>
+                  <NavLink onClick={handleLogOut}>
+                    <Link to="/home">Đăng xuất</Link>
                   </NavLink>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           ) : (
-            <ButtonToggle
-              color="primary"
-              tag={Link}
-              to="/signin"
-            >
+            <ButtonToggle color="primary" tag={Link} to="/signin">
               Đăng nhập
             </ButtonToggle>
           )}
@@ -117,4 +115,4 @@ const AppHeader = (props) => {
   );
 };
 
-export default (AppHeader);
+export default AppHeader;

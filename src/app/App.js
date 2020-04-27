@@ -20,6 +20,7 @@ import Lecture from '../components/Lecture'
 import HomeWork from '../components/HomeWork'
 import HomeWorkStudent from '../components/HomeWorkStudent'
 import Bang from '../components/Bang'
+import UserAuth from '../components/UserAuth'
 
 var test = [];
 
@@ -47,25 +48,25 @@ function App() {
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/home" component={Home} />
       <Route exact path="/introduction" component={Introduction} />
-      <Route exact path="/compiler" component={Compiler} />
-      <Route exact path="/translate" component={Translate} />
-      <Route exact path="/homework" component={HomeWork} />
-      <Route exact path="/homeworkstudent" component={HomeWorkStudent} />
+      <UserAuth exact path="/compiler" component={Compiler} />
+      <UserAuth exact path="/translate" component={Translate} />
+      <UserAuth exact path="/homework" component={HomeWork} />
+      <Route exact path="/bang" component={Bang} />
+      <UserAuth exact path="/homeworkstudent" component={HomeWorkStudent} />
       <ProfileLayout path="/profile">
         <Switch>
-          <Route path="/profile/inform" component={ProfileInform} />
-          <Route path="/profile/changepassword" component={ProfileChangePassword} />
+          <UserAuth path="/profile/inform" component={ProfileInform} />
+          <UserAuth path="/profile/changepassword" component={ProfileChangePassword} />
         </Switch>
       </ProfileLayout>
       <TestLayout path="/test">
         <Switch>
-            <Route path="/test/checkcode" component={CheckCode} />
+            <UserAuth path="/test/checkcode" component={CheckCode} />
           </Switch>
       </TestLayout>
       <LectureLayout path="/studyc">
-      <Route exact path="/studyc/lecture" component={Lecture} />
+      <UserAuth exact path="/studyc/lecture" component={Lecture} />
       </LectureLayout>
     </Switch>
     </UserLayout>

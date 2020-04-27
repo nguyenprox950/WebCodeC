@@ -1,10 +1,10 @@
 .StudyC {
-    padding-top: 60px;
+  padding-top: 60px;
 }
 
 .StudyC #studyCMenu {
-    float: left;
-    height: 650px;
-    overflow: scroll !important;
-    display: block;
+  float: left;
+  height: 650px;
+  overflow: scroll !important;
+  display: block;
 }

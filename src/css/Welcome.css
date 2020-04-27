@@ -1,25 +1,24 @@
-.welcome
-{
-    padding: 30px 0;
-    padding: 80px 0;
+.welcome {
+  padding: 30px 0;
+  padding: 80px 0;
 }
-.welcome h2{
-    margin-top: 0px;
+.welcome h2 {
+  margin-top: 0px;
 }
 
 .welcome h2 span {
-    color: #1890ff;
+  color: #1890ff;
 }
-.welcome h2, p{
-    text-align: center;
-  
+.welcome h2,
+p {
+  text-align: center;
 }
 
-.welcome p{
-    font-size: 20px;
-    margin: 0 10%;
+.welcome p {
+  font-size: 20px;
+  margin: 0 10%;
 }
-.welcome-content{
-    width: 70%;
-    margin: 0 auto;
+.welcome-content {
+  width: 70%;
+  margin: 0 auto;
 }

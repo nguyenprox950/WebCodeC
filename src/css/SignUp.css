@@ -1,102 +1,98 @@
-.signUpBody *{
-    margin:0;
-    padding:0;
-    border:none;
-    font-family: 'Open Sans', sans-serif;
+.signUpBody * {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: "Open Sans", sans-serif;
 }
-body{
-    background-color: #ededee;
+body {
+  background-color: #ededee;
 }
 
 .toSignUp {
-    display: grid;
-    grid-template-columns: repeat(12,1fr);
-    grid-template-rows: minmax(70px,auto);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: minmax(70px, auto);
 }
 
 .formSignUp {
-    border: 1px solid #80808000;
-    grid-column: 6/9;
-    grid-row: 3;
-    height: 850px;
-    width: 292px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    border-radius: 15px;
-    box-shadow: 0px 0px 14px 0px grey;
-    background-color: white;
+  border: 1px solid #80808000;
+  grid-column: 6/9;
+  grid-row: 3;
+  height: 850px;
+  width: 292px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0px 0px 14px 0px grey;
+  background-color: white;
 }
 
 .formSignUp img {
-    margin-bottom: 10px;
-    height: auto;
-    width: 20%;
+  margin-bottom: 10px;
+  height: auto;
+  width: 20%;
 }
 
 .formSignUp form {
-    width: 210px;
+  width: 210px;
 }
 
 .formSignUp h2 {
-    margin-top: 50px;
-    margin-bottom: 30px;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
- 
+
 .formSignUp label {
-    display: block;
-    font-weight: lighter;
-    margin-bottom: 0px;
- 
+  display: block;
+  font-weight: lighter;
+  margin-bottom: 0px;
 }
- 
+
 .toSignUp button#register1 {
-    font-size: 12px;
-    margin: 0 auto;
-    padding: 6px;
-    width: 150px;
-    border-radius: 10px;
-    border: none;
-    bottom: 10px;
-    cursor: pointer;
-    margin-left: 29px;
-    margin-top: 30px;
-    background: linear-gradient(to right, #fc00ff, #00dbde);
+  font-size: 12px;
+  margin: 0 auto;
+  padding: 6px;
+  width: 150px;
+  border-radius: 10px;
+  border: none;
+  bottom: 10px;
+  cursor: pointer;
+  margin-left: 29px;
+  margin-top: 30px;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
 }
 
 .toSignUp button#register2 {
-    font-size: 12px;
-    margin: 0 auto;
-    padding: 6px;
-    width: 150px;
-    border-radius: 10px;
-    border: none;
-    bottom: 10px;
-    cursor: pointer;
-    margin-top: 30px;
-    background: linear-gradient(to right, #fc00ff, #00dbde);
+  font-size: 12px;
+  margin: 0 auto;
+  padding: 6px;
+  width: 150px;
+  border-radius: 10px;
+  border: none;
+  bottom: 10px;
+  cursor: pointer;
+  margin-top: 30px;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
 }
 
-.formSignUp button#register1:hover{
- 
-    background: linear-gradient(to right, #fc466b, #3f5efb); 
+.formSignUp button#register1:hover {
+  background: linear-gradient(to right, #fc466b, #3f5efb);
 }
 
-.formSignUp button#register2:hover{
- 
-    background: linear-gradient(to right, #fc466b, #3f5efb); 
+.formSignUp button#register2:hover {
+  background: linear-gradient(to right, #fc466b, #3f5efb);
 }
-
 
 .MuiInput-underline:before {
-    border-bottom: 1px solid #00BCD4 !important;
+  border-bottom: 1px solid #00bcd4 !important;
 }
 
 .MuiFormControl-root {
-    width: 100% !important;
+  width: 100% !important;
 }
 
-.MuiFormControl-root  {
-    margin: 0px !important;
+.MuiFormControl-root {
+  margin: 0px !important;
 }

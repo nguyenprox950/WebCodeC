@@ -24,7 +24,8 @@ const Service = (props) => {
                     <i className="fa fa-th"></i>
                     <h2>Chấm code C tự động</h2>
                     <p>
-                      Trang web xây dựng hệ thống chấm code tự động để các bạn có thể tự học và thực hành môn lập trình C tại nhà.{" "}
+                      Trang web xây dựng hệ thống chấm code tự động để các bạn
+                      có thể tự học và thực hành môn lập trình C tại nhà.{" "}
                     </p>
                   </div>
                 </div>
@@ -33,7 +34,9 @@ const Service = (props) => {
                     <i className="fa fa-html5"></i>
                     <h2>Kiểm tra online</h2>
                     <p>
-                      Hệ thống giúp cho giảng viên có thể tạo các bài kiểm tra online trong thời gian quy định để sinh viên có thể làm và nộp bài online.{" "}
+                      Hệ thống giúp cho giảng viên có thể tạo các bài kiểm tra
+                      online trong thời gian quy định để sinh viên có thể làm và
+                      nộp bài online.{" "}
                     </p>
                   </div>
                 </div>
@@ -42,7 +45,9 @@ const Service = (props) => {
                     <i className="fa fa-html5"></i>
                     <h2>Hệ thống kiến thức</h2>
                     <p>
-                      Trang web cung cấp những bài giảng cũng như các bài tập cơ bản về môn lập trình C theo chương trình học để các bạn sinh viên dễ học tập và thực hành.{" "}
+                      Trang web cung cấp những bài giảng cũng như các bài tập cơ
+                      bản về môn lập trình C theo chương trình học để các bạn
+                      sinh viên dễ học tập và thực hành.{" "}
                     </p>
                   </div>
                 </div>
