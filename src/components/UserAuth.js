@@ -10,7 +10,7 @@ const UserAuth = ({component: Component, ...props }) => {
             if(userInform){
                 return <Component {...routerProps}/>
             }
-        return <Redirect to = "/bang"/>
+        return <Redirect to = "/mustsignin"/>
         }}
         />
     )

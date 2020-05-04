@@ -83,6 +83,17 @@ const AppHeader = (props) => {
                 <div></div>
               )}
             </NavItem>
+            <NavItem>
+              {localStorage.getItem("role") === "admin" ? (
+                <NavLink className="item">
+                  <Link to="/tableofstudents">
+                    Danh sách nộp bài tập về nhà
+                  </Link>
+                </NavLink>
+              ) : (
+                <div></div>
+              )}
+            </NavItem>
           </Nav>
           {Object.keys(userInform).length !== 0 ? (
             <UncontrolledDropdown inNavbar className="Header-Profile">
@@ -99,7 +110,7 @@ const AppHeader = (props) => {
                 <DropdownItem divider />
                 <DropdownItem>
                   <NavLink onClick={handleLogOut}>
-                    <Link to="/home">Đăng xuất</Link>
+                    <Link to="/">Đăng xuất</Link>
                   </NavLink>
                 </DropdownItem>
               </DropdownMenu>

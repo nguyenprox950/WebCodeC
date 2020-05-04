@@ -1,5 +1,5 @@
 export const LOGIN = "LOGIN"
 export const CHANGEINFORM = "CHANGEINFORM"
-export const SUBMIT = "SUBMIT"
+export const GET_DATASTUDENTS_ARRAY = "GET_DATASTUDENTS_ARRAY"
 
 

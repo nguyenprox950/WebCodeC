@@ -56,13 +56,17 @@ const saveCode = (code) => {
   var time =
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + " " + time;
+  var userInform = JSON.parse(localStorage.getItem("user"));
   firebaseApp
     .database()
     .ref("homeWork/CodeHistory(student)/" + localStorage.getItem("emailID"))
     .set({
       history: code,
       time: dateTime,
+      fullName: userInform.fullName,
+      studentID: userInform.studentID
     });
+  setRight("null")
 };
 
 const getDate = () => {

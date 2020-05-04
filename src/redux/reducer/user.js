@@ -1,7 +1,8 @@
-import { LOGIN, CHANGEINFORM } from "../constants/userConstants";
+import { LOGIN, CHANGEINFORM, GET_DATASTUDENTS_ARRAY } from "../constants/userConstants";
 
 const initialState = {
-    userInform: {}
+    userInform: {},
+    dataStudents: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -19,9 +20,14 @@ const userReducer = (state = initialState, action) => {
             userInform.studentID = action.data.studentID
             userInform.phoneNumber = action.data.phoneNumber
             userInform.password = action.data.password
-                return {
-                    ...state, userInform
-                }
+            return {
+                ...state, userInform
+            }
+        }
+        case GET_DATASTUDENTS_ARRAY: {
+            return {
+                ...state, dataStudents: action.data
+            }
         }
         default:
             return state;

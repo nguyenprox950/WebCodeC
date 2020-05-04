@@ -9,7 +9,7 @@ const Bang = (props) => {
         <Card body>
           <h5>Bạn chưa đăng nhập</h5>
           <h5>Vui lòng đăng nhập để sử dụng dịch vụ.</h5>
-          <Button color="primary" onClick={() => props.history.push("/SignIn")}>
+          <Button color="primary" onClick={() => props.history.push("/signin")}>
             Đăng nhập
           </Button>
         </Card>

@@ -6,6 +6,10 @@ import { Formik, Form } from "formik";
 import { MyInput } from "./MyInput";
 import { firebaseApp } from "../components/Firebase";
 import { Button } from "reactstrap";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import * as yup from "yup";
 
 var stop = 0;
@@ -70,6 +74,10 @@ const setHomeWork = (values) => {
 
   if (values.output3 !== "") step = 3;
 
+  if (values.output4 !== "") step = 4;
+
+  if (values.output5 !== "") step = 5;
+
   firebaseApp.database().ref("homeWork/Test").set({
     Title: values.title,
     Introduct: values.introduct,
@@ -95,10 +103,48 @@ const setHomeWork = (values) => {
     });
   }
 
+  if (step > 3) {
+    firebaseApp.database().ref("homeWork/Test/Expected_Output/Expect4").set({
+      Input: values.input4,
+      Output: values.output4,
+    });
+  }
+
+  if (step > 4) {
+    firebaseApp.database().ref("homeWork/Test/Expected_Output/Expect5").set({
+      Input: values.input5,
+      Output: values.output5,
+    });
+  }
+
   Swal.fire("Tạo bài tập thành công", "", "success");
 };
 
+const setHidden = (age, number) => {
+  if(age === 1 && number === 1){
+    return false
+  } else if (age === 2 && number <= 2){
+    return false
+  } else if (age === 3 && number <= 3){
+    return false
+  } else if (age === 4 && number <= 4){
+    return false
+  } else if (age === 5 && number <= 5){
+    return false
+  } else {
+    return true
+  }
+}
+
 export const HomeWork = () => {
+
+  const [age, setAge] = useState(1);
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+    console.log(age)
+  };
+
   const [time, setTime] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
   );
@@ -154,6 +200,10 @@ export const HomeWork = () => {
           output2: "",
           input3: "",
           output3: "",
+          input4: "",
+          output4: "",
+          input5: "",
+          output5: "",
           deadLine: "",
         }}
         validationSchema={validationSchema}
@@ -170,12 +220,31 @@ export const HomeWork = () => {
               format="dd/MM/yyyy"
               InputLabelProps={{ shrink: true }}
             />
-            <MyInput type="text" name="input1" label="Input1" />
-            <MyInput type="text" name="output1" label="Output1" />
-            <MyInput type="text" name="input2" label="Input2" />
-            <MyInput type="text" name="output2" label="Output2" />
-            <MyInput type="text" name="input3" label="Input3" />
-            <MyInput type="text" name="output3" label="Output3" />
+            <FormControl>
+            <InputLabel id="demo-simple-select-label">Số lượng Testcase</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                onChange={handleChange}
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+              </Select>
+            </FormControl>
+            <MyInput hidden = {setHidden(age, 1)} type="text" name="input1" label="Input1" />
+            <MyInput hidden = {setHidden(age, 1)} type="text" name="output1" label="Output1" />
+            <MyInput hidden = {setHidden(age, 2)} type="text" name="input2" label="Input2" />
+            <MyInput hidden = {setHidden(age, 2)} type="text" name="output2" label="Output2" />
+            <MyInput hidden = {setHidden(age, 3)} type="text" name="input3" label="Input3" />
+            <MyInput hidden = {setHidden(age, 3)} type="text" name="output3" label="Output3" />
+            <MyInput hidden = {setHidden(age, 4)} type="text" name="input4" label="Input4" />
+            <MyInput hidden = {setHidden(age, 4)} type="text" name="output4" label="Output4" />
+            <MyInput hidden = {setHidden(age, 5)} type="text" name="input5" label="Input5" />
+            <MyInput hidden = {setHidden(age, 5)} type="text" name="output5" label="Output5" />
             <Button
               id="createHomeWork"
               color="primary"

@@ -21,6 +21,7 @@ import HomeWork from '../components/HomeWork'
 import HomeWorkStudent from '../components/HomeWorkStudent'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
+import TableOfStudents from '../components/TableOfStudents'
 
 function App() {
 
@@ -34,12 +35,13 @@ function App() {
   },[])
   return (
     <Switch>
-    {/* <Route exact path="/Test" component={Test} /> */}
     <Route exact path="/signin" component={SignIn} />
     <Route exact path="/signup" component={SignUp} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
+      <UserAuth exact path="/tableofstudents" component={TableOfStudents} />
+      <Route exact path="/mustsignin" component={Bang} />
       <Route exact path="/introduction" component={Introduction} />
       <UserAuth exact path="/compiler" component={Compiler} />
       <UserAuth exact path="/translate" component={Translate} />

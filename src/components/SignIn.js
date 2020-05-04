@@ -19,7 +19,7 @@ const SignIn = (props) => {
   const dispatch = useDispatch();
 
   const handleSuccess = () => {
-    props.history.replace("/home");
+    props.history.replace("/");
   };
 
   return (
