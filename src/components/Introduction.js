@@ -1,9 +1,28 @@
 import React, { Component } from "react";
 import "../css/Introduction.css";
+import { Controlled as CodeMirror } from "react-codemirror2";
+import "codemirror/lib/codemirror.css";
+import "codemirror/mode/cmake/cmake";
+import "codemirror/theme/material.css";
 import AppHeader from "./AppHeader";
 
-export default class Introduction extends Component {
-  render() {
+var cSource =
+  "\
+#include <stdio.h>\n\
+\n\
+int main() {\n\
+    int a, b;\n\
+    scanf(\"%d\", &a);\n\
+    scanf(\"%d\", &b);\n\
+    printf(\"%d\", a + b);\n\
+    return 0;\n\
+}";
+
+const Introduction = () => {
+  const codeMirrorOptions = {
+    theme: "material",
+    lineNumbers: true,
+  };
     return (
       <div>
         <div>
@@ -11,84 +30,38 @@ export default class Introduction extends Component {
         </div>
         <div id="mainIntroduction">
           <div id="leftIntroduction">
-            <h2>Giới thiệu</h2>
-            <h5>Học code C online</h5>
-            <p>
-              Với mong muốn hỗ trợ các bạn học lập trình online, nhất là những
-              người mới bắt đầu học lập trình về một số ngôn ngữ lập trình như
-              c, c++, java,… Chúng tôi đã xây dựng website chấm code online cho
-              phép các bạn có thể nộp code, chạy code online và đưa ra kết quả
-              đúng sai ngay. Người học sẽ biết được mình đúng hay sai, sai ở
-              những test nào, từ đó có thể rút kinh nghiệm và cải thiện code của
-              mình một cách nhanh chóng, phù hợp.
-            </p>
-            <p>
-              Chúng tôi rất mong được sự góp ý của các bạn về website để ngày
-              càng phục vụ công việc học tập của các bạn tốt hơn. Mọi góp ý,
-              đóng góp bài tập xin gửi về email: ntknguyen19@gmail.com.
-            </p>
+            <h2>Hướng dẫn làm bài tập</h2>
+            <h5>Code ví dụ cho bài tính tổng 2 số theo ngôn ngữ C:</h5>
+            <CodeMirror
+              className="exampleCode"
+              id="exampleCode"
+              value={cSource}
+              options={{
+                mode: "cmake",
+                ...codeMirrorOptions,
+              }}
+            />
+            <h5>Để nộp bài các bạn thực hiện theo các bước sau:</h5>
+            <ul>
+              <li><strong>Bước 1:</strong> Đăng ký và đăng nhập.</li>
+              <li><strong>Bước 2:</strong> Mở trang "Bài tập" và chọn bài tập muốn thực hiện (<strong><span style={{color: "#ff0000"}}>Lưu ý</span></strong>: Hãy đợi bài tập load xong yêu cầu và đề bài mới thực hiện bài tập. Nếu không thấy hiện hãy ấn vào bài tập một lần nữa).</li>
+              <li><strong>Bước 3:</strong> Code. Các bạn có thể code trực tiếp trên web hoặc code trên máy mình rồi copy code vào khung soạn thảo (màu đen than).</li>
+              <li><strong>Bước 4:</strong> Khi code xong nhấn vào nút "Chấm code" và đợi trang web trả về kết quả. Hệ thống sẽ có các test cho mỗi bài, test nào đúng sẽ hiện chữ <strong><span style={{color: "#008000"}}>màu xanh</span></strong>. Nếu test nào sai sẽ hiện chữ <strong><span style={{color: "#ff0000"}}>màu đỏ</span></strong>.</li>
+            </ul>
+            <h5><span style={{color: "#ff0000"}}>Lưu ý quan trọng:</span></h5>
+            <ul>
+              <li>Trong code của bạn chỉ đọc và xuất ra kết quả mà đề bài yêu cầu, <strong>không thừa</strong>, <strong>không thiếu</strong>. Ví dụ bài tổng 2 số như trên, bạn chỉ xuất ra kết quả, không xuất bất kỳ cái gì khác như: printf(“Nhap a = “); như vậy sẽ thừa.</li>
+              <li>Trong code của bạn <strong><span style={{color: "#ff0000"}}>không dùng</span></strong> các lệnh để dừng màn hình hoặc các lệnh hệ thống đặc biệt như system(“pause”), getch().</li>
+              <li>Trong code <strong><span style={{color: "#ff0000"}}>không dùng</span></strong> thư viện conio.h.</li>
+              <li>Với các bài về chuỗi ký tự, các bạn <strong><span style={{color: "#ff0000"}}>không dùng fflush(stdin)</span></strong> để xoá bộ đệm, nếu phải xoá bộ đệm hãy dùng fgets 2 lần để nhập xâu.</li>
+            </ul>
           </div>
           <div id="rightIntroduction">
             <h2>Quảng cáo</h2>
-            <div
-              id="carouselExampleFade"
-              className="carousel slide carousel-fade"
-              data-ride="carousel"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img
-                    src="/img/carousel_1.jpg"
-                    className="d-block w-100"
-                    alt="..."
-                    height="200px"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="/img/carousel_2.jpg"
-                    className="d-block w-100"
-                    alt="..."
-                    height="200px"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="/img/carousel_3.jpg"
-                    className="d-block w-100"
-                    alt="..."
-                    height="200px"
-                  />
-                </div>
-              </div>
-              <a
-                className="carousel-control-prev"
-                href="#carouselExampleFade"
-                role="button"
-                data-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Previous</span>
-              </a>
-              <a
-                className="carousel-control-next"
-                href="#carouselExampleFade"
-                role="button"
-                data-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Next</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>
     );
-  }
 }
+
+export default Introduction

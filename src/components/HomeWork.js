@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import "../css/HomeWork.css";
-import Translate from "./Translate";
 import Swal from "sweetalert2";
 import { Formik, Form } from "formik";
 import { MyInput } from "./MyInput";
 import { firebaseApp } from "../components/Firebase";
-import { Button } from "reactstrap";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import { Controlled as CodeMirror } from "react-codemirror2";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import * as yup from "yup";
+import "codemirror/lib/codemirror.css";
+import "codemirror/mode/cmake/cmake";
+import "codemirror/theme/material.css";
 
 var stop = 0;
 
@@ -22,8 +25,6 @@ const validationSchema = yup.object({
   introduct: yup.string().required("Vui lòng nhập yêu cầu"),
 
   deadLine: yup.date().required("Vui lòng nhập Deadline"),
-
-  output1: yup.string().required("Vui lòng nhập Output1"),
 });
 
 const setDate = (deadLine) => {
@@ -136,13 +137,51 @@ const setHidden = (age, number) => {
   }
 }
 
-export const HomeWork = () => {
+export const HomeWork = (props) => {
+
+  const [source, setSource] = useState();
+
+  const [modal, setModal] = useState(false);
+
+  const [OP1, setOP1] = useState('');
+  const [OP2, setOP2] = useState('');
+  const [OP3, setOP3] = useState('');
+  const [OP4, setOP4] = useState('');
+  const [OP5, setOP5] = useState('');
+
+
+  const setOutput = (number) => {
+    number = parseInt(number)
+    setModal(!modal);
+    var code = btoa(unescape(encodeURIComponent(source || "")));
+    if(number === 1)setOP1(code)
+    else if (number === 2)setOP2(code)
+    else if (number === 3)setOP3(code)
+    else if (number === 4)setOP4(code)
+    else if (number === 5)setOP5(code)
+    setSource(null);
+  };
+
+  const igNore = () => {
+    setModal(!modal);
+    setSource(null);
+  }
+
+  const toggle = (number) => {
+    if(number !== null) localStorage.setItem('Output', number)
+    setModal(!modal);
+  };
+
+
+  const codeMirrorOptions = {
+    theme: "material",
+    lineNumbers: true,
+  };
 
   const [age, setAge] = useState(1);
 
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(age)
   };
 
   const [time, setTime] = useState(
@@ -181,7 +220,11 @@ export const HomeWork = () => {
   }, 1000);
 
   const handleSuccess = (values) => {
-    console.log(values.deadLine);
+    values.output1 = document.getElementById("output1").value
+    values.output2 = document.getElementById("output2").value
+    values.output3 = document.getElementById("output3").value
+    values.output4 = document.getElementById("output4").value
+    values.output5 = document.getElementById("output5").value
     setDate(values.deadLine);
     setStop(1);
     setHomeWork(values);
@@ -206,10 +249,12 @@ export const HomeWork = () => {
           output5: "",
           deadLine: "",
         }}
+        setFieldValue
         validationSchema={validationSchema}
         onSubmit={(values) => handleSuccess(values)}
       >
         {({ handelSubmit }) => (
+          <div>
           <Form className="FormikHomeWork">
             <MyInput type="text" name="title" label="Tiêu đề" />
             <MyInput type="text" name="introduct" label="Yêu cầu" />
@@ -236,15 +281,15 @@ export const HomeWork = () => {
               </Select>
             </FormControl>
             <MyInput hidden = {setHidden(age, 1)} type="text" name="input1" label="Input1" />
-            <MyInput hidden = {setHidden(age, 1)} type="text" name="output1" label="Output1" />
+            <MyInput hidden = {setHidden(age, 1)} id="output1" value={OP1} onClick={()=>toggle(1)} type="text" name="output1" label="Output1" />
             <MyInput hidden = {setHidden(age, 2)} type="text" name="input2" label="Input2" />
-            <MyInput hidden = {setHidden(age, 2)} type="text" name="output2" label="Output2" />
+            <MyInput hidden = {setHidden(age, 2)} id="output2" value={OP2} onClick={()=>toggle(2)} type="text" name="output2" label="Output2" />
             <MyInput hidden = {setHidden(age, 3)} type="text" name="input3" label="Input3" />
-            <MyInput hidden = {setHidden(age, 3)} type="text" name="output3" label="Output3" />
+            <MyInput hidden = {setHidden(age, 3)} id="output3" value={OP3} onClick={()=>toggle(3)} type="text" name="output3" label="Output3" />
             <MyInput hidden = {setHidden(age, 4)} type="text" name="input4" label="Input4" />
-            <MyInput hidden = {setHidden(age, 4)} type="text" name="output4" label="Output4" />
+            <MyInput hidden = {setHidden(age, 4)} id="output4" value={OP4} onClick={()=>toggle(4)} type="text" name="output4" label="Output4" />
             <MyInput hidden = {setHidden(age, 5)} type="text" name="input5" label="Input5" />
-            <MyInput hidden = {setHidden(age, 5)} type="text" name="output5" label="Output5" />
+            <MyInput hidden = {setHidden(age, 5)} id="output5" value={OP5} onClick={()=>toggle(5)} type="text" name="output5" label="Output5" />
             <Button
               id="createHomeWork"
               color="primary"
@@ -255,6 +300,28 @@ export const HomeWork = () => {
               Tạo bài tập
             </Button>
           </Form>
+          <Modal isOpen={modal} toggle={igNore} className="modalHistory">
+            <ModalHeader toggle={igNore}>{"Output"+localStorage.getItem("Output")}</ModalHeader>
+            <ModalBody>
+              <CodeMirror
+                id="source_code"
+                value={source}
+                options={{
+                  mode: "cmake",
+                  ...codeMirrorOptions
+                }}
+                onBeforeChange={(editor, data, source) => {
+                  setSource(source);
+                }}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={()=>setOutput(localStorage.getItem('Output'))}>
+                Chấp nhận
+              </Button>
+            </ModalFooter>
+          </Modal>
+          </div>
         )}
       </Formik>
     </div>

@@ -41,6 +41,16 @@ const AppHeader = (props) => {
         <NavbarBrand href="/">Code C</NavbarBrand>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
+          <NavItem>
+              <NavLink className="item">
+                <Link to="/introduction">Hướng dẫn làm bài</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="item">
+                <Link to="/studyc">Học C</Link>
+              </NavLink>
+            </NavItem>
             <NavItem>
               <NavLink className="item">
                 <Link to="/compiler">DevC</Link>
@@ -48,12 +58,7 @@ const AppHeader = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="item">
-                <Link to="/test">Bài lập</Link>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="item">
-                <Link to="/studyc">Học C</Link>
+                <Link to="/test">Bài tập</Link>
               </NavLink>
             </NavItem>
             <NavItem>
@@ -75,8 +80,8 @@ const AppHeader = (props) => {
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
                 <NavLink className="item">
-                  <Link to="/homework">
-                    Bài tập về nhà (Set up)
+                  <Link to="/tableofstudents">
+                    Danh sách nộp bài tập về nhà
                   </Link>
                 </NavLink>
               ) : (
@@ -86,8 +91,19 @@ const AppHeader = (props) => {
             <NavItem>
               {localStorage.getItem("role") === "admin" ? (
                 <NavLink className="item">
-                  <Link to="/tableofstudents">
-                    Danh sách nộp bài tập về nhà
+                  <Link to="/tableoflecture">
+                    Quản lý bài giảng
+                  </Link>
+                </NavLink>
+              ) : (
+                <div></div>
+              )}
+            </NavItem>
+            <NavItem>
+              {localStorage.getItem("role") === "admin" ? (
+                <NavLink className="item">
+                  <Link to="/homework">
+                    Bài tập về nhà (Set up)
                   </Link>
                 </NavLink>
               ) : (

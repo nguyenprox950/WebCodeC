@@ -11,9 +11,13 @@ export const changeInform = (values) => {
             email: values.email, 
             studentID: values.studentID,         
             phoneNumber: values.phoneNumber, 
-            password: values.password
+            password: values.password,
+            role: values.role
         })
         dispatch(changeInformUser(values))
+        firebaseApp.database().ref('userInform/' + emailID).on('value', function(snapshot) {
+            localStorage.setItem('user', JSON.stringify(snapshot.val()))
+        })
         Swal.fire(
             'Chúc mừng ',
             'Bạn đã thay đổi thông tin thành công!',
@@ -39,7 +43,8 @@ export const changePassword = (values) => {
                 email: values.email, 
                 studentID: values.studentID,         
                 phoneNumber: values.phoneNumber, 
-                password: values.password2
+                password: values.password2,
+                role: values.role
             })
             firebaseApp.database().ref('userInform/' + emailID).on('value', function(snapshot) {
                 dispatch(changeInformUser(snapshot.val()))

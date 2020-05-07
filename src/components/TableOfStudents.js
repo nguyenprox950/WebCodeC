@@ -29,13 +29,13 @@ const TableOfStudents = (props) => {
 
   const [modal, setModal] = useState(false);
 
-  const toggle = (history, Name) => {
+  const show = (history, Name) => {
     if (history !== null) codeHistory = decode(history)
     if (fullName !== null) fullName = Name
       setModal(!modal);
   };
 
-  const toggle2 = () => {
+  const hidden = () => {
     setModal(!modal);
   }
   
@@ -45,11 +45,9 @@ const TableOfStudents = (props) => {
     dispatch(getDataStudents())
   },[])
 
-  // pushRow(dataStudents, setModal, modal)
-
   return (
     <div className="tableOfStudents">
-      <Table>
+      <Table hover>
         <thead>
           <tr>
             <th>#</th>
@@ -69,14 +67,14 @@ const TableOfStudents = (props) => {
                 <td>{item.studentID}</td>
                 <td>{item.time}</td>
             <td>
-                <Button color="info" onClick={()=>toggle(item.codeHistory, item.fullName)}>Lịch sử</Button>
+                <Button color="info" onClick={()=>show(item.codeHistory, item.fullName)}>Lịch sử</Button>
             </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <Modal isOpen={modal} toggle={toggle2} className="modalHistory">
-          <ModalHeader toggle={toggle2}>{fullName}</ModalHeader>
+      <Modal isOpen={modal} toggle={hidden} className="modalHistory">
+          <ModalHeader toggle={hidden}>{fullName}</ModalHeader>
           <ModalBody>
             <CodeMirror
               id="codeHistory"
@@ -88,7 +86,7 @@ const TableOfStudents = (props) => {
             />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={toggle2}>
+            <Button color="primary" onClick={hidden}>
               Cancel
             </Button>
           </ModalFooter>

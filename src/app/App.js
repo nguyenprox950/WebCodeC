@@ -22,6 +22,8 @@ import HomeWorkStudent from '../components/HomeWorkStudent'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
 import TableOfStudents from '../components/TableOfStudents'
+import TableOfLecture from '../components/TableOfLecture'
+import Test from '../components/Test'
 
 function App() {
 
@@ -35,12 +37,14 @@ function App() {
   },[])
   return (
     <Switch>
+    {/* <Route exact path="/test" component={Test} /> */}
     <Route exact path="/signin" component={SignIn} />
     <Route exact path="/signup" component={SignUp} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
       <UserAuth exact path="/tableofstudents" component={TableOfStudents} />
+      <UserAuth exact path="/tableoflecture" component={TableOfLecture} />
       <Route exact path="/mustsignin" component={Bang} />
       <Route exact path="/introduction" component={Introduction} />
       <UserAuth exact path="/compiler" component={Compiler} />

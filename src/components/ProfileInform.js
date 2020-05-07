@@ -52,6 +52,7 @@ const ProfileInform = (props) => {
             studentID: userInform.studentID,
             phoneNumber: userInform.phoneNumber,
             password: userInform.password,
+            role: userInform.role
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => dispatch(changeInform(values))}

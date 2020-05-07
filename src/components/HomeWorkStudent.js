@@ -245,6 +245,7 @@ export const HomeWorkStudent = () => {
       if (distance < 0) {
         setStop(2);
         setTime(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+        window.location.reload();
       }
     }
   }, 1000);

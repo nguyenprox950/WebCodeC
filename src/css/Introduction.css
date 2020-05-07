@@ -1,5 +1,5 @@
 #mainIntroduction {
-  padding-top: 70px;
+  padding-top: 60px;
 }
 #mainIntroduction #leftIntroduction {
   width: 800px;
@@ -8,6 +8,14 @@
   margin-left: 115px;
   float: left;
   top: 70px;
+}
+
+.exampleCode {
+  margin-top: 30px;
+  margin-left: 50px;
+  width: 800px;
+  resize: none !important;
+  overflow: visible !important;
 }
 
 #mainIntroduction #rightIntroduction {
@@ -28,13 +36,23 @@
   font-size: 18px;
   font-weight: 600;
   margin-left: 50px;
-  margin-top: 0px;
+  margin-top: 10px;
 }
 
 #leftIntroduction p {
   margin-left: 50px;
   text-align: justify;
   margin-right: 10px;
+  margin-top: 10px;
+}
+
+#leftIntroduction ul {
+  margin: 1.5em 0 1.571em 1.9em;
+  margin-top: 10px;
+}
+
+#leftIntroduction li {
+  margin-top: 10px;
 }
 
 #rightIntroduction h2 {

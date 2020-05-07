@@ -1,8 +1,8 @@
-.StudyC {
+.LectureMenu {
   padding-top: 60px;
 }
 
-.StudyC #studyCMenu {
+.LectureMenu #lectureMenu {
   float: left;
   height: 650px;
   overflow: scroll !important;

@@ -36,6 +36,7 @@ const ProfileChangePassword = (props) => {
             phoneNumber: userInform.phoneNumber,
             password: "",
             password2: "",
+            role: userInform.role
           }}
           validationSchema={validationPassword}
           onSubmit={(values) => dispatch(changePassword(values))}
