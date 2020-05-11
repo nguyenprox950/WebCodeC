@@ -205,7 +205,7 @@ export const CheckCode = (props) => {
       setCount(
         days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
       );
-  }, 100);
+  }, 1000);
 
   const clear = () => {
     setSource(cSource);
@@ -314,12 +314,14 @@ export const CheckCode = (props) => {
     <div>
     <div className="checkCode">
       <div class="checkCodeTitle">
+      <p hidden>{count}</p>
         <div className="homeWork">
           <h3>{Title}</h3>
           <p><strong>Đề bài: </strong>{Introduct}</p>
-          <p hidden>{count}</p>
         </div>
       </div>
+      </div>
+      <div className="require">
       </div>
       <div className="checkCodeApi">
         <h6>Nhập code của bạn</h6>

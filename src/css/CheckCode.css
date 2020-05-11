@@ -5,16 +5,15 @@
 .checkCode .homeWork h3 {
   text-align: center;
 }
-.checkCode .homeWork p{
+.checkCode p{
   word-wrap: normal;
   font-size: 20px;
-  float: left;
   margin-left: 44px;
-  margin-right: 150px;
+  margin-right: 44px;
   text-align: left;
 }
 .checkCodeApi {
-  padding-top: 100px;
+  padding-top: 10px;
   margin-left: 300px;
   width: 1000px;
 }
