@@ -343,7 +343,7 @@ export const HomeWorkStudent = (props) => {
               <h3>{Title}</h3>
             </div>
             <div className="test">
-              <p><strong>Đề bài:</strong>{Introduct}</p>
+              <p><strong>Đề bài: </strong>{Introduct}</p>
             </div>
           </div>
         ) : (

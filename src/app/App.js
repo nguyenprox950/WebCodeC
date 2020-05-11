@@ -56,9 +56,9 @@ function App() {
           <UserAuth path="/profile/changepassword" component={ProfileChangePassword} />
         </Switch>
       </ProfileLayout>
-      <TestLayout path="/test">
+      <TestLayout path="/checkcode">
         <Switch>
-            <UserAuth path="/test/checkcode" component={CheckCode} />
+            <UserAuth path="/checkcode/test:ID" component={CheckCode} />
           </Switch>
       </TestLayout>
       <LectureLayout path="/studyc">

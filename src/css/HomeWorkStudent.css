@@ -15,6 +15,7 @@
 }
 
 .homeWorkStudent p {
+  word-wrap: normal;
   font-weight: normal;
   font-size: 20px;
   float: left;
@@ -32,16 +33,19 @@
 #checkHomeWork {
   margin-top: 10px;
   margin-left: 190px;
+  margin-bottom: 100px;
 }
 
 #historyHomeWork {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 100px;
 }
 
 #clearHomeWork {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 100px;
 }
 
 .modalHistory {

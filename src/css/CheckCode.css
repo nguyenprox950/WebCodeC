@@ -6,11 +6,11 @@
   text-align: center;
 }
 .checkCode .homeWork p{
-  word-wrap: normal ;
+  word-wrap: normal;
   font-size: 20px;
   float: left;
   margin-left: 44px;
-  margin-right: 44px;
+  margin-right: 150px;
   text-align: left;
 }
 .checkCodeApi {
@@ -22,16 +22,19 @@
 #check {
   margin-top: 10px;
   margin-left: 44px;
+  margin-bottom: 100px;
 }
 
 #history {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 100px;
 }
 
 #clear {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 100px;
 }
 
 .modalHistory {

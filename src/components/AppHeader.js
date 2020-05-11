@@ -58,7 +58,7 @@ const AppHeader = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="item">
-                <Link to="/test">Bài tập</Link>
+                <Link to="/checkcode">Bài tập</Link>
               </NavLink>
             </NavItem>
             <NavItem>
