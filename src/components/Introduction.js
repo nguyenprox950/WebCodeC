@@ -50,15 +50,16 @@ const Introduction = () => {
             </ul>
             <h5><span style={{color: "#ff0000"}}>Lưu ý quan trọng:</span></h5>
             <ul>
+              <li>Trong code của bạn <strong><span style={{color: "#ff0000"}}>chỉ dùng</span></strong> <strong><span style={{color: "blue"}}>int main()</span></strong> cho hàm chính.</li>
               <li>Trong code của bạn chỉ đọc và xuất ra kết quả mà đề bài yêu cầu, <strong>không thừa</strong>, <strong>không thiếu</strong>. Ví dụ bài tổng 2 số như trên, bạn chỉ xuất ra kết quả, không xuất bất kỳ cái gì khác như: printf(“Nhap a = “); như vậy sẽ thừa.</li>
               <li>Trong code của bạn <strong><span style={{color: "#ff0000"}}>không dùng</span></strong> các lệnh để dừng màn hình hoặc các lệnh hệ thống đặc biệt như system(“pause”), getch().</li>
               <li>Trong code <strong><span style={{color: "#ff0000"}}>không dùng</span></strong> thư viện conio.h.</li>
               <li>Với các bài về chuỗi ký tự, các bạn <strong><span style={{color: "#ff0000"}}>không dùng fflush(stdin)</span></strong> để xoá bộ đệm, nếu phải xoá bộ đệm hãy dùng fgets 2 lần để nhập xâu.</li>
             </ul>
           </div>
-          <div id="rightIntroduction">
+          {/* <div id="rightIntroduction">
             <h2>Quảng cáo</h2>
-          </div>
+          </div> */}
         </div>
       </div>
     );

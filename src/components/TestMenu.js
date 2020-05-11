@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "../css/TestMenu.css";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { firebaseApp } from "../components/Firebase";
 
-const testMenu = () => {
+const TestMenu = (props) => {
+
   const handleClick = (e) => {
     localStorage.setItem("testKey", e.key);
   };
@@ -107,4 +108,4 @@ const testMenu = () => {
   );
 };
 
-export default testMenu;
+export default TestMenu;

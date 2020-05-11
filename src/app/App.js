@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import '../app/App.css';
 import { Route, Switch } from 'react-router-dom'
 import SignUp from '../components/SignUp'
@@ -23,7 +23,6 @@ import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
 import TableOfStudents from '../components/TableOfStudents'
 import TableOfLecture from '../components/TableOfLecture'
-import Test from '../components/Test'
 
 function App() {
 
@@ -37,24 +36,23 @@ function App() {
   },[])
   return (
     <Switch>
-    {/* <Route exact path="/test" component={Test} /> */}
-    <Route exact path="/signin" component={SignIn} />
-    <Route exact path="/signup" component={SignUp} />
+    <Route path="/signin" component={SignIn} />
+    <Route path="/signup" component={SignUp} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
-      <UserAuth exact path="/tableofstudents" component={TableOfStudents} />
-      <UserAuth exact path="/tableoflecture" component={TableOfLecture} />
-      <Route exact path="/mustsignin" component={Bang} />
-      <Route exact path="/introduction" component={Introduction} />
-      <UserAuth exact path="/compiler" component={Compiler} />
-      <UserAuth exact path="/translate" component={Translate} />
-      <UserAuth exact path="/homework" component={HomeWork} />
-      <Route exact path="/mustsignin" component={Bang} />
-      <UserAuth exact path="/homeworkstudent" component={HomeWorkStudent} />
+      <UserAuth path="/tableofstudents" component={TableOfStudents} />
+      <UserAuth path="/tableoflecture" component={TableOfLecture} />
+      <Route path="/mustsignin" component={Bang} />
+      <Route path="/introduction" component={Introduction} />
+      <UserAuth path="/compiler" component={Compiler} />
+      <UserAuth path="/translate" component={Translate} />
+      <UserAuth path="/homework" component={HomeWork} />
+      <Route path="/mustsignin" component={Bang} />
+      <UserAuth path="/homeworkstudent" component={HomeWorkStudent} />
       <ProfileLayout path="/profile">
         <Switch>
-          <UserAuth path="/profile/inform" component={ProfileInform} />
+          <UserAuth path="/profile/:ID" component={ProfileInform} />
           <UserAuth path="/profile/changepassword" component={ProfileChangePassword} />
         </Switch>
       </ProfileLayout>
@@ -64,7 +62,7 @@ function App() {
           </Switch>
       </TestLayout>
       <LectureLayout path="/studyc">
-      <UserAuth exact path="/studyc/lecture" component={Lecture} />
+      <UserAuth path="/studyc/lecture" component={Lecture} />
       </LectureLayout>
     </Switch>
     </UserLayout>

@@ -284,17 +284,14 @@ export const CheckCode = (props) => {
     Right = 0;
   };
   return (
+    <div>
     <div className="checkCode">
       <div class="checkCodeTitle">
         <div className="homeWork">
           <h3>{Title}</h3>
+          <p><strong>Đề bài: </strong>{Introduct}</p>
         </div>
-        <div className="require">
-          <p>Đề bài:</p>
-        </div>
-        <div className="test">
-          <p>{Introduct}</p>
-        </div>
+      </div>
       </div>
       <div className="checkCodeApi">
         <h6>Nhập code của bạn</h6>

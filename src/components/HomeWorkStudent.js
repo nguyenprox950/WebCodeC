@@ -189,7 +189,7 @@ const getHistory = () => {
     });
 };
 
-export const HomeWorkStudent = () => {
+export const HomeWorkStudent = (props) => {
   getHistory();
 
   getInform();
@@ -342,11 +342,8 @@ export const HomeWorkStudent = () => {
             <div className="title">
               <h3>{Title}</h3>
             </div>
-            <div className="require">
-              <p>Đề bài:</p>
-            </div>
             <div className="test">
-              <p>{Introduct}</p>
+              <p><strong>Đề bài:</strong>{Introduct}</p>
             </div>
           </div>
         ) : (

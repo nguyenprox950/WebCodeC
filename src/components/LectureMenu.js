@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "../css/LectureMenu.css";
 import { Menu } from "antd";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { firebaseApp } from "./Firebase";
 
 const setShow = (number) => {
+  
   var isShow;
   firebaseApp
   .database()
@@ -27,6 +28,7 @@ const setShow = (number) => {
 }
 
 const LectureMenu = () => {
+
   const handleClick = (e) => {
     if (localStorage.getItem("emailID") !== null) {
     localStorage.setItem("Lecture", e.key);

@@ -5,7 +5,8 @@
   font-family: "Open Sans", sans-serif;
 }
 body {
-  background-color: #ededee;
+  background-color: #fff;
+  margin-bottom: 100px;
 }
 
 .toSignIn {
