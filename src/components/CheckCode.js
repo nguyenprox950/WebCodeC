@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "../components/Firebase";
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -52,6 +53,8 @@ var codeHistory;
 var time;
 
 var max;
+
+var Input1, Output1;
 
 const decode = (bytes) => {
   var escaped = escape(atob(bytes || ""));
@@ -132,6 +135,28 @@ const getTestInform = (Number, Step) => {
       }
     });
 };
+
+const getExample = (Number) => {
+  firebaseApp
+  .database()
+  .ref("Test/Test" + Number)
+  .child("Expected_Output/Expect1/Input")
+  .on("value", function (snapshot) {
+    if (snapshot.exists) {
+      Input1 = snapshot.val();
+    }
+  });
+  firebaseApp
+    .database()
+    .ref("Test/Test" + Number)
+    .child("Expected_Output/Expect1/Output")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Output1 = decode(snapshot.val());
+      }
+    console.log("Input1="+Input1+", Output1"+ Output1)
+  });
+}
 
 const getHistory = () => {
   firebaseApp
@@ -229,6 +254,7 @@ export const CheckCode = (props) => {
   testNumber = localStorage.getItem("testKey");
   getInform(testNumber);
   getTestInform(testNumber, 1);
+  getExample(testNumber)
 
   const getCode = (token, step) => {
     axios
@@ -311,17 +337,18 @@ export const CheckCode = (props) => {
     Right = 0;
   };
   return (
-    <div>
-    <div className="checkCode">
+    <div className="Checkcode">
       <div class="checkCodeTitle">
       <p hidden>{count}</p>
         <div className="homeWork">
           <h3>{Title}</h3>
           <p><strong>Đề bài: </strong>{Introduct}</p>
+          <p><strong>Input: </strong>{Input1}</p>
+          <p><strong>Output: </strong></p>
         </div>
       </div>
-      </div>
-      <div className="require">
+      <div className ="Output1">  
+         <textarea rows="5" value={Output1}/>
       </div>
       <div className="checkCodeApi">
         <h6>Nhập code của bạn</h6>

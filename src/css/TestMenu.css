@@ -3,8 +3,10 @@
 }
 
 .Test #testMenu {
+  position: fixed;
   float: left;
-  height: 650px;
+  top: 60px;
+  bottom: 0;
   overflow: scroll !important;
   display: block;
 }

@@ -18,7 +18,7 @@ var historyTime;
 
 var date;
 
-var Title, Introduct;
+var Title, Introduct, Input1, Output1;
 
 var Right = 0,
   Wrong = 0,
@@ -189,7 +189,30 @@ const getHistory = () => {
     });
 };
 
+const getExample = () => {
+  firebaseApp
+    .database()
+    .ref("homeWork/Test")
+    .child("Expected_Output/Expect1/Input")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Input1 = snapshot.val();
+      }
+    });
+  firebaseApp
+    .database()
+    .ref("homeWork/Test")
+    .child("Expected_Output/Expect1/Output")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Output1= decode(snapshot.val());
+      }
+    });
+};
+
 export const HomeWorkStudent = (props) => {
+  getExample()
+
   getHistory();
 
   getInform();
@@ -341,9 +364,12 @@ export const HomeWorkStudent = (props) => {
           <div className="checkCodeTitle">
             <div className="title">
               <h3>{Title}</h3>
-            </div>
-            <div className="test">
               <p><strong>Đề bài: </strong>{Introduct}</p>
+              <p><strong>Input: </strong>{Input1}</p>
+              <p><strong>Output: </strong></p>
+            </div>
+            <div className ="Output1">  
+              <textarea rows="5" value={Output1}/>
             </div>
           </div>
         ) : (

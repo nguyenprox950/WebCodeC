@@ -1,26 +1,36 @@
-.checkCode .homeWork {
-  margin-left: 256px;
-}
-
-.checkCode .homeWork h3 {
+.checkCodeTitle .homeWork h3 {
+  margin-left: 300px;
   text-align: center;
 }
-.checkCode p{
+
+.Checkcode .Output1 {
+  margin-left: 300px;
+  margin-right : 44px;
+}
+
+.Checkcode .Output1 textarea{
+  background-color: grey;
+  color: white ;
+  width: 100%;
+  font-size: 20px;
+}
+
+.checkCodeTitle p{
   word-wrap: normal;
   font-size: 20px;
-  margin-left: 44px;
+  margin-left: 300px;
   margin-right: 44px;
   text-align: left;
 }
 .checkCodeApi {
   padding-top: 10px;
   margin-left: 300px;
-  width: 1000px;
+  margin-right: 44px;
 }
 
 #check {
   margin-top: 10px;
-  margin-left: 44px;
+  margin-left: 300px;
   margin-bottom: 100px;
 }
 

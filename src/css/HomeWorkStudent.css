@@ -14,19 +14,29 @@
   text-align: center;
 }
 
+.homeWorkStudent .Output1 textarea{
+  background-color: grey;
+  color: white ;
+  width: 100%;
+  font-size: 20px;
+}
+
+.homeWorkStudent .Output1{
+  margin-left: 190px;
+  margin-right: 190px;
+}
+
 .homeWorkStudent p {
-  word-wrap: normal;
   font-weight: normal;
   font-size: 20px;
-  float: left;
   text-align: left;
   margin-left: 190px;
   margin-right: 190px;
 }
 
 .checkCodeHomeWork {
-  padding-top: 100px;
-  width: 1100px;
+  padding-top: 10px;
+  margin-right: 190px;
   margin-left: 190px;
 }
 
