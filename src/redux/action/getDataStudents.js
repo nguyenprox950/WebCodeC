@@ -1,43 +1,44 @@
 import {firebaseApp} from '../../components/Firebase'
 import { GET_DATASTUDENTS_ARRAY } from '../constants/userConstants'
 
-export const getDataStudents = () => {
+export const getDataStudents = (number) => {
     return dispatch => {
-        firebaseApp.database().ref('homeWork/CodeHistory(student)').orderByChild("studentID").once("value").then(function(snapshot) {
-            let newArray = [], number = 0, color
+        firebaseApp.database().ref('Homework/Test/Homework'+number+"/HistoryCode").orderByChild("studentID").once("value").then(function(snapshot) {
+            let newArray = [], Number = 0, Color
             snapshot.forEach(function(childSnapshot) {
-                const id = childSnapshot.key
-                const time = childSnapshot.val().time
-                const fullName = childSnapshot.val().fullName
-                const studentID = childSnapshot.val().studentID
-                const right = childSnapshot.val().Right.isRight
-                const codeHistory = childSnapshot.val().history
-                number = number + 1;
-                console.log(right)
-                if(right === true) {
-                    color = 'green'
-                } else if (right === false){
-                    color = 'red'
+                const ID = childSnapshot.key
+                const Time = childSnapshot.val().Time
+                const FullName = childSnapshot.val().FullName
+                const StudentID = childSnapshot.val().StudentID
+                const Right = childSnapshot.val().isRight
+                const CodeHistory = childSnapshot.val().History
+                const Mark = childSnapshot.val().Mark
+                Number = Number + 1;
+                if(Right === true) {
+                    Color = 'green'
+                } else if (Right === false){
+                    Color = 'red'
                 } else {
-                    color = null
+                    Color = null
                 }
                 newArray.push({
-                    id,
-                    number,
-                    color,
-                    time,
-                    fullName,
-                    studentID,
-                    right,
-                    codeHistory
+                    ID,
+                    Number,
+                    Color,
+                    Time,
+                    FullName,
+                    StudentID,
+                    Right,
+                    CodeHistory,
+                    Mark
                 })
             })
-            dispatch(getDataAction(newArray))
+            dispatch(getDataStudentsAction(newArray))
         })
     }
 }
 
-export const getDataAction = (data) => {
+export const getDataStudentsAction = (data) => {
     return {
         type: GET_DATASTUDENTS_ARRAY,
         data: data

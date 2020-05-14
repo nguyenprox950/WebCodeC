@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
-import { firebaseApp } from "../components/Firebase";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { firebaseApp } from "./Firebase";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -52,7 +51,7 @@ var codeHistory;
 
 var time;
 
-var max;
+var Mark;
 
 var Input1, Output1;
 
@@ -65,10 +64,42 @@ const decode = (bytes) => {
   }
 };
 
+const getDate = (number) => {
+    var day
+    firebaseApp
+      .database()
+      .ref("Homework/Test/Homework"+number+"/Deadline")
+      .on("value", function (snapshot) {
+        if (snapshot.exists) {
+            day = snapshot.val();
+        }
+      });
+    return day;
+  };
+  
+  const setStop = (stop, number) => {
+    firebaseApp.database().ref("Homework/Test/Homework"+number).update({
+      Stop: stop,
+    });
+  };
+
+  const getStop = (number) => {
+    var stop
+    firebaseApp
+      .database()
+      .ref("Homework/Test/Homework"+number+"/Stop")
+      .on("value", function (snapshot) {
+        if (snapshot.exists) {
+          stop = snapshot.val();
+        }
+      });
+    return stop;
+  };
+
 const getInform = (Number) => {
   firebaseApp
     .database()
-    .ref("Test/Test" + Number + "/Title")
+    .ref("Homework/Test/Homework" + Number + "/Title")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
         Title = snapshot.val();
@@ -76,7 +107,7 @@ const getInform = (Number) => {
     });
   firebaseApp
     .database()
-    .ref("Test/Test" + Number + "/Introduct")
+    .ref("Homework/Test/Homework" + Number + "/Introduct")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
         Introduct = snapshot.val();
@@ -84,13 +115,12 @@ const getInform = (Number) => {
     });
   firebaseApp
     .database()
-    .ref("Test/Test" + Number + "/Step_test")
+    .ref("Homework/Test/Homework" + Number + "/Step_Test")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
         Step = parseInt(snapshot.val());
       }
     });
-  max = Step;
 };
 
 const saveCode = (code) => {
@@ -100,24 +130,29 @@ const saveCode = (code) => {
   var time =
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + " " + time;
+  var userInform = JSON.parse(localStorage.getItem("user"));
   firebaseApp
     .database()
     .ref(
-      "historyCode/" +
-        localStorage.getItem("emailID") +
-        "/Test" +
-        localStorage.getItem("testKey")
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") + 
+      "/HistoryCode/"+
+      localStorage.getItem("emailID") 
+
     )
     .set({
-      history: code,
-      time: dateTime,
+      History: code,
+      Time: dateTime,
+      FullName: userInform.fullName,
+      StudentID: userInform.studentID,
+      Mark: "Chưa chấm điểm"
     });
 };
 
 const getTestInform = (Number, Step) => {
   firebaseApp
     .database()
-    .ref("Test/Test" + Number)
+    .ref("Homework/Test/Homework" + Number)
     .child("Expected_Output/Expect" + Step + "/Input")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
@@ -126,7 +161,7 @@ const getTestInform = (Number, Step) => {
     });
   firebaseApp
     .database()
-    .ref("Test/Test" + Number)
+    .ref("Homework/Test/Homework" + Number)
     .child("Expected_Output/Expect" + Step + "/Output")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
@@ -138,7 +173,7 @@ const getTestInform = (Number, Step) => {
 const getExample = (Number) => {
   firebaseApp
   .database()
-  .ref("Test/Test" + Number)
+  .ref("Homework/Test/Homework" + Number)
   .child("Expected_Output/Expect1/Input")
   .on("value", function (snapshot) {
     if (snapshot.exists) {
@@ -147,7 +182,7 @@ const getExample = (Number) => {
   });
   firebaseApp
     .database()
-    .ref("Test/Test" + Number)
+    .ref("Homework/Test/Homework" + Number)
     .child("Expected_Output/Expect1/Output")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
@@ -156,15 +191,32 @@ const getExample = (Number) => {
   });
 }
 
+const getMark = () => {
+  firebaseApp
+    .database()
+    .ref(
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") +
+      "/HistoryCode/"+
+        localStorage.getItem("emailID") +
+        "/Mark"
+    )
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Mark = snapshot.val();
+      }
+    });
+}
+
 const getHistory = () => {
   firebaseApp
     .database()
     .ref(
-      "historyCode/" +
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") +
+      "/HistoryCode/"+
         localStorage.getItem("emailID") +
-        "/Test" +
-        localStorage.getItem("testKey") +
-        "/history"
+        "/History"
     )
     .on("value", function (snapshot) {
       if (snapshot.exists) {
@@ -174,11 +226,11 @@ const getHistory = () => {
   firebaseApp
     .database()
     .ref(
-      "historyCode/" +
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") +
+      "/HistoryCode/"+
         localStorage.getItem("emailID") +
-        "/Test" +
-        localStorage.getItem("testKey") +
-        "/time"
+        "/Time"
     )
     .on("value", function (snapshot) {
       if (snapshot.exists) {
@@ -191,25 +243,28 @@ const setRight = (Right) => {
   firebaseApp
     .database()
     .ref(
-      "historyCode/" +
-        localStorage.getItem("emailID") +
-        "/Test" +
-        localStorage.getItem("testKey") +
-        "/Right"
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") +
+      "/HistoryCode/"+
+        localStorage.getItem("emailID")
     )
-    .set({
+    .update({
       isRight: Right,
     });
 };
 
-export const CheckCode = (props) => {
+export const HomeworkStudents = (props) => {
+
+    testNumber = localStorage.getItem("homeworkKey");
+
 
   const [count, setCount] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
   );
 
   var x = setInterval(function () {
-      var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+    if (getStop(testNumber) === 1) {
+      var countDownDate = getDate(testNumber);
       // Get today's date and time
       var now = new Date().getTime();
 
@@ -228,6 +283,42 @@ export const CheckCode = (props) => {
       setCount(
         days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
       );
+      // console.log(time)
+
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        setStop(2, testNumber);
+        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+      }
+    }
+  }, 1000);
+
+  const [rend, setRend] = useState(
+    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
+  );
+
+  var y = setInterval(function () {
+      var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+      // Get today's date and time
+      var now = new Date().getTime();
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element
+      setRend(
+        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+      );
+      // console.log(time)
+
+      // If the count down is finished, write some text
   }, 1000);
 
   const clear = () => {
@@ -248,8 +339,7 @@ export const CheckCode = (props) => {
     setModal(!modal);
   };
   getHistory();
-
-  testNumber = localStorage.getItem("testKey");
+  getMark();
   getInform(testNumber);
   getTestInform(testNumber, 1);
   getExample(testNumber)
@@ -262,13 +352,13 @@ export const CheckCode = (props) => {
         async: true,
       })
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         if (result.data.status.id <= 2) {
           // document.getElementById('output').value = result.data.status.description
           setTimeout(getCode.bind(null, result.data.token, step));
         } else if (result.data.status.id === 3) {
           Right = Right + 1;
-          console.log(step + " " + Step + " " + Right);
+          // console.log(step + " " + Step + " " + Right);
           if (Right === Step) {
             setRight(true);
             document.getElementById("output").value = "Chính xác";
@@ -306,7 +396,7 @@ export const CheckCode = (props) => {
         data: dataCode,
       })
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         getCode(result.data.token, step);
       })
       .catch((error) => {
@@ -321,24 +411,27 @@ export const CheckCode = (props) => {
     // console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
     for (var i = 1; i <= Step; i++) {
       getTestInform(testNumber, i);
-      console.log(testNumber + " " + i);
-      console.log(Input + " Output:" + Output);
+      // console.log(testNumber + " " + i);
+      // console.log(Input + " Output:" + Output);
       var dataSubmit = {
         source_code: code,
         language_id: 54,
         stdin: btoa(unescape(encodeURIComponent(Input || ""))),
         expected_output: Output,
       };
-      console.log(dataSubmit);
+      // console.log(dataSubmit);
       sendCode(dataSubmit, i);
     }
     Right = 0;
   };
   return (
+    <div>
+    <p hidden>{rend}</p>
+    {getStop(testNumber) === 1? (
     <div className="Checkcode">
       <div class="checkCodeTitle">
-      <p hidden>{count}</p>
         <div className="homeWork">
+        <h3 style={{ color: "red", textAlign:"center" }}>{count}</h3>
           <h3>{Title}</h3>
           <p><strong>Đề bài: </strong>{Introduct}</p>
           <p><strong>Input: </strong>{Input1}</p>
@@ -401,7 +494,16 @@ export const CheckCode = (props) => {
         </Modal>
       </div>
     </div>
+     ) : (
+        <div class="checkCodeTitle">
+        <div className="homeWork">
+            <h3 style={{marginTop: "100px"}}>Thời gian làm bài đã hết</h3>
+            <h3 style={{marginTop: "50px"}}>Điểm: {Mark}</h3>
+        </div>
+        </div>
+      )} 
+    </div>
   );
 };
 
-export default CheckCode;
+export default HomeworkStudents;

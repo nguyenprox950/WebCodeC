@@ -360,7 +360,7 @@ export const HomeWorkStudent = (props) => {
     <div>
       <div className="homeWorkStudent">
         <h3 style={{ color: "red" }}>{time}</h3>
-        {getStop() === 1 ? (
+        {getStop() === 1? (
           <div className="checkCodeTitle">
             <div className="title">
               <h3>{Title}</h3>

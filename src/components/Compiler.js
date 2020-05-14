@@ -79,7 +79,6 @@ const Compiler = (props) => {
   };
   const handelSubmit = () => {
     data.source_code = source;
-    console.log(source);
     if (data.source_code === "") {
       Swal.fire({
         icon: "error",
@@ -89,10 +88,7 @@ const Compiler = (props) => {
     } else {
       data.stdin = document.getElementById("stdin").value;
       var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
-      console.log(data.stdin);
       var input = btoa(unescape(encodeURIComponent(data.stdin || "")));
-      console.log("ngôn ngữ:" + data.language_id + "\n" + "souce_code:" + code);
-
       var dataSubmit = {
         source_code: code,
         language_id: 54,

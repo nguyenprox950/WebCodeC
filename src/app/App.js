@@ -10,6 +10,7 @@ import { signInAction } from '../redux/action/userAction'
 import UserLayout from '../layout/UserLayout'
 import LectureLayout from '../layout/LectureLayout'
 import ProfileLayout from '../layout/ProfileLayout'
+import HomeworkLayout from '../layout/HomeworkLayout'
 import ProfileInform from '../components/ProfileInform'
 import ProfileChangePassword from '../components/ProfileChangePassword'
 import Compiler from '../components/Compiler'
@@ -18,11 +19,14 @@ import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
 import Lecture from '../components/Lecture'
 import HomeWork from '../components/HomeWork'
-import HomeWorkStudent from '../components/HomeWorkStudent'
+import HomeworkStudents from '../components/HomeworkStudents'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
+// import TableOfStudents from '../components/TableOfStudents(dontuse)'
 import TableOfStudents from '../components/TableOfStudents'
 import TableOfLecture from '../components/TableOfLecture'
+import HomeworkTeacher from '../components/HomeworkTeacher'
+import HomeworkStudentsTest from '../components/HomeworkStudents'
 
 function App() {
 
@@ -41,15 +45,16 @@ function App() {
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
-      <UserAuth path="/tableofstudents" component={TableOfStudents} />
+      <Route path="/homeworkteacher" component={HomeworkTeacher} />
+      {/* <UserAuth path="/tableofstudents" component={TableOfStudents} /> */}
       <UserAuth path="/tableoflecture" component={TableOfLecture} />
       <Route path="/mustsignin" component={Bang} />
       <Route path="/introduction" component={Introduction} />
       <UserAuth path="/compiler" component={Compiler} />
       <UserAuth path="/translate" component={Translate} />
-      <UserAuth path="/homework" component={HomeWork} />
+      {/* <UserAuth path="/homework" component={HomeWork} /> */}
       <Route path="/mustsignin" component={Bang} />
-      <UserAuth path="/homeworkstudent" component={HomeWorkStudent} />
+      {/* <UserAuth path="/homeworkstudent" component={HomeWorkStudent} /> */}
       <ProfileLayout path="/profile">
         <Switch>
           <UserAuth path="/profile/:ID" component={ProfileInform} />
@@ -59,8 +64,12 @@ function App() {
       <TestLayout path="/checkcode">
         <Switch>
             <UserAuth path="/checkcode/test:ID" component={CheckCode} />
-          </Switch>
+        </Switch>
       </TestLayout>
+      <HomeworkLayout path="/homework">
+           <UserAuth path="/homework/test:ID" component={HomeworkStudents} />
+           <UserAuth path="/homework/table:ID" component={TableOfStudents} />
+      </HomeworkLayout>
       <LectureLayout path="/studyc">
       <UserAuth path="/studyc/lecture" component={Lecture} />
       </LectureLayout>

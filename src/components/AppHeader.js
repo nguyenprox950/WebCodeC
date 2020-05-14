@@ -63,7 +63,7 @@ const AppHeader = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="item">
-                <Link to="/homeworkstudent">Bài tập về nhà (Student)</Link>
+                <Link to="/homework">Bài tập về nhà</Link>
               </NavLink>
             </NavItem>
           </Nav>
@@ -82,7 +82,7 @@ const AppHeader = (props) => {
                 {localStorage.getItem("role") === "admin" ? (
                   <DropdownItem>
                     <NavLink className="item">
-                      <Link to="/homework">Bài tập về nhà (Set up)</Link>
+                      <Link to="/homeworkteacher">Bài tập về nhà (Set up)</Link>
                     </NavLink>
                   </DropdownItem>
                 ) : null}

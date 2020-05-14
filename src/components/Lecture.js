@@ -1,6 +1,5 @@
 import React from "react";
 import "../css/Lecture.css";
-var PDF;
 
 export const Lecture = () => {
   const setPDF = () => {
