@@ -15,9 +15,9 @@ const store = createStore(rootReducer, composed)
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <HashRouter>
             <App/>
-        </Router>
+        </HashRouter>
     </Provider>,
     document.getElementById('root')
 
