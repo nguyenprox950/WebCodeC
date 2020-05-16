@@ -176,7 +176,7 @@ export const HomeworkTeacher = (props) => {
       firebaseApp.database().ref("Homework").set({
         NumberHW: 0
       });
-      firebaseApp.database().ref("Homework/HistoryCode").remove();
+      firebaseApp.database().ref("Homework/Test").remove();
       }
     })
 

@@ -83,14 +83,14 @@ const HomeworkMenu = (props) => {
                   style={{ color: setColor(item.Number) }}
                   to={`/homework/table${item.Number}`}
                 >
-                  {item.Number}. {item.Title}
+                  {item.Line}. {item.Title}
                 </Link>
               ) : (
                 <Link
                   style={{ color: setColor(item.Number) }}
                   to={`/homework/test${item.Number}`}
                 >
-                  {item.Number}. {item.Title}
+                  {item.Line}. {item.Title}
                 </Link>
               )}
             </Menu.Item>

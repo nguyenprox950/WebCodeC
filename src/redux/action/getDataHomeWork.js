@@ -4,15 +4,17 @@ import { GET_DATAHOMEWORK_ARRAY, GET_HOMEWORKINFORM } from '../constants/userCon
 export const getDataHomework = () => {
     return dispatch => {
         firebaseApp.database().ref('Homework/Test').orderByChild("Number").once("value").then(function(snapshot) {
-            let newArray = []
+            let newArray = [], Line = 0
             snapshot.forEach(function(childSnapshot) {
                 const ID = childSnapshot.key
                 const Title = childSnapshot.val().Title
                 const Number = childSnapshot.val().Number
+                Line = Line + 1
                 newArray.push({
                     ID,
                     Title,
-                    Number
+                    Number,
+                    Line
                 })
             })
             dispatch(getDataHomeworkAction(newArray))
@@ -30,7 +32,7 @@ export const getDataHomeworkAction = (data) => {
 export const getHomeworkInform = () => {
     return dispatch => {
         firebaseApp.database().ref('Homework/Test').orderByChild("Number").once("value").then(function(snapshot) {
-            let newArray = [], Color
+            let newArray = [], Color, Line = 0
             snapshot.forEach(function(childSnapshot) {
                 const ID = childSnapshot.key
                 const Title = childSnapshot.val().Title
@@ -39,6 +41,7 @@ export const getHomeworkInform = () => {
                 const NumberOfStudents = childSnapshot.child("HistoryCode").numChildren()
                 const Number = childSnapshot.val().Number
                 const Stop = childSnapshot.val().Stop
+                Line = Line + 1
                 if(Stop === 1) Color = "green"
                 else if (Stop === 2) Color = "red"
                 newArray.push({
@@ -48,7 +51,8 @@ export const getHomeworkInform = () => {
                     Deadline_Day,
                     NumberOfStudents,
                     Number,
-                    Color
+                    Color,
+                    Line
                 })
             })
             dispatch(getHomeworkInformAction(newArray))
