@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/HomeWork.css";
+import "../css/Homework.css";
 import Swal from "sweetalert2";
 import { Formik, Form } from "formik";
 import { MyInput } from "./MyInput";
@@ -52,7 +52,7 @@ const setHomeWork = (values) => {
     Title: values.title,
     Introduct: values.introduct,
     Step_Test: step,
-    DeadLine_Day: values.deadLine,
+    Deadline_Day: values.deadLine,
     Deadline: new Date(values.deadLine).getTime(),
     Number: numberHW,
     Stop: 1
@@ -158,10 +158,28 @@ export const HomeworkTeacher = (props) => {
   };
 
   const clear = () => {
-    firebaseApp.database().ref("Homework").set({
+    Swal.fire({
+      title: 'Bạn có chắc?',
+      text: "Muốn xoá toàn bộ bài tập về nhà đã tạo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý xoá!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Đã xoá!',
+          'Toàn bộ bài tập về nhà đã được xoá.',
+          'success'
+        )
+      firebaseApp.database().ref("Homework").set({
         NumberHW: 0
-    });
-    firebaseApp.database().ref("Homework/HistoryCode").remove();
+      });
+      firebaseApp.database().ref("Homework/HistoryCode").remove();
+      }
+    })
+
   } 
 
   const handleSuccess = (values) => {
@@ -249,7 +267,7 @@ export const HomeworkTeacher = (props) => {
             </Button>
           </Form>
           <Button
-              id="clear"
+              id="clearHomework"
               color="danger"
               type="submit"
               name="clearHomeWork"

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "../components/Firebase";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -137,14 +137,14 @@ const getTestInform = (Number, Step) => {
 
 const getExample = (Number) => {
   firebaseApp
-  .database()
-  .ref("Test/Test" + Number)
-  .child("Expected_Output/Expect1/Input")
-  .on("value", function (snapshot) {
-    if (snapshot.exists) {
-      Input1 = snapshot.val();
-    }
-  });
+    .database()
+    .ref("Test/Test" + Number)
+    .child("Expected_Output/Expect1/Input")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Input1 = snapshot.val();
+      }
+    });
   firebaseApp
     .database()
     .ref("Test/Test" + Number)
@@ -153,8 +153,8 @@ const getExample = (Number) => {
       if (snapshot.exists) {
         Output1 = decode(snapshot.val());
       }
-  });
-}
+    });
+};
 
 const getHistory = () => {
   firebaseApp
@@ -203,31 +203,30 @@ const setRight = (Right) => {
 };
 
 export const CheckCode = (props) => {
-
   const [count, setCount] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
   );
 
   var x = setInterval(function () {
-      var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-      // Get today's date and time
-      var now = new Date().getTime();
+    var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+    // Get today's date and time
+    var now = new Date().getTime();
 
-      // Find the distance between now and the count down date
-      var distance = countDownDate - now;
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
 
-      // Time calculations for days, hours, minutes and seconds
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display the result in the element
-      setCount(
-        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-      );
+    // Display the result in the element
+    setCount(
+      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+    );
   }, 1000);
 
   const clear = () => {
@@ -252,7 +251,7 @@ export const CheckCode = (props) => {
   testNumber = localStorage.getItem("testKey");
   getInform(testNumber);
   getTestInform(testNumber, 1);
-  getExample(testNumber)
+  getExample(testNumber);
 
   const getCode = (token, step) => {
     axios
@@ -337,16 +336,24 @@ export const CheckCode = (props) => {
   return (
     <div className="Checkcode">
       <div class="checkCodeTitle">
-      <p hidden>{count}</p>
+        <p hidden>{count}</p>
         <div className="homeWork">
           <h3>{Title}</h3>
-          <p><strong>Đề bài: </strong>{Introduct}</p>
-          <p><strong>Input: </strong>{Input1}</p>
-          <p><strong>Output: </strong></p>
+          <p>
+            <strong>Đề bài: </strong>
+            {Introduct}
+          </p>
+          <p>
+            <strong>Input: </strong>
+            {Input1}
+          </p>
+          <p>
+            <strong>Output: </strong>
+          </p>
         </div>
       </div>
-      <div className ="Output1">  
-         <textarea rows="5" value={Output1}/>
+      <div className="Output1">
+        <textarea rows="5" value={Output1} />
       </div>
       <div className="checkCodeApi">
         <h6>Nhập code của bạn</h6>

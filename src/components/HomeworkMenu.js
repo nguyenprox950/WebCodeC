@@ -4,15 +4,15 @@ import "../css/TestMenu.css";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { firebaseApp } from "./Firebase";
-import { getDataHomeWork } from "../redux/action/getDataHomeWork";
+import { getDataHomework } from "../redux/action/getDataHomework";
 import { useDispatch, useSelector } from "react-redux";
-import { getDataStudents } from '../redux/action/getDataStudents'
+import { getDataStudents } from "../redux/action/getDataStudents";
 
 const HomeworkMenu = (props) => {
   const dispatch = useDispatch();
   const { dataHomework } = useSelector((state) => state.userReducer);
   useEffect(() => {
-    dispatch(getDataHomeWork());
+    dispatch(getDataHomework());
   }, []);
 
   const [count, setCount] = useState(
@@ -43,7 +43,7 @@ const HomeworkMenu = (props) => {
 
   const handleClick = (e) => {
     localStorage.setItem("homeworkKey", e.key);
-    dispatch(getDataStudents(e.key))
+    dispatch(getDataStudents(e.key));
   };
   const setColor = (key) => {
     var condition;
@@ -77,20 +77,20 @@ const HomeworkMenu = (props) => {
         <Menu onClick={handleClick} style={{ width: 256 }} mode="inline">
           <h4>Bài tập về nhà</h4>
           {dataHomework.map((item) => (
-            <Menu.Item key={"" + item.number}>
+            <Menu.Item key={"" + item.Number}>
               {localStorage.getItem("role") === "admin" ? (
                 <Link
-                  style={{ color: setColor(item.number) }}
-                  to={`/homework/table${item.number}`}
+                  style={{ color: setColor(item.Number) }}
+                  to={`/homework/table${item.Number}`}
                 >
-                  {item.number}. {item.title}
+                  {item.Number}. {item.Title}
                 </Link>
               ) : (
                 <Link
-                  style={{ color: setColor(item.number) }}
-                  to={`/homework/test${item.number}`}
+                  style={{ color: setColor(item.Number) }}
+                  to={`/homework/test${item.Number}`}
                 >
-                  {item.number}. {item.title}
+                  {item.Number}. {item.Title}
                 </Link>
               )}
             </Menu.Item>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "./Firebase";
@@ -55,6 +55,8 @@ var Mark;
 
 var Input1, Output1;
 
+var countDown, Past;
+
 const decode = (bytes) => {
   var escaped = escape(atob(bytes || ""));
   try {
@@ -63,6 +65,18 @@ const decode = (bytes) => {
     return unescape(escaped);
   }
 };
+
+const getCurrentTime = () =>{
+  axios
+  .request({
+    url: "http://api.timezonedb.com/?zone=Asia/Ho_Chi_Minh&format=json&key=3JK6Y5WSRG2O",
+    method: "GET",
+    async: true,
+  })
+  .then((result) => {
+    countDown = (result.data.timestamp * 1000) - 25200000
+  })
+}
 
 const getDate = (number) => {
     var day
@@ -191,23 +205,6 @@ const getExample = (Number) => {
   });
 }
 
-const getMark = () => {
-  firebaseApp
-    .database()
-    .ref(
-      "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") +
-      "/HistoryCode/"+
-        localStorage.getItem("emailID") +
-        "/Mark"
-    )
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        Mark = snapshot.val();
-      }
-    });
-}
-
 const getHistory = () => {
   firebaseApp
     .database()
@@ -239,7 +236,7 @@ const getHistory = () => {
     });
 };
 
-const setRight = (Right) => {
+const setRight = (Right, Time) => {
   firebaseApp
     .database()
     .ref(
@@ -251,9 +248,27 @@ const setRight = (Right) => {
     .update({
       isRight: Right,
     });
+  if(Right === true) {
+    firebaseApp
+    .database()
+    .ref(
+      "Homework/Test/Homework" +
+      localStorage.getItem("homeworkKey") +
+      "/HistoryCode/"+
+        localStorage.getItem("emailID")
+    )
+    .update({
+      TimeRunCode: Time
+    });
+  }
 };
 
 export const HomeworkStudents = (props) => {
+
+  useEffect(()=>{
+    getCurrentTime()
+    Past = new Date().getTime()
+}, [])
 
     testNumber = localStorage.getItem("homeworkKey");
 
@@ -266,11 +281,16 @@ export const HomeworkStudents = (props) => {
     if (getStop(testNumber) === 1) {
       var countDownDate = getDate(testNumber);
       // Get today's date and time
-      var now = new Date().getTime();
-
+      var TimeNow = new Date().getTime()
+      var Change = TimeNow -  Past;
+      // console.log(Change)
+      var now = countDown;
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
-
+      if(Change > 1000) {
+        countDown = countDown + 1000
+        Past = new Date().getTime()
+      }
       // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor(
@@ -339,7 +359,6 @@ export const HomeworkStudents = (props) => {
     setModal(!modal);
   };
   getHistory();
-  getMark();
   getInform(testNumber);
   getTestInform(testNumber, 1);
   getExample(testNumber)
@@ -360,7 +379,7 @@ export const HomeworkStudents = (props) => {
           Right = Right + 1;
           // console.log(step + " " + Step + " " + Right);
           if (Right === Step) {
-            setRight(true);
+            setRight(true, result.data.time);
             document.getElementById("output").value = "Chính xác";
             document.getElementById("output").hidden = true;
             Swal.fire("Chính xác", "", "success");
@@ -497,8 +516,7 @@ export const HomeworkStudents = (props) => {
      ) : (
         <div class="checkCodeTitle">
         <div className="homeWork">
-            <h3 style={{marginTop: "100px"}}>Thời gian làm bài đã hết</h3>
-            <h3 style={{marginTop: "50px"}}>Điểm: {Mark}</h3>
+            <h3 >Thời gian làm bài đã hết</h3>
         </div>
         </div>
       )} 

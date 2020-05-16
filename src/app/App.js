@@ -18,7 +18,7 @@ import TestLayout from '../layout/TestLayout'
 import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
 import Lecture from '../components/Lecture'
-import HomeWork from '../components/HomeWork'
+// import HomeWork from '../bin/HomeWork'
 import HomeworkStudents from '../components/HomeworkStudents'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
@@ -26,7 +26,8 @@ import UserAuth from '../components/UserAuth'
 import TableOfStudents from '../components/TableOfStudents'
 import TableOfLecture from '../components/TableOfLecture'
 import HomeworkTeacher from '../components/HomeworkTeacher'
-import HomeworkStudentsTest from '../components/HomeworkStudents'
+import TableMark from '../components/TableMark'
+import TableOfHomework from '../components/TableOfHomework'
 
 function App() {
 
@@ -48,6 +49,8 @@ function App() {
       <Route path="/homeworkteacher" component={HomeworkTeacher} />
       {/* <UserAuth path="/tableofstudents" component={TableOfStudents} /> */}
       <UserAuth path="/tableoflecture" component={TableOfLecture} />
+      <UserAuth path="/tableofhomework" component={TableOfHomework} />
+      <UserAuth path="/tablemark" component={TableMark} />
       <Route path="/mustsignin" component={Bang} />
       <Route path="/introduction" component={Introduction} />
       <UserAuth path="/compiler" component={Compiler} />

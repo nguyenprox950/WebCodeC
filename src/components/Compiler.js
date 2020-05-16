@@ -21,7 +21,7 @@ const Compiler = (props) => {
 
   const codeMirrorOptions = {
     theme: "material",
-    lineNumbers: true
+    lineNumbers: true,
   };
 
   const getCode = (token) => {

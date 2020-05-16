@@ -1,9 +1,11 @@
-import { LOGIN, CHANGEINFORM, GET_DATASTUDENTS_ARRAY, GET_DATAHOMEWORK_ARRAY } from "../constants/userConstants";
+import { LOGIN, CHANGEINFORM, GET_DATASTUDENTS_ARRAY, GET_DATAHOMEWORK_ARRAY, GET_MARK_ARRAY, GET_HOMEWORKINFORM } from "../constants/userConstants";
 
 const initialState = {
     userInform: {},
     dataStudents: [],
-    dataHomework:[]
+    dataHomework:[],
+    dataMark:[],
+    homeworkInform: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -33,6 +35,16 @@ const userReducer = (state = initialState, action) => {
         case GET_DATAHOMEWORK_ARRAY: {
             return {
                 ...state, dataHomework: action.data
+            }
+        }
+        case GET_MARK_ARRAY: {
+            return {
+                ...state, dataMark: action.data
+            }
+        }
+        case GET_HOMEWORKINFORM: {
+            return {
+                ...state, homeworkInform: action.data
             }
         }
         default:

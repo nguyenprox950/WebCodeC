@@ -56,16 +56,34 @@ const AppHeader = (props) => {
                 <Link to="/compiler">DevC</Link>
               </NavLink>
             </NavItem>
+            {localStorage.getItem("role") === "student" ? (
+              <NavItem>
+                <NavLink className="item">
+                  <Link to="/checkcode">Bài tập</Link>
+                </NavLink>
+              </NavItem>
+            ) : null}
+            {localStorage.getItem("role") === "student" ? (
+              <NavItem>
+                <NavLink className="item">
+                  <Link to="/homework">Bài tập về nhà</Link>
+                </NavLink>
+              </NavItem>
+            ) : null}
+            {/* {localStorage.getItem("role") === "student" ? (
             <NavItem>
               <NavLink className="item">
-                <Link to="/checkcode">Bài tập</Link>
+                <Link to="/tableMark">Bảng điểm</Link>
               </NavLink>
             </NavItem>
+              ) : null} */}
+            {/* {localStorage.getItem("role") === "admin" ? (
             <NavItem>
               <NavLink className="item">
-                <Link to="/homework">Bài tập về nhà</Link>
+                <Link to="/text">Test</Link>
               </NavLink>
             </NavItem>
+              ) : null} */}
           </Nav>
           {Object.keys(userInform).length !== 0 ? (
             <UncontrolledDropdown inNavbar className="Header-Profile">
@@ -76,9 +94,18 @@ const AppHeader = (props) => {
               <DropdownMenu right>
                 <DropdownItem>
                   <NavLink>
-                    <Link to={`/profile/${userInform.email}`}>Thông tin cá nhân</Link>
+                    <Link to={`/profile/${userInform.email}`}>
+                      Thông tin cá nhân
+                    </Link>
                   </NavLink>
                 </DropdownItem>
+                {localStorage.getItem("role") === "student" ? (
+                  <DropdownItem>
+                    <NavLink className="item">
+                      <Link to="/tableMark">Bảng điểm</Link>
+                    </NavLink>
+                  </DropdownItem>
+                ) : null}
                 {localStorage.getItem("role") === "admin" ? (
                   <DropdownItem>
                     <NavLink className="item">
@@ -89,9 +116,16 @@ const AppHeader = (props) => {
                 {localStorage.getItem("role") === "admin" ? (
                   <DropdownItem>
                     <NavLink className="item">
-                      <Link to="/tableofstudents">
-                        Danh sách nộp bài tập về nhà
+                      <Link to="/tableofhomework">
+                        Bài tập về nhà (chỉnh sửa)
                       </Link>
+                    </NavLink>
+                  </DropdownItem>
+                ) : null}
+                {localStorage.getItem("role") === "admin" ? (
+                  <DropdownItem>
+                    <NavLink className="item">
+                      <Link to="/homework">Danh sách nộp bài tập về nhà</Link>
                     </NavLink>
                   </DropdownItem>
                 ) : null}

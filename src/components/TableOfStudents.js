@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
+import "../css/TableOfStudents.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { getDataStudents } from '../redux/action/getDataStudents'
 import { firebaseApp } from "./Firebase";
-import "../css/TableOfStudentsTest.css";
+import axios from "axios";
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/cmake/cmake";
 import "codemirror/theme/material.css";
 
 var codeHistory, fullName, number;
+
+var countDown, Past;
 
 const codeMirrorOptions = {
   theme: "material",
@@ -25,6 +28,18 @@ const decode = (bytes) => {
     return unescape(escaped);
   }
 };
+
+const getCurrentTime = () =>{
+  axios
+  .request({
+    url: "http://api.timezonedb.com/?zone=Asia/Ho_Chi_Minh&format=json&key=3JK6Y5WSRG2O",
+    method: "GET",
+    async: true,
+  })
+  .then((result) => {
+    countDown = (result.data.timestamp * 1000) - 25200000
+  })
+}
 
 const getDate = (number) => {
   var day
@@ -41,6 +56,11 @@ const getDate = (number) => {
 
 const TableOfStudents = (props) => {
 
+  useEffect(()=>{
+    getCurrentTime()
+    Past = new Date().getTime()
+  },[])
+
   number = localStorage.getItem("homeworkKey")
 
   const [count, setCount] = useState(
@@ -50,10 +70,16 @@ const TableOfStudents = (props) => {
   var x = setInterval(function () {
       var countDownDate = getDate(number);
       // Get today's date and time
-      var now = new Date().getTime();
-
+      var TimeNow = new Date().getTime()
+      var Change = TimeNow -  Past;
+      // console.log(Change)
+      var now = countDown;
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
+      if(Change > 1000) {
+        countDown = countDown + 1000
+        Past = new Date().getTime()
+      }
 
       // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -106,21 +132,21 @@ const TableOfStudents = (props) => {
   const [modal, setModal] = useState(false);
 
   const show = (history, Name) => {
-    if (history !== null) codeHistory = decode(history)
-    if (fullName !== null) fullName = Name
-      setModal(!modal);
+    if (history !== null && history!== codeHistory) codeHistory = decode(history)
+    if (fullName !== null && Name !== fullName) fullName = Name
+      setModal(true);
+      console.log(modal);
+      console.log(codeHistory);
+      console.log(fullName);
   };
 
   const hidden = () => {
-    setModal(!modal);
+    console.log(modal);
+    setModal(false);
   }
   
   const dispatch = useDispatch()
   const { dataStudents } = useSelector(state => state.userReducer)
-
-  useEffect(()=>{
-    dispatch(getDataStudents(number))
-  },[])
 
   const editMark = (Number) => {
     document.getElementById("EditButton"+Number).style.display="none";
@@ -128,13 +154,14 @@ const TableOfStudents = (props) => {
     var mark = document.getElementById("Mark_row"+Number);
 
     var mark_data = mark.innerHTML;
-    mark.innerHTML="<input type='number' id='mark_number"+Number+"' value='"+mark_data+"'>";
+    mark.innerHTML="<input type='number' max='10' min='0' id='mark_number"+Number+"' value='"+mark_data+"'>";
   }
 
   const setMark = (Number, ID) => {
     var mark_val = document.getElementById("mark_number"+Number).value;
+    if (mark_val > 10|| mark_val < 0) mark_val="Điểm không hợp lệ"
     document.getElementById("Mark_row"+Number).innerHTML=mark_val;
-   firebaseApp.database().ref("Homework(Test)/Test/Homework"+localStorage.getItem("homeworkKey")+"/HistoryCode/"+ID).update({
+   firebaseApp.database().ref("Homework/Test/Homework"+localStorage.getItem("homeworkKey")+"/HistoryCode/"+ID).update({
       Mark: mark_val
     });
     dispatch(getDataStudents(number))
@@ -143,7 +170,7 @@ const TableOfStudents = (props) => {
   }
 
   return (
-    <div className="tableOfStudentsTest">
+    <div className="tableOfStudents">
           <p hidden>{rend}</p>
           <h3 style={{ color: "red" , textAlign: "center"}}>{count}</h3>
       <Table hove id="tableOfStudent"r>
@@ -153,6 +180,7 @@ const TableOfStudents = (props) => {
             <th>Họ và tên</th>
             <th>Mã số sinh viên</th>
             <th>Thời gian nộp</th>
+            <th>Thời gian code chạy</th>
             <th>Điểm</th>
             <th>Code nộp</th>
             <th>Cho điểm</th>
@@ -165,6 +193,7 @@ const TableOfStudents = (props) => {
                 <td>{item.FullName}</td>
                 <td>{item.StudentID}</td>
                 <td>{item.Time}</td>
+                <td>{item.TimeRunCode}</td>
                 <td id={"Mark_row"+item.Number}>{item.Mark}</td>
             <td>
                 <Button color="info" onClick={()=>show(item.CodeHistory, item.FullName)}>Lịch sử</Button>
