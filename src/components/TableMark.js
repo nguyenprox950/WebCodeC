@@ -5,7 +5,7 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { getMark } from '../redux/action/getDataStudents'
 import "codemirror/lib/codemirror.css";
-import "codemirror/mode/cmake/cmake";
+import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
 
 var codeHistory, TimeSubmit
@@ -30,7 +30,7 @@ const TableMark = (props) => {
 
   const show = (history, Time) => {
     if (history !== null && history !==codeHistory) codeHistory = decode(history)
-    if (TimeSubmit !== null && Time !== TimeSubmit) TimeSubmit = Time
+    if (Time !== null && Time !== TimeSubmit) TimeSubmit = Time
       setModal(!modal);
   };
 
@@ -75,7 +75,7 @@ const TableMark = (props) => {
               id="codeHistory"
               value={codeHistory}
               options={{
-                mode: "cmake",
+                mode: "text/x-csrc",
                 ...codeMirrorOptions,
               }}
             />

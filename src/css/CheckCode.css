@@ -5,17 +5,17 @@
 
 .Checkcode .Output1 {
   margin-left: 300px;
-  margin-right : 44px;
+  margin-right: 44px;
 }
 
-.Checkcode .Output1 textarea{
+.Checkcode .Output1 textarea {
   background-color: grey;
-  color: white ;
+  color: white;
   width: 100%;
   font-size: 20px;
 }
 
-.checkCodeTitle p{
+.checkCodeTitle p {
   word-wrap: normal;
   font-size: 20px;
   margin-left: 300px;
@@ -26,6 +26,40 @@
   padding-top: 10px;
   margin-left: 300px;
   margin-right: 44px;
+}
+
+.checkCodeApi .cm-s-material .cm-meta {
+  color: white !important;
+  background-color: #FF0000;
+}
+
+.checkCodeApi .cm-s-material .cm-type {
+  color: #82AAFF !important;
+}
+
+.checkCodeApi .cm-s-material .cm-variable {
+  color: #82AAFF !important;
+}
+
+.checkCodeApi .cm-s-material .cm-operator {
+  color: white !important;
+}
+
+.modalHistory .cm-s-material .cm-meta {
+  color: white !important;
+  background-color: #FF0000;
+}
+
+.modalHistory .cm-s-material .cm-type {
+  color: #82AAFF !important;
+}
+
+.modalHistory .cm-s-material .cm-variable {
+  color: #82AAFF !important;
+}
+
+.modalHistory .cm-s-material .cm-operator {
+  color: white !important;
 }
 
 #check {

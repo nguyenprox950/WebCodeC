@@ -28,6 +28,7 @@ import TableOfLecture from '../components/TableOfLecture'
 import HomeworkTeacher from '../components/HomeworkTeacher'
 import TableMark from '../components/TableMark'
 import TableOfHomework from '../components/TableOfHomework'
+// import Test from '../components/Test'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
+      {/* <Route path="/time" component={Test} /> */}
       <Route path="/homeworkteacher" component={HomeworkTeacher} />
       {/* <UserAuth path="/tableofstudents" component={TableOfStudents} /> */}
       <UserAuth path="/tableoflecture" component={TableOfLecture} />

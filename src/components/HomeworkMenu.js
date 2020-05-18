@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDataStudents } from "../redux/action/getDataStudents";
 
 const HomeworkMenu = (props) => {
+  const [activeTab, setActiveTab] = useState("0");
+
   const dispatch = useDispatch();
   const { dataHomework } = useSelector((state) => state.userReducer);
   useEffect(() => {
@@ -43,7 +45,11 @@ const HomeworkMenu = (props) => {
 
   const handleClick = (e) => {
     localStorage.setItem("homeworkKey", e.key);
-    dispatch(getDataStudents(e.key));
+    if (localStorage.getItem("role") === "admin")
+      if (activeTab !== e.key) {
+        setActiveTab(e.key);
+        dispatch(getDataStudents(e.key));
+      }
   };
   const setColor = (key) => {
     var condition;

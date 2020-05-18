@@ -1,7 +1,24 @@
 .tableOfStudents {
-    margin-left: 256px;
+  margin-left: 256px;
 }
 
 .modalHistory {
-    margin-top: 150px;
+  margin-top: 150px;
+}
+
+.modalHistory .cm-s-material .cm-meta {
+  color: white !important;
+  background-color: #FF0000;
+}
+
+.modalHistory .cm-s-material .cm-type {
+  color: #82AAFF !important;
+}
+
+.modalHistory .cm-s-material .cm-variable {
+  color: #82AAFF !important;
+}
+
+.modalHistory .cm-s-material .cm-operator {
+  color: white !important;
 }

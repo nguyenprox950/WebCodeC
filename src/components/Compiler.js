@@ -5,7 +5,7 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 import { ButtonToggle } from "reactstrap";
 import axios from "axios";
 import "codemirror/lib/codemirror.css";
-import "codemirror/mode/cmake/cmake";
+import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
 var defaultUrl = "https://api.judge0.com";
 var apiUrl = defaultUrl;
@@ -110,7 +110,7 @@ const Compiler = (props) => {
             id="source_code"
             value={source}
             options={{
-              mode: "cmake",
+              mode: "text/x-csrc",
               ...codeMirrorOptions,
             }}
             onBeforeChange={(editor, data, source) => {

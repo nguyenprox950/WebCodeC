@@ -1,0 +1,16 @@
+.modalHistory .cm-s-material .cm-meta {
+    color: white !important;
+    background-color: #FF0000;
+  }
+  
+  .modalHistory .cm-s-material .cm-type {
+    color: #82AAFF !important;
+  }
+  
+  .modalHistory .cm-s-material .cm-variable {
+    color: #82AAFF !important;
+  }
+  
+  .modalHistory .cm-s-material .cm-operator {
+    color: white !important;
+  }

@@ -6,8 +6,26 @@
 
 .compiler {
   margin-top: 20px;
-  margin-left: 200px;
-  width: 1000px;
+  margin-left: 100px;
+  margin-right: 100px;
+  /* width: 1000px; */
+}
+
+.compiler .cm-s-material .cm-meta {
+  color: white !important;
+  background-color: #FF0000;
+}
+
+.compiler .cm-s-material .cm-type {
+  color: #82AAFF !important;
+}
+
+.compiler .cm-s-material .cm-variable {
+  color: #82AAFF !important;
+}
+
+.compiler .cm-s-material .cm-operator {
+  color: white !important;
 }
 
 #runCode {

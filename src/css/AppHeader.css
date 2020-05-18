@@ -9,6 +9,7 @@
   width: 100%;
 }
 
-.active, .item:hover {
+.active,
+.item:hover {
   color: white;
 }

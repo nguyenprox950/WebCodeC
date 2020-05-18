@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "../components/Firebase";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Progress,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "codemirror/lib/codemirror.css";
-import "codemirror/mode/cmake/cmake";
+import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
 
 var defaultUrl = "https://api.judge0.com";
@@ -25,8 +17,6 @@ const data = {
   language_id: 54,
   stdin: "",
 };
-
-var load = 1;
 
 var Title, Introduct;
 
@@ -51,8 +41,6 @@ int main() {\n\
 var codeHistory;
 
 var time;
-
-var max;
 
 var Input1, Output1;
 
@@ -90,7 +78,6 @@ const getInform = (Number) => {
         Step = parseInt(snapshot.val());
       }
     });
-  max = Step;
 };
 
 const saveCode = (code) => {
@@ -203,6 +190,18 @@ const setRight = (Right) => {
 };
 
 export const CheckCode = (props) => {
+  const [activeTab, setActiveTab] = useState("0");
+
+  testNumber = localStorage.getItem("testKey");
+
+  if (activeTab !== testNumber) {
+    setActiveTab(testNumber);
+    getHistory();
+    getInform(testNumber);
+    getTestInform(testNumber, 1);
+    getExample(testNumber);
+  }
+
   const [count, setCount] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
   );
@@ -246,12 +245,6 @@ export const CheckCode = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
-  getHistory();
-
-  testNumber = localStorage.getItem("testKey");
-  getInform(testNumber);
-  getTestInform(testNumber, 1);
-  getExample(testNumber);
 
   const getCode = (token, step) => {
     axios
@@ -361,7 +354,7 @@ export const CheckCode = (props) => {
           id="source_code"
           value={source}
           options={{
-            mode: "cmake",
+            mode: "text/x-csrc",
             ...codeMirrorOptions,
             value: cSource,
           }}
@@ -395,7 +388,7 @@ export const CheckCode = (props) => {
               id="codeHistory"
               value={codeHistory}
               options={{
-                mode: "cmake",
+                mode: "text/x-csrc",
                 ...codeMirrorOptions,
               }}
             />

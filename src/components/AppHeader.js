@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownItem,
   ButtonToggle,
-  NavbarToggler,
 } from "reactstrap";
 import { useSelector } from "react-redux";
 import { firebaseApp } from "./Firebase";

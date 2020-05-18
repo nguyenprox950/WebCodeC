@@ -4,16 +4,9 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "./Firebase";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Progress,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "codemirror/lib/codemirror.css";
-import "codemirror/mode/cmake/cmake";
+import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
 
 var defaultUrl = "https://api.judge0.com";
@@ -24,8 +17,6 @@ const data = {
   language_id: 54,
   stdin: "",
 };
-
-var load = 1;
 
 var Title, Introduct;
 
@@ -51,8 +42,6 @@ var codeHistory;
 
 var time;
 
-var Mark;
-
 var Input1, Output1;
 
 var countDown, Past;
@@ -66,49 +55,53 @@ const decode = (bytes) => {
   }
 };
 
-const getCurrentTime = () =>{
+const getCurrentTime = () => {
   axios
-  .request({
-    url: "http://api.timezonedb.com/?zone=Asia/Ho_Chi_Minh&format=json&key=3JK6Y5WSRG2O",
-    method: "GET",
-    async: true,
-  })
-  .then((result) => {
-    countDown = (result.data.timestamp * 1000) - 25200000
-  })
-}
+    .request({
+      url:
+        "http://api.timezonedb.com/?zone=Asia/Ho_Chi_Minh&format=json&key=3JK6Y5WSRG2O",
+      method: "GET",
+      async: true,
+    })
+    .then((result) => {
+      countDown = result.data.timestamp * 1000 - 25200000;
+    });
+};
 
 const getDate = (number) => {
-    var day
-    firebaseApp
-      .database()
-      .ref("Homework/Test/Homework"+number+"/Deadline")
-      .on("value", function (snapshot) {
-        if (snapshot.exists) {
-            day = snapshot.val();
-        }
-      });
-    return day;
-  };
-  
-  const setStop = (stop, number) => {
-    firebaseApp.database().ref("Homework/Test/Homework"+number).update({
+  var day;
+  firebaseApp
+    .database()
+    .ref("Homework/Test/Homework" + number + "/Deadline")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        day = snapshot.val();
+      }
+    });
+  return day;
+};
+
+const setStop = (stop, number) => {
+  firebaseApp
+    .database()
+    .ref("Homework/Test/Homework" + number)
+    .update({
       Stop: stop,
     });
-  };
+};
 
-  const getStop = (number) => {
-    var stop
-    firebaseApp
-      .database()
-      .ref("Homework/Test/Homework"+number+"/Stop")
-      .on("value", function (snapshot) {
-        if (snapshot.exists) {
-          stop = snapshot.val();
-        }
-      });
-    return stop;
-  };
+const getStop = (number) => {
+  var stop;
+  firebaseApp
+    .database()
+    .ref("Homework/Test/Homework" + number + "/Stop")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        stop = snapshot.val();
+      }
+    });
+  return stop;
+};
 
 const getInform = (Number) => {
   firebaseApp
@@ -149,17 +142,16 @@ const saveCode = (code) => {
     .database()
     .ref(
       "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") + 
-      "/HistoryCode/"+
-      localStorage.getItem("emailID") 
-
+        localStorage.getItem("homeworkKey") +
+        "/HistoryCode/" +
+        localStorage.getItem("emailID")
     )
     .set({
       History: code,
       Time: dateTime,
       FullName: userInform.fullName,
       StudentID: userInform.studentID,
-      Mark: "Chưa chấm điểm"
+      Mark: "Chưa chấm điểm",
     });
 };
 
@@ -186,14 +178,14 @@ const getTestInform = (Number, Step) => {
 
 const getExample = (Number) => {
   firebaseApp
-  .database()
-  .ref("Homework/Test/Homework" + Number)
-  .child("Expected_Output/Expect1/Input")
-  .on("value", function (snapshot) {
-    if (snapshot.exists) {
-      Input1 = snapshot.val();
-    }
-  });
+    .database()
+    .ref("Homework/Test/Homework" + Number)
+    .child("Expected_Output/Expect1/Input")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        Input1 = snapshot.val();
+      }
+    });
   firebaseApp
     .database()
     .ref("Homework/Test/Homework" + Number)
@@ -202,16 +194,16 @@ const getExample = (Number) => {
       if (snapshot.exists) {
         Output1 = decode(snapshot.val());
       }
-  });
-}
+    });
+};
 
 const getHistory = () => {
   firebaseApp
     .database()
     .ref(
       "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") +
-      "/HistoryCode/"+
+        localStorage.getItem("homeworkKey") +
+        "/HistoryCode/" +
         localStorage.getItem("emailID") +
         "/History"
     )
@@ -224,8 +216,8 @@ const getHistory = () => {
     .database()
     .ref(
       "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") +
-      "/HistoryCode/"+
+        localStorage.getItem("homeworkKey") +
+        "/HistoryCode/" +
         localStorage.getItem("emailID") +
         "/Time"
     )
@@ -241,37 +233,45 @@ const setRight = (Right, Time) => {
     .database()
     .ref(
       "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") +
-      "/HistoryCode/"+
+        localStorage.getItem("homeworkKey") +
+        "/HistoryCode/" +
         localStorage.getItem("emailID")
     )
     .update({
       isRight: Right,
     });
-  if(Right === true) {
+  if (Right === true) {
     firebaseApp
-    .database()
-    .ref(
-      "Homework/Test/Homework" +
-      localStorage.getItem("homeworkKey") +
-      "/HistoryCode/"+
-        localStorage.getItem("emailID")
-    )
-    .update({
-      TimeRunCode: Time
-    });
+      .database()
+      .ref(
+        "Homework/Test/Homework" +
+          localStorage.getItem("homeworkKey") +
+          "/HistoryCode/" +
+          localStorage.getItem("emailID")
+      )
+      .update({
+        TimeRunCode: Time,
+      });
   }
 };
 
 export const HomeworkStudents = (props) => {
+  const [activeTab, setActiveTab] = useState("0");
 
-  useEffect(()=>{
-    getCurrentTime()
-    Past = new Date().getTime()
-}, [])
+  testNumber = localStorage.getItem("homeworkKey");
 
-    testNumber = localStorage.getItem("homeworkKey");
+  if (activeTab !== testNumber) {
+    setActiveTab(testNumber);
+    getHistory();
+    getInform(testNumber);
+    getTestInform(testNumber, 1);
+    getExample(testNumber);
+  }
 
+  useEffect(() => {
+    getCurrentTime();
+    Past = new Date().getTime();
+  }, []);
 
   const [count, setCount] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
@@ -281,15 +281,15 @@ export const HomeworkStudents = (props) => {
     if (getStop(testNumber) === 1) {
       var countDownDate = getDate(testNumber);
       // Get today's date and time
-      var TimeNow = new Date().getTime()
-      var Change = TimeNow -  Past;
+      var TimeNow = new Date().getTime();
+      var Change = TimeNow - Past;
       // console.log(Change)
       var now = countDown;
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
-      if(Change > 1000) {
-        countDown = countDown + 1000
-        Past = new Date().getTime()
+      if (Change > 1000) {
+        countDown = countDown + 1000;
+        Past = new Date().getTime();
       }
       // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -318,27 +318,27 @@ export const HomeworkStudents = (props) => {
   );
 
   var y = setInterval(function () {
-      var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-      // Get today's date and time
-      var now = new Date().getTime();
-      // Find the distance between now and the count down date
-      var distance = countDownDate - now;
+    var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+    // Get today's date and time
+    var now = new Date().getTime();
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
 
-      // Time calculations for days, hours, minutes and seconds
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display the result in the element
-      setRend(
-        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-      );
-      // console.log(time)
+    // Display the result in the element
+    setRend(
+      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+    );
+    // console.log(time)
 
-      // If the count down is finished, write some text
+    // If the count down is finished, write some text
   }, 1000);
 
   const clear = () => {
@@ -358,10 +358,6 @@ export const HomeworkStudents = (props) => {
   const toggle = () => {
     setModal(!modal);
   };
-  getHistory();
-  getInform(testNumber);
-  getTestInform(testNumber, 1);
-  getExample(testNumber)
 
   const getCode = (token, step) => {
     axios
@@ -445,81 +441,89 @@ export const HomeworkStudents = (props) => {
   };
   return (
     <div>
-    <p hidden>{rend}</p>
-    {getStop(testNumber) === 1? (
-    <div className="Checkcode">
-      <div class="checkCodeTitle">
-        <div className="homeWork">
-        <h3 style={{ color: "red", textAlign:"center" }}>{count}</h3>
-          <h3>{Title}</h3>
-          <p><strong>Đề bài: </strong>{Introduct}</p>
-          <p><strong>Input: </strong>{Input1}</p>
-          <p><strong>Output: </strong></p>
-        </div>
-      </div>
-      <div className ="Output1">  
-         <textarea rows="5" value={Output1}/>
-      </div>
-      <div className="checkCodeApi">
-        <h6>Nhập code của bạn</h6>
-        <CodeMirror
-          id="source_code"
-          value={source}
-          options={{
-            mode: "cmake",
-            ...codeMirrorOptions,
-            value: cSource,
-          }}
-          onBeforeChange={(editor, data, source) => {
-            setSource(source);
-          }}
-        />
-        <textarea
-          class="form-control"
-          id="output"
-          name="output"
-          rows="2"
-          cols="50"
-          hidden
-        ></textarea>
-      </div>
-      <Button id="check" type="submit" color="primary" onClick={checkCode}>
-        Chấm code
-      </Button>
-      <Button id="history" color="info" onClick={toggle}>
-        Lịch sử
-      </Button>
-      <Button id="clear" color="danger" onClick={() => clear()}>
-        Xoá code
-      </Button>
-      <div>
-        <Modal isOpen={modal} toggle={toggle} className="modalHistory">
-          <ModalHeader toggle={toggle}>{time}</ModalHeader>
-          <ModalBody>
+      <p hidden>{rend}</p>
+      {getStop(testNumber) === 1 ? (
+        <div className="Checkcode">
+          <div class="checkCodeTitle">
+            <div className="homeWork">
+              <h3 style={{ color: "red", textAlign: "center" }}>{count}</h3>
+              <h3>{Title}</h3>
+              <p>
+                <strong>Đề bài: </strong>
+                {Introduct}
+              </p>
+              <p>
+                <strong>Input: </strong>
+                {Input1}
+              </p>
+              <p>
+                <strong>Output: </strong>
+              </p>
+            </div>
+          </div>
+          <div className="Output1">
+            <textarea rows="5" value={Output1} />
+          </div>
+          <div className="checkCodeApi">
+            <h6>Nhập code của bạn</h6>
             <CodeMirror
-              id="codeHistory"
-              value={codeHistory}
+              id="source_code"
+              value={source}
               options={{
-                mode: "cmake",
+                mode: "text/x-csrc",
                 ...codeMirrorOptions,
+                value: cSource,
+              }}
+              onBeforeChange={(editor, data, source) => {
+                setSource(source);
               }}
             />
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={toggle}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    </div>
-     ) : (
+            <textarea
+              class="form-control"
+              id="output"
+              name="output"
+              rows="2"
+              cols="50"
+              hidden
+            ></textarea>
+          </div>
+          <Button id="check" type="submit" color="primary" onClick={checkCode}>
+            Chấm code
+          </Button>
+          <Button id="history" color="info" onClick={toggle}>
+            Lịch sử
+          </Button>
+          <Button id="clear" color="danger" onClick={() => clear()}>
+            Xoá code
+          </Button>
+          <div>
+            <Modal isOpen={modal} toggle={toggle} className="modalHistory">
+              <ModalHeader toggle={toggle}>{time}</ModalHeader>
+              <ModalBody>
+                <CodeMirror
+                  id="codeHistory"
+                  value={codeHistory}
+                  options={{
+                    mode: "text/x-csrc",
+                    ...codeMirrorOptions,
+                  }}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={toggle}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
+        </div>
+      ) : (
         <div class="checkCodeTitle">
-        <div className="homeWork">
-            <h3 >Thời gian làm bài đã hết</h3>
+          <div className="homeWork">
+            <h3>Thời gian làm bài đã hết</h3>
+          </div>
         </div>
-        </div>
-      )} 
+      )}
     </div>
   );
 };
