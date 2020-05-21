@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/CheckCode.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { firebaseApp } from "../components/Firebase";
@@ -33,8 +33,8 @@ var cSource =
 #include <stdio.h>\n\
 \n\
 int main() {\n\
-    \n\
-    return 0;\n\
+  \n\
+  return 0;\n\
 }\n\
 ";
 
@@ -101,6 +101,7 @@ const saveCode = (code) => {
     });
 };
 
+
 const getTestInform = (Number, Step) => {
   firebaseApp
     .database()
@@ -110,7 +111,7 @@ const getTestInform = (Number, Step) => {
       if (snapshot.exists) {
         Input = snapshot.val();
       }
-    });
+  });
   firebaseApp
     .database()
     .ref("Test/Test" + Number)
@@ -119,7 +120,7 @@ const getTestInform = (Number, Step) => {
       if (snapshot.exists) {
         Output = snapshot.val();
       }
-    });
+  });
 };
 
 const getExample = (Number) => {
@@ -131,7 +132,7 @@ const getExample = (Number) => {
       if (snapshot.exists) {
         Input1 = snapshot.val();
       }
-    });
+  });
   firebaseApp
     .database()
     .ref("Test/Test" + Number)
@@ -140,7 +141,7 @@ const getExample = (Number) => {
       if (snapshot.exists) {
         Output1 = decode(snapshot.val());
       }
-    });
+  });
 };
 
 const getHistory = () => {
@@ -190,22 +191,28 @@ const setRight = (Right) => {
 };
 
 export const CheckCode = (props) => {
+
   const [activeTab, setActiveTab] = useState("0");
 
+  const [source, setSource] = useState();
+
+  const [hide, setHide] = useState();
+  
+  const [count, setCount] = useState(
+    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
+  );
+
   testNumber = localStorage.getItem("testKey");
+
 
   if (activeTab !== testNumber) {
     setActiveTab(testNumber);
     getHistory();
     getInform(testNumber);
-    getTestInform(testNumber, 1);
     getExample(testNumber);
+    setSource(cSource);
+    setHide(true);
   }
-
-  const [count, setCount] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
-
   var x = setInterval(function () {
     var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
     // Get today's date and time
@@ -230,10 +237,8 @@ export const CheckCode = (props) => {
 
   const clear = () => {
     setSource(cSource);
-    document.getElementById("output").hidden = true;
+    setHide(true);
   };
-
-  const [source, setSource] = useState();
 
   const codeMirrorOptions = {
     theme: "material",
@@ -254,7 +259,6 @@ export const CheckCode = (props) => {
         async: true,
       })
       .then((result) => {
-        console.log(result.data);
         if (result.data.status.id <= 2) {
           // document.getElementById('output').value = result.data.status.description
           setTimeout(getCode.bind(null, result.data.token, step));
@@ -264,7 +268,7 @@ export const CheckCode = (props) => {
           if (Right === Step) {
             setRight(true);
             document.getElementById("output").value = "Chính xác";
-            document.getElementById("output").hidden = true;
+            setHide(true);
             Swal.fire("Chính xác", "", "success");
           } else {
             setRight(false);
@@ -273,11 +277,11 @@ export const CheckCode = (props) => {
           setRight(false);
           document.getElementById("output").value =
             result.data.status.description;
-          document.getElementById("output").hidden = false;
+            setHide(false);
         } else {
-          document.getElementById("output").value =
-            result.data.status.description;
-          document.getElementById("output").hidden = false;
+          document.getElementById("output").value = decode(result.data.compile_output)
+
+          setHide(false);
           setRight(false);
         }
       })
@@ -298,7 +302,6 @@ export const CheckCode = (props) => {
         data: dataCode,
       })
       .then((result) => {
-        console.log(result.data);
         getCode(result.data.token, step);
       })
       .catch((error) => {
@@ -313,16 +316,14 @@ export const CheckCode = (props) => {
     // console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
     for (var i = 1; i <= Step; i++) {
       getTestInform(testNumber, i);
-      console.log(testNumber + " " + i);
-      console.log(Input + " Output:" + Output);
+      console.log("i="+i+"\n"+"input="+btoa(unescape(encodeURIComponent(Input || "")))+"\n"+"output="+Output)
       var dataSubmit = {
         source_code: code,
         language_id: 54,
         stdin: btoa(unescape(encodeURIComponent(Input || ""))),
         expected_output: Output,
       };
-      console.log(dataSubmit);
-      sendCode(dataSubmit, i);
+      // sendCode(dataSubmit, i);
     }
     Right = 0;
   };
@@ -368,7 +369,7 @@ export const CheckCode = (props) => {
           name="output"
           rows="2"
           cols="50"
-          hidden
+          hidden = {hide}
         ></textarea>
       </div>
       <Button id="check" type="submit" color="primary" onClick={checkCode}>

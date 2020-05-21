@@ -87,14 +87,14 @@ const ProfileChangePassword = (props) => {
                 <p>Mật khẩu mới:</p>
                 <MyInput
                   id="password"
-                  type="text"
+                  type="password"
                   name="password"
                   variant="outlined"
                 />
                 <p>Xác nhận mật khẩu:</p>
                 <MyInput
                   id="password2"
-                  type="text"
+                  type="password"
                   name="password2"
                   variant="outlined"
                 />

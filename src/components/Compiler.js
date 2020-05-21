@@ -37,13 +37,17 @@ const Compiler = (props) => {
           document.getElementById("output").value =
             result.data.status.description;
           setTimeout(getCode.bind(null, result.data.token));
-        } else {
-          console.log(decode(result.data.stdout));
+        } else if (result.data.status.id === 3){
+          console.log(decode(result.data.compile_output));
           document.getElementById("output").value =
             "Code của bạn đã được chạy trong " +
             result.data.time +
             "s\n" +
             decode(result.data.stdout);
+        }
+        else {
+          document.getElementById("output").style.color = "red"
+          document.getElementById("output").value = decode(result.data.compile_output)
         }
       })
       .catch((error) => {

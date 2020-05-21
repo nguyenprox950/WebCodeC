@@ -14,6 +14,7 @@ import {
   DropdownItem,
   ButtonToggle,
 } from "reactstrap";
+import { Menu } from 'antd';
 import { useSelector } from "react-redux";
 import { firebaseApp } from "./Firebase";
 
@@ -93,7 +94,7 @@ const AppHeader = (props) => {
               <DropdownMenu right>
                 <DropdownItem>
                   <NavLink>
-                    <Link to={`/profile/${userInform.email}`}>
+                    <Link to={`/profile/${userInform.email}/inform`}>
                       Thông tin cá nhân
                     </Link>
                   </NavLink>

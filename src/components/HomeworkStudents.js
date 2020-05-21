@@ -33,8 +33,8 @@ var cSource =
 #include <stdio.h>\n\
 \n\
 int main() {\n\
-    \n\
-    return 0;\n\
+\n\
+  return 0;\n\
 }\n\
 ";
 
@@ -260,6 +260,12 @@ export const HomeworkStudents = (props) => {
 
   testNumber = localStorage.getItem("homeworkKey");
 
+  const [count, setCount] = useState(
+    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
+  );
+
+  const [close, setClose] = useState(false)
+
   if (activeTab !== testNumber) {
     setActiveTab(testNumber);
     getHistory();
@@ -272,10 +278,6 @@ export const HomeworkStudents = (props) => {
     getCurrentTime();
     Past = new Date().getTime();
   }, []);
-
-  const [count, setCount] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
 
   var x = setInterval(function () {
     if (getStop(testNumber) === 1) {
@@ -309,36 +311,10 @@ export const HomeworkStudents = (props) => {
       if (distance < 0) {
         setStop(2, testNumber);
         setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+        clearInterval(x)
+        setClose(true)
       }
     }
-  }, 1000);
-
-  const [rend, setRend] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
-
-  var y = setInterval(function () {
-    var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-    // Get today's date and time
-    var now = new Date().getTime();
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
-
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the result in the element
-    setRend(
-      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-    );
-    // console.log(time)
-
-    // If the count down is finished, write some text
   }, 1000);
 
   const clear = () => {
@@ -388,8 +364,8 @@ export const HomeworkStudents = (props) => {
             result.data.status.description;
           document.getElementById("output").hidden = false;
         } else {
-          document.getElementById("output").value =
-            result.data.status.description;
+          document.getElementById("output").value = decode(result.data.compile_output)
+
           document.getElementById("output").hidden = false;
           setRight(false);
         }
@@ -441,7 +417,7 @@ export const HomeworkStudents = (props) => {
   };
   return (
     <div>
-      <p hidden>{rend}</p>
+      <p hidden>{close}</p>
       {getStop(testNumber) === 1 ? (
         <div className="Checkcode">
           <div class="checkCodeTitle">

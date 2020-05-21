@@ -62,7 +62,7 @@ const TableMark = (props) => {
                 <td>{item.Title}</td>
                 <td>{item.Score}</td>
             <td>
-                <Button color="info" onClick={()=>show(item.CodeHistory, item.Time)}>Lịch sử</Button>
+                <Button color="info" onClick={()=>show(item.CodeHistory, item.Time)}>Xem</Button>
             </td>
             </tr>
           ))}

@@ -3,8 +3,12 @@ import "antd/dist/antd.css";
 import "../css/Profile.css";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProfileMenu = (props) => {
+
+  const { userInform } = useSelector((state) => state.userReducer);
+  
   return (
     <div className="Profile">
       <div id="leftProfile">
@@ -15,10 +19,10 @@ const ProfileMenu = (props) => {
           mode="inline"
         >
           <Menu.Item key="1">
-            <Link to="/profile/inform">Thông tin cơ bản</Link>
+            <Link to={`/profile/${userInform.email}/inform`}>Thông tin cơ bản</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/profile/changepassword">Đổi mật khẩu</Link>
+            <Link to={`/profile/${userInform.email}/changepassword`}>Đổi mật khẩu</Link>
           </Menu.Item>
         </Menu>
       </div>

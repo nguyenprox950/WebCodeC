@@ -55,94 +55,88 @@ const getDate = (number) => {
   return day;
 };
 
-const TableOfStudents = (props) => {
-  useEffect(() => {
-    getCurrentTime();
-    Past = new Date().getTime();
-  }, []);
+const setStop = (stop, number) => {
+  firebaseApp
+    .database()
+    .ref("Homework/Test/Homework" + number)
+    .update({
+      Stop: stop,
+    });
+};
 
+const getStop = (number) => {
+  var stop;
+  firebaseApp
+    .database()
+    .ref("Homework/Test/Homework" + number + "/Stop")
+    .on("value", function (snapshot) {
+      if (snapshot.exists) {
+        stop = snapshot.val();
+      }
+    });
+  return stop;
+};
+
+const TableOfStudents = (props) => {
   number = localStorage.getItem("homeworkKey");
 
   const [count, setCount] = useState(
     0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
   );
 
+  useEffect(() => {
+    getCurrentTime();
+    Past = new Date().getTime();
+  }, []);
+
   var x = setInterval(function () {
-    var countDownDate = getDate(number);
-    // Get today's date and time
-    var TimeNow = new Date().getTime();
-    var Change = TimeNow - Past;
-    // console.log(Change)
-    var now = countDown;
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
-    if (Change > 1000) {
-      countDown = countDown + 1000;
-      Past = new Date().getTime();
+    if (getStop(number) === 1) {
+      var countDownDate = getDate(number);
+      // Get today's date and time
+      var TimeNow = new Date().getTime();
+      var Change = TimeNow - Past;
+      // console.log(Change)
+      var now = countDown;
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+      if (Change > 1000) {
+        countDown = countDown + 1000;
+        Past = new Date().getTime();
+      }
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element
+      setCount(
+        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+      );
+      // console.log(time)
+
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+        clearInterval(x)
+      }
     }
-
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the result in the element
-    setCount(
-      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-    );
-    // console.log(time)
-
-    // If the count down is finished, write some text
-    if (distance < 0) {
-      setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-    }
-  }, 1000);
-
-  const [rend, setRend] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
-
-  var y = setInterval(function () {
-    var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-    // Get today's date and time
-    var now = new Date().getTime();
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
-
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the result in the element
-    setRend(
-      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-    );
-    // console.log(time)
-
-    // If the count down is finished, write some text
   }, 1000);
 
   const [modal, setModal] = useState(false);
+  console.log(modal);
 
   const show = (history, Name) => {
+    setModal(true);
     if (history !== null && history !== codeHistory)
       codeHistory = decode(history);
-    if (fullName !== null && Name !== fullName) fullName = Name;
-    setModal(true);
-    console.log(modal);
-    console.log(codeHistory);
-    console.log(fullName);
+    if (Name !== null && Name !== fullName) fullName = Name;
   };
 
   const hidden = () => {
-    console.log(modal);
     setModal(false);
   };
 
@@ -185,7 +179,6 @@ const TableOfStudents = (props) => {
 
   return (
     <div className="tableOfStudents">
-      <p hidden>{rend}</p>
       <h3 style={{ color: "red", textAlign: "center" }}>{count}</h3>
       <Table hove id="tableOfStudent" r>
         <thead>
@@ -214,7 +207,7 @@ const TableOfStudents = (props) => {
                   color="info"
                   onClick={() => show(item.CodeHistory, item.FullName)}
                 >
-                  Lịch sử
+                  Xem
                 </Button>
               </td>
               <td>
@@ -237,8 +230,7 @@ const TableOfStudents = (props) => {
             </tr>
           ))}
         </tbody>
-      </Table>
-      <Modal isOpen={modal} toggle={hidden} className="modalHistory">
+        <Modal isOpen={modal} toggle={hidden} className="modalHistory">
         <ModalHeader toggle={hidden}>{fullName}</ModalHeader>
         <ModalBody>
           <CodeMirror
@@ -256,6 +248,7 @@ const TableOfStudents = (props) => {
           </Button>
         </ModalFooter>
       </Modal>
+      </Table>   
     </div>
   );
 };

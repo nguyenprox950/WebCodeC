@@ -18,17 +18,15 @@ import TestLayout from '../layout/TestLayout'
 import CheckCode from '../components/CheckCode'
 import Translate from '../components/Translate'
 import Lecture from '../components/Lecture'
-// import HomeWork from '../bin/HomeWork'
 import HomeworkStudents from '../components/HomeworkStudents'
 import Bang from '../components/Bang'
 import UserAuth from '../components/UserAuth'
-// import TableOfStudents from '../components/TableOfStudents(dontuse)'
 import TableOfStudents from '../components/TableOfStudents'
 import TableOfLecture from '../components/TableOfLecture'
 import HomeworkTeacher from '../components/HomeworkTeacher'
 import TableMark from '../components/TableMark'
 import TableOfHomework from '../components/TableOfHomework'
-// import Test from '../components/Test'
+import Test from '../components/Test'
 
 function App() {
 
@@ -44,12 +42,11 @@ function App() {
     <Switch>
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/for" component={Test} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
-      {/* <Route path="/time" component={Test} /> */}
       <Route path="/homeworkteacher" component={HomeworkTeacher} />
-      {/* <UserAuth path="/tableofstudents" component={TableOfStudents} /> */}
       <UserAuth path="/tableoflecture" component={TableOfLecture} />
       <UserAuth path="/tableofhomework" component={TableOfHomework} />
       <UserAuth path="/tablemark" component={TableMark} />
@@ -57,13 +54,11 @@ function App() {
       <Route path="/introduction" component={Introduction} />
       <UserAuth path="/compiler" component={Compiler} />
       <UserAuth path="/translate" component={Translate} />
-      {/* <UserAuth path="/homework" component={HomeWork} /> */}
       <Route path="/mustsignin" component={Bang} />
-      {/* <UserAuth path="/homeworkstudent" component={HomeWorkStudent} /> */}
       <ProfileLayout path="/profile">
         <Switch>
-          <UserAuth path="/profile/:ID" component={ProfileInform} />
-          <UserAuth path="/profile/changepassword" component={ProfileChangePassword} />
+          <UserAuth path="/profile/:ID/Inform" component={ProfileInform} />
+          <UserAuth path="/profile/:ID/changepassword" component={ProfileChangePassword} />
         </Switch>
       </ProfileLayout>
       <TestLayout path="/checkcode">
