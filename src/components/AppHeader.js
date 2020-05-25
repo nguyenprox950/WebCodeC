@@ -56,13 +56,11 @@ const AppHeader = (props) => {
                 <Link to="/compiler">DevC</Link>
               </NavLink>
             </NavItem>
-            {localStorage.getItem("role") === "student" ? (
               <NavItem>
                 <NavLink className="item">
                   <Link to="/checkcode">Bài tập</Link>
                 </NavLink>
               </NavItem>
-            ) : null}
             {localStorage.getItem("role") === "student" ? (
               <NavItem>
                 <NavLink className="item">

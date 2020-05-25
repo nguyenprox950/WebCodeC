@@ -8,6 +8,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
+import { getTestcase } from "../redux/action/getDataHomework";
+import { useDispatch, useSelector } from "react-redux";
 
 var defaultUrl = "https://api.judge0.com";
 var apiUrl = defaultUrl;
@@ -37,6 +39,8 @@ int main() {\n\
   return 0;\n\
 }\n\
 ";
+
+var testcase =[]
 
 var codeHistory;
 
@@ -99,28 +103,6 @@ const saveCode = (code) => {
       history: code,
       time: dateTime,
     });
-};
-
-
-const getTestInform = (Number, Step) => {
-  firebaseApp
-    .database()
-    .ref("Test/Test" + Number)
-    .child("Expected_Output/Expect" + Step + "/Input")
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        Input = snapshot.val();
-      }
-  });
-  firebaseApp
-    .database()
-    .ref("Test/Test" + Number)
-    .child("Expected_Output/Expect" + Step + "/Output")
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        Output = snapshot.val();
-      }
-  });
 };
 
 const getExample = (Number) => {
@@ -192,20 +174,20 @@ const setRight = (Right) => {
 
 export const CheckCode = (props) => {
 
+  const dispatch = useDispatch();
+  
   const [activeTab, setActiveTab] = useState("0");
 
   const [source, setSource] = useState();
 
   const [hide, setHide] = useState();
   
-  const [count, setCount] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
+  const [count, setCount] = useState(false);
 
   testNumber = localStorage.getItem("testKey");
 
-
-  if (activeTab !== testNumber) {
+  if (testNumber !== activeTab) {
+    dispatch(getTestcase(testNumber))
     setActiveTab(testNumber);
     getHistory();
     getInform(testNumber);
@@ -213,27 +195,32 @@ export const CheckCode = (props) => {
     setSource(cSource);
     setHide(true);
   }
-  var x = setInterval(function () {
+
+  const { testcase } = useSelector((state) => state.userReducer); 
+
+  useEffect(() => {
     var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-    // Get today's date and time
-    var now = new Date().getTime();
+    var x = setInterval(function () {
+      // Get today's date and time
+      var now = new Date().getTime();
 
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
 
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the result in the element
-    setCount(
-      days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-    );
-  }, 1000);
+      // Display the result in the element
+      setCount(
+        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+      );
+    }, 1000);
+  }, []);
 
   const clear = () => {
     setSource(cSource);
@@ -260,7 +247,6 @@ export const CheckCode = (props) => {
       })
       .then((result) => {
         if (result.data.status.id <= 2) {
-          // document.getElementById('output').value = result.data.status.description
           setTimeout(getCode.bind(null, result.data.token, step));
         } else if (result.data.status.id === 3) {
           Right = Right + 1;
@@ -275,9 +261,8 @@ export const CheckCode = (props) => {
           }
         } else if (result.data.status.id === 4) {
           setRight(false);
-          document.getElementById("output").value =
-            result.data.status.description;
-            setHide(false);
+          document.getElementById("output").value = result.data.status.description;
+          setHide(false);
         } else {
           document.getElementById("output").value = decode(result.data.compile_output)
 
@@ -291,8 +276,6 @@ export const CheckCode = (props) => {
   };
 
   const sendCode = (dataCode, step) => {
-    localStorage.setItem("state", step);
-    // console.log(Right+" "+step)
     axios
       .request({
         url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
@@ -313,17 +296,15 @@ export const CheckCode = (props) => {
     data.source_code = source;
     var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
     saveCode(code);
-    // console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
     for (var i = 1; i <= Step; i++) {
-      getTestInform(testNumber, i);
-      console.log("i="+i+"\n"+"input="+btoa(unescape(encodeURIComponent(Input || "")))+"\n"+"output="+Output)
+      console.log("i="+i+"\n"+"input="+btoa(unescape(encodeURIComponent(testcase[i-1].Input || "")))+"\n"+"output="+testcase[i-1].Output)
       var dataSubmit = {
         source_code: code,
         language_id: 54,
-        stdin: btoa(unescape(encodeURIComponent(Input || ""))),
-        expected_output: Output,
+        stdin: btoa(unescape(encodeURIComponent(testcase[i-1].Input || ""))),
+        expected_output: testcase[i-1].Output,
       };
-      // sendCode(dataSubmit, i);
+      sendCode(dataSubmit, i);
     }
     Right = 0;
   };

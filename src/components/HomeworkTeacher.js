@@ -59,7 +59,7 @@ const setHomeWork = (values) => {
       Introduct: values.introduct,
       Step_Test: step,
       Deadline_Day: values.deadLine,
-      Deadline: new Date(values.deadLine).getTime(),
+      Deadline: new Date(values.deadLine+"Z").getTime() - 25200000,
       Number: numberHW,
       Stop: 1,
     });

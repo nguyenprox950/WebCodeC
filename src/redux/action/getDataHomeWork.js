@@ -1,5 +1,5 @@
 import {firebaseApp} from '../../components/Firebase'
-import { GET_DATAHOMEWORK_ARRAY, GET_HOMEWORKINFORM } from '../constants/userConstants'
+import { GET_DATAHOMEWORK_ARRAY, GET_HOMEWORKINFORM, GET_TESTCASE, GET_TESTCASE_HOMEWORK } from '../constants/userConstants'
 
 export const getDataHomework = () => {
     return dispatch => {
@@ -66,3 +66,60 @@ export const getHomeworkInformAction = (data) => {
         data: data
     }
 }
+
+export const getTestcase = (number) => {
+    return dispatch => {
+        firebaseApp.database().ref('/Test/Test'+number+'/Expected_Output').once("value").then(function(snapshot) {
+            let newArray = [], Number = 0
+            snapshot.forEach(function(childSnapshot) {
+                const ID = childSnapshot.key
+                const Input = childSnapshot.val().Input
+                const Output = childSnapshot.val().Output
+                Number = Number + 1
+                newArray.push({
+                    ID,
+                    Input,
+                    Output,
+                    Number
+                })
+            })
+            dispatch(getTestcaseAction(newArray))
+        })
+    }
+} 
+
+export const getTestcaseAction = (data) => {
+    return {
+        type: GET_TESTCASE,
+        data: data
+    }
+}
+
+export const getTestcaseHomework = (number) => {
+    return dispatch => {
+        firebaseApp.database().ref('/Homework/Test/Homework'+number+'/Expected_Output').once("value").then(function(snapshot) {
+            let newArray = [], Number = 0
+            snapshot.forEach(function(childSnapshot) {
+                const ID = childSnapshot.key
+                const Input = childSnapshot.val().Input
+                const Output = childSnapshot.val().Output
+                Number = Number + 1
+                newArray.push({
+                    ID,
+                    Input,
+                    Output,
+                    Number
+                })
+            })
+            dispatch(getTestcaseHomeworkAction(newArray))
+        })
+    }
+} 
+
+export const getTestcaseHomeworkAction = (data) => {
+    return {
+        type: GET_TESTCASE_HOMEWORK,
+        data: data
+    }
+}
+

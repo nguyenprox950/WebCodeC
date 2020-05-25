@@ -8,6 +8,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
+import { getTestcaseHomework } from "../redux/action/getDataHomework";
+import { useDispatch, useSelector } from "react-redux";
 
 var defaultUrl = "https://api.judge0.com";
 var apiUrl = defaultUrl;
@@ -44,7 +46,7 @@ var time;
 
 var Input1, Output1;
 
-var countDown, Past;
+var countDown, Past, countDownDate;
 
 const decode = (bytes) => {
   var escaped = escape(atob(bytes || ""));
@@ -58,13 +60,12 @@ const decode = (bytes) => {
 const getCurrentTime = () => {
   axios
     .request({
-      url:
-        "http://api.timezonedb.com/?zone=Asia/Ho_Chi_Minh&format=json&key=3JK6Y5WSRG2O",
+      url:"http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh",
       method: "GET",
       async: true,
     })
     .then((result) => {
-      countDown = result.data.timestamp * 1000 - 25200000;
+      countDown = result.data.unixtime * 1000;
     });
 };
 
@@ -155,27 +156,6 @@ const saveCode = (code) => {
     });
 };
 
-const getTestInform = (Number, Step) => {
-  firebaseApp
-    .database()
-    .ref("Homework/Test/Homework" + Number)
-    .child("Expected_Output/Expect" + Step + "/Input")
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        Input = snapshot.val();
-      }
-    });
-  firebaseApp
-    .database()
-    .ref("Homework/Test/Homework" + Number)
-    .child("Expected_Output/Expect" + Step + "/Output")
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        Output = snapshot.val();
-      }
-    });
-};
-
 const getExample = (Number) => {
   firebaseApp
     .database()
@@ -256,7 +236,6 @@ const setRight = (Right, Time) => {
 };
 
 export const HomeworkStudents = (props) => {
-  const [activeTab, setActiveTab] = useState("0");
 
   testNumber = localStorage.getItem("homeworkKey");
 
@@ -266,56 +245,67 @@ export const HomeworkStudents = (props) => {
 
   const [close, setClose] = useState(false)
 
+  const [activeTab, setActiveTab] = useState("0");
+  
+  const dispatch = useDispatch();
+
   if (activeTab !== testNumber) {
+    getCurrentTime();
+    dispatch(getTestcaseHomework(testNumber))
     setActiveTab(testNumber);
     getHistory();
     getInform(testNumber);
-    getTestInform(testNumber, 1);
     getExample(testNumber);
   }
 
   useEffect(() => {
     getCurrentTime();
     Past = new Date().getTime();
+    var x = setInterval(function () {
+      if(getStop(testNumber) === 2) {
+        clearInterval(x)
+        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+        setClose(!close)
+     } else if(getStop(testNumber) === 1) {
+        var countDownDate = getDate(testNumber);
+        // Get today's date and time
+        var TimeNow = new Date().getTime();
+        var Change = TimeNow - Past;
+        // console.log(Change)
+        var now = countDown;
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+        if (Change > 1000) {
+          countDown = countDown + 1000;
+          Past = new Date().getTime();
+        }
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+        // Display the result in the element
+        setCount(
+          days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
+        );
+        // console.log(time)
+  
+        // If the count down is finished, write some text
+        if (distance < 0) {
+          setStop(2, testNumber);
+          setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
+          clearInterval(x)
+          setClose(!close)
+        }
+      }
+    }, 1000);
   }, []);
 
-  var x = setInterval(function () {
-    if (getStop(testNumber) === 1) {
-      var countDownDate = getDate(testNumber);
-      // Get today's date and time
-      var TimeNow = new Date().getTime();
-      var Change = TimeNow - Past;
-      // console.log(Change)
-      var now = countDown;
-      // Find the distance between now and the count down date
-      var distance = countDownDate - now;
-      if (Change > 1000) {
-        countDown = countDown + 1000;
-        Past = new Date().getTime();
-      }
-      // Time calculations for days, hours, minutes and seconds
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display the result in the element
-      setCount(
-        days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-      );
-      // console.log(time)
-
-      // If the count down is finished, write some text
-      if (distance < 0) {
-        setStop(2, testNumber);
-        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-        clearInterval(x)
-        setClose(true)
-      }
-    }
-  }, 1000);
+  const { testcaseHomework } = useSelector((state) => state.userReducer); 
 
   const clear = () => {
     setSource(cSource);
@@ -345,7 +335,6 @@ export const HomeworkStudents = (props) => {
       .then((result) => {
         // console.log(result.data);
         if (result.data.status.id <= 2) {
-          // document.getElementById('output').value = result.data.status.description
           setTimeout(getCode.bind(null, result.data.token, step));
         } else if (result.data.status.id === 3) {
           Right = Right + 1;
@@ -376,8 +365,6 @@ export const HomeworkStudents = (props) => {
   };
 
   const sendCode = (dataCode, step) => {
-    localStorage.setItem("state", step);
-    // console.log(Right+" "+step)
     axios
       .request({
         url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
@@ -387,7 +374,6 @@ export const HomeworkStudents = (props) => {
         data: dataCode,
       })
       .then((result) => {
-        // console.log(result.data);
         getCode(result.data.token, step);
       })
       .catch((error) => {
@@ -399,18 +385,13 @@ export const HomeworkStudents = (props) => {
     data.source_code = source;
     var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
     saveCode(code);
-    // console.log("ngôn ngữ:"+data.language_id +'\n'+"souce_code:"+code)
     for (var i = 1; i <= Step; i++) {
-      getTestInform(testNumber, i);
-      // console.log(testNumber + " " + i);
-      // console.log(Input + " Output:" + Output);
       var dataSubmit = {
         source_code: code,
         language_id: 54,
-        stdin: btoa(unescape(encodeURIComponent(Input || ""))),
-        expected_output: Output,
+        stdin: btoa(unescape(encodeURIComponent(testcaseHomework[i-1].Input || ""))),
+        expected_output: testcaseHomework[i-1].Output,
       };
-      // console.log(dataSubmit);
       sendCode(dataSubmit, i);
     }
     Right = 0;

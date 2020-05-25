@@ -36,7 +36,7 @@ const TableOfStudents = (props) => {
       .database()
       .ref("Homework/Test/Homework" + Number)
       .update({
-        Deadline: new Date(newDeadline).getTime(),
+        Deadline: new Date(newDeadline+"Z").getTime() - 25200000,
         Deadline_Day: newDeadline,
         Stop: 1,
       });

@@ -8,7 +8,7 @@ export default class Home extends Component {
         return (
             <div>
                 <Carousel/>
-                <Service/>
+                {/* <Service/> */}
                 <Welcome/>
             </div>
         )
