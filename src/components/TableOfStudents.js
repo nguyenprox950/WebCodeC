@@ -78,62 +78,13 @@ const getStop = (number) => {
 
 const TableOfStudents = (props) => {
   number = localStorage.getItem("homeworkKey");
-
-  const [count, setCount] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
-
+  
   const [activeTab, setActiveTab] = useState("0");
   
   if (activeTab !== number) {
     getCurrentTime();
     setActiveTab(number);
   }
-
-  useEffect(() => {
-    getCurrentTime();
-    Past = new Date().getTime();
-    var x = setInterval(function () {
-      if(getStop(number) === 2) {
-        clearInterval(x)
-        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-      } else if(getStop(number) === 1) {
-        var countDownDate = getDate(number);
-        // Get today's date and time
-        var TimeNow = new Date().getTime();
-        var Change = TimeNow - Past;
-        // console.log(Change)
-        var now = countDown;
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-        if (Change > 1000) {
-          countDown = countDown + 1000;
-          Past = new Date().getTime();
-        }
-  
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-        // Display the result in the element
-        setCount(
-          days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-        );
-        // console.log(time)
-  
-        // If the count down is finished, write some text
-        if (distance < 0) {
-          setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-          clearInterval(x)
-          setStop(2 , number)
-        }
-      }
-    }, 1000);
-  }, []);
 
   const [modal, setModal] = useState(false);
 
@@ -187,7 +138,6 @@ const TableOfStudents = (props) => {
 
   return (
     <div className="tableOfStudents">
-      <h3 style={{ color: "red", textAlign: "center" }}>{count}</h3>
       <Table hove id="tableOfStudent" r>
         <thead>
           <tr>

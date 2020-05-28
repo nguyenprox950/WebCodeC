@@ -199,7 +199,7 @@ export const CheckCode = (props) => {
   const { testcase } = useSelector((state) => state.userReducer); 
 
   useEffect(() => {
-    var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+    var countDownDate = new Date("Jan 5, 3030 15:37:25").getTime();
     var x = setInterval(function () {
       // Get today's date and time
       var now = new Date().getTime();

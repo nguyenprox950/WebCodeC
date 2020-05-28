@@ -27,6 +27,9 @@ import HomeworkTeacher from '../components/HomeworkTeacher'
 import TableMark from '../components/TableMark'
 import TableOfHomework from '../components/TableOfHomework'
 import Test from '../components/Test'
+import CountDownTime from '../components/CountDownTime'
+import Homework from '../components/Homework'
+import HomeworkSubmit from '../components/HomeworkSubmit'
 
 function App() {
 
@@ -42,7 +45,7 @@ function App() {
     <Switch>
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
-    <Route path="/for" component={Test} />
+    <Route path="/T" component={Test} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
@@ -67,8 +70,8 @@ function App() {
         </Switch>
       </TestLayout>
       <HomeworkLayout path="/homework">
-           <UserAuth path="/homework/test:ID" component={HomeworkStudents} />
-           <UserAuth path="/homework/table:ID" component={TableOfStudents} />
+           <UserAuth path="/homework/test:ID" component={Homework} />
+           <UserAuth path="/homework/table:ID" component={HomeworkSubmit} />
       </HomeworkLayout>
       <LectureLayout path="/studyc">
       <UserAuth path="/studyc/lecture" component={Lecture} />

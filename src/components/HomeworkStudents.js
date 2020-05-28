@@ -22,9 +22,7 @@ const data = {
 
 var Title, Introduct;
 
-var Step,
-  Input = "",
-  Output = "";
+var Step
 
 var Right = 0;
 
@@ -36,7 +34,7 @@ var cSource =
 \n\
 int main() {\n\
 \n\
-  return 0;\n\
+    return 0;\n\
 }\n\
 ";
 
@@ -46,8 +44,6 @@ var time;
 
 var Input1, Output1;
 
-var countDown, Past, countDownDate;
-
 const decode = (bytes) => {
   var escaped = escape(atob(bytes || ""));
   try {
@@ -55,40 +51,6 @@ const decode = (bytes) => {
   } catch {
     return unescape(escaped);
   }
-};
-
-const getCurrentTime = () => {
-  axios
-    .request({
-      url:"http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh",
-      method: "GET",
-      async: true,
-    })
-    .then((result) => {
-      countDown = result.data.unixtime * 1000;
-    });
-};
-
-const getDate = (number) => {
-  var day;
-  firebaseApp
-    .database()
-    .ref("Homework/Test/Homework" + number + "/Deadline")
-    .on("value", function (snapshot) {
-      if (snapshot.exists) {
-        day = snapshot.val();
-      }
-    });
-  return day;
-};
-
-const setStop = (stop, number) => {
-  firebaseApp
-    .database()
-    .ref("Homework/Test/Homework" + number)
-    .update({
-      Stop: stop,
-    });
 };
 
 const getStop = (number) => {
@@ -239,10 +201,6 @@ export const HomeworkStudents = (props) => {
 
   testNumber = localStorage.getItem("homeworkKey");
 
-  const [count, setCount] = useState(
-    0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây "
-  );
-
   const [close, setClose] = useState(false)
 
   const [activeTab, setActiveTab] = useState("0");
@@ -250,60 +208,13 @@ export const HomeworkStudents = (props) => {
   const dispatch = useDispatch();
 
   if (activeTab !== testNumber) {
-    getCurrentTime();
     dispatch(getTestcaseHomework(testNumber))
     setActiveTab(testNumber);
     getHistory();
     getInform(testNumber);
     getExample(testNumber);
+    setClose(!close)
   }
-
-  useEffect(() => {
-    getCurrentTime();
-    Past = new Date().getTime();
-    var x = setInterval(function () {
-      if(getStop(testNumber) === 2) {
-        clearInterval(x)
-        setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-        setClose(!close)
-     } else if(getStop(testNumber) === 1) {
-        var countDownDate = getDate(testNumber);
-        // Get today's date and time
-        var TimeNow = new Date().getTime();
-        var Change = TimeNow - Past;
-        // console.log(Change)
-        var now = countDown;
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-        if (Change > 1000) {
-          countDown = countDown + 1000;
-          Past = new Date().getTime();
-        }
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-        // Display the result in the element
-        setCount(
-          days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
-        );
-        // console.log(time)
-  
-        // If the count down is finished, write some text
-        if (distance < 0) {
-          setStop(2, testNumber);
-          setCount(0 + "ngày " + 0 + "giờ " + 0 + "phút " + 0 + "giây ");
-          clearInterval(x)
-          setClose(!close)
-        }
-      }
-    }, 1000);
-  }, []);
-
 
   const { testcaseHomework } = useSelector((state) => state.userReducer); 
 
@@ -403,7 +314,6 @@ export const HomeworkStudents = (props) => {
         <div className="Checkcode">
           <div class="checkCodeTitle">
             <div className="homeWork">
-              <h3 style={{ color: "red", textAlign: "center" }}>{count}</h3>
               <h3>{Title}</h3>
               <p>
                 <strong>Đề bài: </strong>
@@ -475,11 +385,7 @@ export const HomeworkStudents = (props) => {
           </div>
         </div>
       ) : (
-        <div class="checkCodeTitle">
-          <div className="homeWork">
-            <h3>Thời gian làm bài đã hết</h3>
-          </div>
-        </div>
+            null
       )}
     </div>
   );
