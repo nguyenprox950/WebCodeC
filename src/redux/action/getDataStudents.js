@@ -53,7 +53,7 @@ export const getDataStudentsAction = (data) => {
 export const getMark = () => {
     return dispatch => {
         firebaseApp.database().ref('Homework/Test').orderByChild("Number").once("value").then(function(snapshot) {
-            let newArray = [], Color, Score
+            let newArray = [], Color, Score, Num = 0
             snapshot.forEach(function(childSnapshot) {
                 const ID = childSnapshot.key
                 const Number = childSnapshot.val().Number
@@ -64,6 +64,7 @@ export const getMark = () => {
                 const CodeHistory = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/History").val()
                 const Time = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Time").val()
                 const Right = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/isRight").val()
+                Num = Num + 1
                 if(Right === true) {
                     Color = 'green'
                 } else if (Right === false){
@@ -74,6 +75,7 @@ export const getMark = () => {
                 newArray.push({
                     ID,
                     Number,
+                    Num,
                     Title,
                     Color,
                     Score,

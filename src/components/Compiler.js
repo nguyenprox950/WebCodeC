@@ -7,8 +7,6 @@ import axios from "axios";
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
-var defaultUrl = "https://api.judge0.com";
-var apiUrl = defaultUrl;
 
 const data = {
   source_code: "",
@@ -27,9 +25,19 @@ const Compiler = (props) => {
   const getCode = (token) => {
     axios
       .request({
-        url: apiUrl + "/submissions/" + token + "?base64_encoded=true",
+        url:"https://judge0.p.rapidapi.com/submissions/"+token,
         method: "GET",
         async: true,
+        headers:{
+          "content-type":"application/octet-stream",
+          "x-rapidapi-host":"judge0.p.rapidapi.com",
+          "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+          "useQueryString":true
+          },
+        params:{
+          "fields":"*",
+          "base64_encoded":"true"
+          }
       })
       .then((result) => {
         console.log(result.data);
@@ -58,14 +66,18 @@ const Compiler = (props) => {
   const sendCode = (dataCode) => {
     axios
       .request({
-        url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
-        method: "POST",
-        async: true,
-        contentType: "application/json",
+        method:"POST",
+        url:"https://judge0.p.rapidapi.com/submissions",
+        headers:{
+          "content-type":"application/json",
+          "x-rapidapi-host":"judge0.p.rapidapi.com",
+          "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+          "accept":"application/json",
+          "useQueryString":true
+        },
         data: dataCode,
       })
       .then((result) => {
-        console.log(result.data);
         getCode(result.data.token);
       })
       .catch((error) => {
@@ -91,12 +103,10 @@ const Compiler = (props) => {
       });
     } else {
       data.stdin = document.getElementById("stdin").value;
-      var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
-      var input = btoa(unescape(encodeURIComponent(data.stdin || "")));
       var dataSubmit = {
-        source_code: code,
+        source_code: data.source_code,
         language_id: 54,
-        stdin: input,
+        stdin: (data.stdin || ""),
         compiler_options: "",
         command_line_arguments: "",
       };

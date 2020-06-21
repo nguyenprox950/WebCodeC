@@ -11,9 +11,6 @@ import "codemirror/theme/material.css";
 import { getTestcaseHomework } from "../redux/action/getDataHomework";
 import { useDispatch, useSelector } from "react-redux";
 
-var defaultUrl = "https://api.judge0.com";
-var apiUrl = defaultUrl;
-
 const data = {
   source_code: "",
   language_id: 54,
@@ -203,6 +200,8 @@ export const HomeworkStudents = (props) => {
 
   const [close, setClose] = useState(false)
 
+  const [source, setSource] = useState();
+
   const [activeTab, setActiveTab] = useState("0");
   
   const dispatch = useDispatch();
@@ -214,6 +213,7 @@ export const HomeworkStudents = (props) => {
     getInform(testNumber);
     getExample(testNumber);
     setClose(!close)
+    setSource(cSource);
   }
 
   const { testcaseHomework } = useSelector((state) => state.userReducer); 
@@ -222,8 +222,6 @@ export const HomeworkStudents = (props) => {
     setSource(cSource);
     document.getElementById("output").hidden = true;
   };
-
-  const [source, setSource] = useState();
 
   const codeMirrorOptions = {
     theme: "material",
@@ -239,9 +237,19 @@ export const HomeworkStudents = (props) => {
   const getCode = (token, step) => {
     axios
       .request({
-        url: apiUrl + "/submissions/" + token + "?base64_encoded=true",
+        url:"https://judge0.p.rapidapi.com/submissions/"+token,
         method: "GET",
         async: true,
+        headers:{
+          "content-type":"application/octet-stream",
+          "x-rapidapi-host":"judge0.p.rapidapi.com",
+          "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+          "useQueryString":true
+          },
+        params:{
+          "fields":"*",
+          "base64_encoded":"true"
+          }
       })
       .then((result) => {
         // console.log(result.data);
@@ -278,10 +286,15 @@ export const HomeworkStudents = (props) => {
   const sendCode = (dataCode, step) => {
     axios
       .request({
-        url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
-        method: "POST",
-        async: true,
-        contentType: "application/json",
+        method:"POST",
+        url:"https://judge0.p.rapidapi.com/submissions",
+        headers:{
+        "content-type":"application/json",
+        "x-rapidapi-host":"judge0.p.rapidapi.com",
+        "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+        "accept":"application/json",
+        "useQueryString":true
+        },
         data: dataCode,
       })
       .then((result) => {
@@ -298,10 +311,10 @@ export const HomeworkStudents = (props) => {
     saveCode(code);
     for (var i = 1; i <= Step; i++) {
       var dataSubmit = {
-        source_code: code,
+        source_code: data.source_code,
         language_id: 54,
-        stdin: btoa(unescape(encodeURIComponent(testcaseHomework[i-1].Input || ""))),
-        expected_output: testcaseHomework[i-1].Output,
+        stdin: (testcaseHomework[i-1].Input || ""),
+        expected_output: decode(testcaseHomework[i-1].Output),
       };
       sendCode(dataSubmit, i);
     }

@@ -11,9 +11,6 @@ import "codemirror/theme/material.css";
 import { getTestcase } from "../redux/action/getDataHomework";
 import { useDispatch, useSelector } from "react-redux";
 
-var defaultUrl = "https://api.judge0.com";
-var apiUrl = defaultUrl;
-
 const data = {
   source_code: "",
   language_id: 54,
@@ -241,11 +238,22 @@ export const CheckCode = (props) => {
   const getCode = (token, step) => {
     axios
       .request({
-        url: apiUrl + "/submissions/" + token + "?base64_encoded=true",
+        url:"https://judge0.p.rapidapi.com/submissions/"+token,
         method: "GET",
         async: true,
+        headers:{
+          "content-type":"application/octet-stream",
+          "x-rapidapi-host":"judge0.p.rapidapi.com",
+          "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+          "useQueryString":true
+          },
+        params:{
+          "fields":"*",
+          "base64_encoded":"true"
+          }
       })
       .then((result) => {
+        console.log(result);
         if (result.data.status.id <= 2) {
           setTimeout(getCode.bind(null, result.data.token, step));
         } else if (result.data.status.id === 3) {
@@ -278,10 +286,15 @@ export const CheckCode = (props) => {
   const sendCode = (dataCode, step) => {
     axios
       .request({
-        url: apiUrl + `/submissions?base64_encoded=true&wait=false`,
-        method: "POST",
-        async: true,
-        contentType: "application/json",
+        method:"POST",
+        url:"https://judge0.p.rapidapi.com/submissions",
+        headers:{
+          "content-type":"application/json",
+          "x-rapidapi-host":"judge0.p.rapidapi.com",
+          "x-rapidapi-key":"d91c2aed13msh035902c0588fa98p11a2b6jsnf3929baa4508",
+          "accept":"application/json",
+          "useQueryString":true
+        },
         data: dataCode,
       })
       .then((result) => {
@@ -296,13 +309,13 @@ export const CheckCode = (props) => {
     data.source_code = source;
     var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
     saveCode(code);
+    console.log(source)
     for (var i = 1; i <= Step; i++) {
-      console.log("i="+i+"\n"+"input="+btoa(unescape(encodeURIComponent(testcase[i-1].Input || "")))+"\n"+"output="+testcase[i-1].Output)
       var dataSubmit = {
-        source_code: code,
+        source_code: data.source_code,
         language_id: 54,
-        stdin: btoa(unescape(encodeURIComponent(testcase[i-1].Input || ""))),
-        expected_output: testcase[i-1].Output,
+        stdin: (testcase[i-1].Input || ""),
+        expected_output: decode(testcase[i-1].Output),
       };
       sendCode(dataSubmit, i);
     }

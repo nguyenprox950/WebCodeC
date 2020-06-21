@@ -68,20 +68,6 @@ const AppHeader = (props) => {
                 </NavLink>
               </NavItem>
             ) : null}
-            {/* {localStorage.getItem("role") === "student" ? (
-            <NavItem>
-              <NavLink className="item">
-                <Link to="/tableMark">Bảng điểm</Link>
-              </NavLink>
-            </NavItem>
-              ) : null} */}
-            {/* {localStorage.getItem("role") === "admin" ? (
-            <NavItem>
-              <NavLink className="item">
-                <Link to="/text">Test</Link>
-              </NavLink>
-            </NavItem>
-              ) : null} */}
           </Nav>
           {Object.keys(userInform).length !== 0 ? (
             <UncontrolledDropdown inNavbar className="Header-Profile">

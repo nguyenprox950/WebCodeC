@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { firebaseApp } from "./Firebase";
 import axios from "axios";
-import * as workerTimers from 'worker-timers';
 
 var countDown, countDownDate, number;
+
+var Past, Current;
 
 var x, i=0;
 
@@ -15,6 +16,7 @@ const getCurrentTime = () => {
         async: true,
       })
       .then((result) => {
+        console.log(result)
         countDown = result.data.unixtime * 1000;
       });
 };
@@ -63,17 +65,15 @@ export const CountDownTime = () => {
     );
   
     if (activeTab !== number) {
-      workerTimers.clearInterval(x);
+        clearInterval(x);
         setActiveTab(number)
         getCurrentTime();
         getDate(number)
-        x = workerTimers.setInterval(function() {
-
-            // Get today's date and time
-            var now = countDown;
-
+        x = setInterval(function() {
+            var now = new Date().getTime();
             // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+            var distance = countDownDate - now;           
+            countDown = countDown + 1000
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -83,7 +83,6 @@ export const CountDownTime = () => {
             setCount(
                 days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
             );
-            countDown = countDown + 1000;
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(getStop(number) === 1) setStop(2, number)
@@ -95,17 +94,14 @@ export const CountDownTime = () => {
     }
 
     useEffect(() => {
-      workerTimers.clearInterval(x);
+        clearInterval(x);
         getCurrentTime();
         getDate(number);
-        // Update the count down every 1 second
-        x = workerTimers.setInterval(function() {
-
-            // Get today's date and time
-            var now = countDown;
-
+        x = setInterval(function() {
+            var now = new Date().getTime();
             // Find the distance between now and the count down date
             var distance = countDownDate - now;
+            countDown = countDown + 1000
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -115,7 +111,6 @@ export const CountDownTime = () => {
             setCount(
                 days + "ngày " + hours + "giờ " + minutes + "phút " + seconds + "giây "
             );
-            countDown = countDown + 1000;
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(getStop(number) === 1) setStop(2, number)

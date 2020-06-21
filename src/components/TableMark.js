@@ -29,8 +29,8 @@ const TableMark = (props) => {
   const [modal, setModal] = useState(false);
 
   const show = (history, Time) => {
-    if (history !== null && history !==codeHistory) codeHistory = decode(history)
-    if (Time !== null && Time !== TimeSubmit) TimeSubmit = Time
+    if (history !==codeHistory) codeHistory = decode(history)
+    if (Time !== TimeSubmit) TimeSubmit = Time
       setModal(!modal);
   };
 
@@ -58,7 +58,7 @@ const TableMark = (props) => {
         <tbody id ="bodyTable">
           {dataMark.map(item => (
             <tr style={{ color: item.Color }} >
-                <th scope="row">{item.Number}</th>
+                <th scope="row">{item.Num}</th>
                 <td>{item.Title}</td>
                 <td>{item.Score}</td>
             <td>
