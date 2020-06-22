@@ -42,24 +42,32 @@ const AppHeader = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink className="item">
-                <Link to="/introduction">Hướng dẫn làm bài</Link>
-              </NavLink>
+              {localStorage.getItem("role") === "student"? (
+                <NavLink className="item">
+                  <Link to="/introduction">Hướng dẫn làm bài</Link>
+                </NavLink>
+              ) : null}
             </NavItem>
             <NavItem>
-              <NavLink className="item">
-                <Link to="/studyc">Học C</Link>
-              </NavLink>
+              {localStorage.getItem("role") === "student" || localStorage.getItem("role") === "admin"? (
+                <NavLink className="item">
+                  <Link to="/studyc">Học C</Link>
+                </NavLink>
+              ) : null}
             </NavItem>
             <NavItem>
-              <NavLink className="item">
-                <Link to="/compiler">DevC</Link>
-              </NavLink>
+              {localStorage.getItem("role") === "student" || localStorage.getItem("role") === "admin"? (
+                <NavLink className="item">
+                  <Link to="/compiler">DevC</Link>
+                </NavLink>
+              ) : null}
             </NavItem>
               <NavItem>
-                <NavLink className="item">
-                  <Link to="/checkcode">Bài tập</Link>
-                </NavLink>
+                {localStorage.getItem("role") === "student" || localStorage.getItem("role") === "admin"? (
+                  <NavLink className="item">
+                    <Link to="/checkcode">Bài tập</Link>
+                  </NavLink>
+                ) : null}
               </NavItem>
             {localStorage.getItem("role") === "student" ? (
               <NavItem>
@@ -72,7 +80,12 @@ const AppHeader = (props) => {
           {Object.keys(userInform).length !== 0 ? (
             <UncontrolledDropdown inNavbar className="Header-Profile">
               <DropdownToggle>
-                <span style={{ color: "black" }}>{userInform.fullName}</span>
+                {localStorage.getItem("role") === "admin" ? (
+                  <span style={{ color: "black" }}>{userInform.fullName} (Giảng viên)</span>
+                ) : null}
+                {localStorage.getItem("role") === "student" ? (
+                  <span style={{ color: "black" }}>{userInform.fullName} (Sinh viên)</span>
+                ) : null}
                 <img src="../img/logo.png" height="30px" />
               </DropdownToggle>
               <DropdownMenu right>

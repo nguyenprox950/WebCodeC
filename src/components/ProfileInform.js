@@ -82,7 +82,12 @@ const ProfileInform = (props) => {
                   variant="outlined"
                   disabled
                 />
+                {localStorage.getItem("role") === "student"? (
                 <p>Mã số sinh viên:</p>
+                ) : null}
+                {localStorage.getItem("role") === "admin"? (
+                <p>Mã giảng viên:</p>
+                ) : null}
                 <MyInput
                   id="studentID"
                   type="text"
