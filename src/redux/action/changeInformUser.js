@@ -26,7 +26,7 @@ export const changeInform = (values) => {
     }  
 }
 
-export const changePassword = (values, handleSuccess) => {
+export const changePassword = (values) => {
     return dispatch => {
         var user = firebaseApp.auth().currentUser;
         var emailID = values.email.slice(0, values.email.indexOf("."))

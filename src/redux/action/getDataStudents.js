@@ -60,6 +60,7 @@ export const getMark = () => {
                 const Title = childSnapshot.val().Title
                 const Mark = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Mark").val()
                 if (Mark === null) Score = "Chưa làm bài"
+                else if (Mark === 'Vui lòng nhập điểm' || Mark === 'Điểm không hợp lệ') Score = "Chưa chấm điểm"
                 else Score = Mark
                 const CodeHistory = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/History").val()
                 const Time = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Time").val()

@@ -118,7 +118,8 @@ const TableOfStudents = (props) => {
 
   const setMark = (Number, ID) => {
     var mark_val = document.getElementById("mark_number" + Number).value;
-    if (mark_val > 10 || mark_val < 0) mark_val = "Điểm không hợp lệ";
+    if (mark_val > 10 || mark_val < 0) mark_val = "Điểm không hợp lệ"
+    else if (mark_val === null || mark_val==='') mark_val ="Vui lòng nhập điểm"
     document.getElementById("Mark_row" + Number).innerHTML = mark_val;
     firebaseApp
       .database()
