@@ -53,7 +53,7 @@ export const getDataStudentsAction = (data) => {
 export const getMark = () => {
     return dispatch => {
         firebaseApp.database().ref('Homework/Test').orderByChild("Number").once("value").then(function(snapshot) {
-            let newArray = [], Color, Score, Num = 0
+            let newArray = [], Color, Score, Num = 0, GPA = 0;
             snapshot.forEach(function(childSnapshot) {
                 const ID = childSnapshot.key
                 const Number = childSnapshot.val().Number
@@ -61,7 +61,10 @@ export const getMark = () => {
                 const Mark = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Mark").val()
                 if (Mark === null) Score = "Chưa làm bài"
                 else if (Mark === 'Vui lòng nhập điểm' || Mark === 'Điểm không hợp lệ') Score = "Chưa chấm điểm"
-                else Score = Mark
+                else {
+                    Score = Mark
+                    GPA = GPA + parseFloat(Mark)
+                }
                 const CodeHistory = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/History").val()
                 const Time = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Time").val()
                 const Right = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/isRight").val()
@@ -77,6 +80,7 @@ export const getMark = () => {
                     ID,
                     Number,
                     Num,
+                    GPA,
                     Title,
                     Color,
                     Score,

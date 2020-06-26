@@ -3,12 +3,13 @@ import { Table } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { getMark } from '../redux/action/getDataStudents'
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/clike/clike"
 import "codemirror/theme/material.css";
 
-var codeHistory, TimeSubmit
+var codeHistory, TimeSubmit, GPA, Position
 
 const codeMirrorOptions = {
   theme: "material",
@@ -40,13 +41,20 @@ const TableMark = (props) => {
   
   const dispatch = useDispatch()
   const { dataMark } = useSelector(state => state.userReducer)
+  Position = dataMark.length
+  if (Position !== 0) {
+    console.log("GPA="+dataMark[Position-1].GPA)
+    console.log("NUM="+dataMark[Position-1].Num)
+    GPA = dataMark[Position-1].GPA/dataMark[Position-1].Num
+  }
   useEffect(()=>{
     dispatch(getMark())
   },[])
 
+
   return (
     <div clasName="tableofMark" style={{paddingTop : "60px"}}>
-      <Table hover>
+      <Table hover id="table-to-xls">
         <thead>
           <tr>
             <th>#</th>
@@ -56,7 +64,7 @@ const TableMark = (props) => {
           </tr>
         </thead>
         <tbody id ="bodyTable">
-          {dataMark.map(item => (
+            {dataMark.map(item => (
             <tr style={{ color: item.Color }} >
                 <th scope="row">{item.Num}</th>
                 <td>{item.Title}</td>
@@ -67,7 +75,22 @@ const TableMark = (props) => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+        <tr>
+            <th scope="row" style ={{fontWeight : "bold", fontSize: "20px"}}>Điểm trung bình</th>
+            <td></td>
+            <td style ={{fontWeight : "bold", fontSize: "20px"}}>{GPA}</td>
+            <td></td>
+        </tr>
+      </tfoot>
       </Table>
+      {/* <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/> */}
       <Modal isOpen={modal} toggle={hidden} className="modalHistory">
           <ModalHeader toggle={hidden}>{TimeSubmit}</ModalHeader>
           <ModalBody>

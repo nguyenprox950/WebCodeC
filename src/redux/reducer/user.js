@@ -6,7 +6,8 @@ import {
   GET_MARK_ARRAY,
   GET_HOMEWORKINFORM,
   GET_TESTCASE,
-  GET_TESTCASE_HOMEWORK
+  GET_TESTCASE_HOMEWORK,
+  GET_DATAUSER_ARRAY
 } from "../constants/userConstants";
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   dataMark: [],
   homeworkInform: [],
   testcase: [],
-  testcaseHomework: []
+  testcaseHomework: [],
+  dataUser: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -75,6 +77,12 @@ const userReducer = (state = initialState, action) => {
           ...state,
           testcaseHomework: action.data,
         };
+    }
+    case GET_DATAUSER_ARRAY: {
+      return {
+        ...state,
+        dataUser: action.data,
+      };
     }
     default:
       return state;

@@ -45,10 +45,10 @@ function App() {
     <Switch>
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
-    <Route path="/T" component={Test} />
     <UserLayout path="/">
       <Switch>
       <Route exact path="/" component={Home} />
+      <Route path="/T" component={Test} />
       <Route path="/homeworkteacher" component={HomeworkTeacher} />
       <UserAuth path="/tableoflecture" component={TableOfLecture} />
       <UserAuth path="/tableofhomework" component={TableOfHomework} />
