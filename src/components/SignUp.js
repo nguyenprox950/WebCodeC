@@ -13,8 +13,8 @@ const validationSchema = yup.object({
     .string()
     .required("Vui lòng nhập đầy đủ họ tên")
     .matches(/^([^0-9]*)$/, "Tên chỉ bao gồm ký tự từ a-z")
-    .max(30, "Tên quá dài")
-    .min(5, "Tên quá ngắn"),
+    .max(21, "Tên quá dài")
+    .min(6, "Tên quá ngắn"),
 
   birthday: yup.date().required("Vui lòng nhập ngày sinh"),
 

@@ -106,7 +106,14 @@ const AppHeader = (props) => {
                 {localStorage.getItem("role") === "admin" ? (
                   <DropdownItem>
                     <NavLink className="item">
-                      <Link to="/homeworkteacher">Bài tập về nhà (tạo)</Link>
+                      <Link to="/tableoflecture">Quản lý bài giảng</Link>
+                    </NavLink>
+                  </DropdownItem>
+                ) : null}
+                {localStorage.getItem("role") === "admin" ? (
+                  <DropdownItem>
+                    <NavLink className="item">
+                      <Link to="/homeworkteacher">Tạo bài tập về nhà</Link>
                     </NavLink>
                   </DropdownItem>
                 ) : null}
@@ -114,7 +121,7 @@ const AppHeader = (props) => {
                   <DropdownItem>
                     <NavLink className="item">
                       <Link to="/tableofhomework">
-                        Bài tập về nhà (chỉnh sửa)
+                        Chỉnh sửa bài tập về nhà
                       </Link>
                     </NavLink>
                   </DropdownItem>
@@ -129,7 +136,7 @@ const AppHeader = (props) => {
                 {localStorage.getItem("role") === "admin" ? (
                   <DropdownItem>
                     <NavLink className="item">
-                      <Link to="/tableoflecture">Quản lý bài giảng</Link>
+                      <Link to="/gpa">Bảng điểm trung bình</Link>
                     </NavLink>
                   </DropdownItem>
                 ) : null}

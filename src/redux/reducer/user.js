@@ -37,6 +37,7 @@ const userReducer = (state = initialState, action) => {
       userInform.studentID = action.data.studentID;
       userInform.phoneNumber = action.data.phoneNumber;
       userInform.password = action.data.password;
+      userInform.role = action.data.role;
       return {
         ...state,
         userInform,

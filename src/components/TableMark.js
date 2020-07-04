@@ -43,8 +43,6 @@ const TableMark = (props) => {
   const { dataMark } = useSelector(state => state.userReducer)
   Position = dataMark.length
   if (Position !== 0) {
-    console.log("GPA="+dataMark[Position-1].GPA)
-    console.log("NUM="+dataMark[Position-1].Num)
     GPA = dataMark[Position-1].GPA/dataMark[Position-1].Num
   }
   useEffect(()=>{
