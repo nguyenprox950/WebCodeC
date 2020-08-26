@@ -61,6 +61,7 @@ export const getMark = () => {
                 const Mark = childSnapshot.child('HistoryCode/'+localStorage.getItem("emailID")+"/Mark").val()
                 if (Mark === null) Score = "Chưa làm bài"
                 else if (Mark === 'Vui lòng nhập điểm' || Mark === 'Điểm không hợp lệ') Score = "Chưa chấm điểm"
+                else if (Mark === "Chưa chấm điểm") Score = "Chưa chấm điểm"
                 else {
                     Score = Mark
                     GPA = GPA + parseFloat(Mark)

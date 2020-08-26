@@ -15,7 +15,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/mode/cmake/cmake";
 import "codemirror/theme/material.css";
 
-var numberHW;
+var numberHW, header, numberState;
 
 const validationSchema = yup.object({
   title: yup.string().required("Vui lòng nhập tiêu đề"),
@@ -142,15 +142,30 @@ export const HomeworkTeacher = (props) => {
   const [OP4, setOP4] = useState("");
   const [OP5, setOP5] = useState("");
 
-  const setOutput = (number) => {
-    number = parseInt(number);
-    setModal(!modal);
-    var code = btoa(unescape(encodeURIComponent(source || "")));
-    if (number === 1) setOP1(code);
-    else if (number === 2) setOP2(code);
-    else if (number === 3) setOP3(code);
-    else if (number === 4) setOP4(code);
-    else if (number === 5) setOP5(code);
+  const [IP1, setIP1] = useState("");
+  const [IP2, setIP2] = useState("");
+  const [IP3, setIP3] = useState("");
+  const [IP4, setIP4] = useState("");
+  const [IP5, setIP5] = useState("");
+
+  const setOutput = (header, number) => {
+    if(header === "Output") {
+      setModal(!modal);
+      var code = btoa(unescape(encodeURIComponent(source || "")));
+      if (number === 1) setOP1(code);
+      else if (number === 2) setOP2(code);
+      else if (number === 3) setOP3(code);
+      else if (number === 4) setOP4(code);
+      else if (number === 5) setOP5(code);
+    } else if (header === "Input") {
+      setModal(!modal);
+      var code = btoa(unescape(encodeURIComponent(source || "")));
+      if (number === 1) setIP1(code);
+      else if (number === 2) setIP2(code);
+      else if (number === 3) setIP3(code);
+      else if (number === 4) setIP4(code);
+      else if (number === 5) setIP5(code);
+    }
     setSource(null);
   };
 
@@ -159,8 +174,9 @@ export const HomeworkTeacher = (props) => {
     setSource(null);
   };
 
-  const toggle = (number) => {
-    if (number !== null) localStorage.setItem("Output", number);
+  const toggle = (number, title) => {
+    if (number !== null) numberState = number;
+    if (title !== null) header = title;
     setModal(!modal);
   };
 
@@ -201,12 +217,22 @@ export const HomeworkTeacher = (props) => {
     values.output3 = document.getElementById("output3").value;
     values.output4 = document.getElementById("output4").value;
     values.output5 = document.getElementById("output5").value;
+    values.input1 = document.getElementById("input1").value;
+    values.input2 = document.getElementById("input2").value;
+    values.input3 = document.getElementById("input3").value;
+    values.input4 = document.getElementById("input4").value;
+    values.input5 = document.getElementById("input5").value;
     setHomeWork(values);
     setOP1("");
     setOP2("");
     setOP3("");
     setOP4("");
     setOP5("");
+    setIP1("");
+    setIP2("");
+    setIP3("");
+    setIP4("");
+    setIP5("");
     document.getElementById("FormikHomeWork").reset();
   };
   return (
@@ -262,7 +288,10 @@ export const HomeworkTeacher = (props) => {
                 </Select>
               </FormControl>
               <MyInput
+                id="input1"
                 hidden={setHidden(age, 1)}
+                value={IP1}
+                onClick={() => toggle(1, "Input")}
                 type="text"
                 name="input1"
                 label="Input1"
@@ -271,13 +300,16 @@ export const HomeworkTeacher = (props) => {
                 hidden={setHidden(age, 1)}
                 id="output1"
                 value={OP1}
-                onClick={() => toggle(1)}
+                onClick={() => toggle(1, "Output")}
                 type="text"
                 name="output1"
                 label="Output1"
               />
               <MyInput
+                id="input2"
                 hidden={setHidden(age, 2)}
+                value={IP2}
+                onClick={() => toggle(2, "Input")}
                 type="text"
                 name="input2"
                 label="Input2"
@@ -286,12 +318,15 @@ export const HomeworkTeacher = (props) => {
                 hidden={setHidden(age, 2)}
                 id="output2"
                 value={OP2}
-                onClick={() => toggle(2)}
+                onClick={() => toggle(2, "Output")}
                 type="text"
                 name="output2"
                 label="Output2"
               />
               <MyInput
+                id="input3"
+                value={IP3}
+                onClick={() => toggle(3, "Input")}             
                 hidden={setHidden(age, 3)}
                 type="text"
                 name="input3"
@@ -301,12 +336,15 @@ export const HomeworkTeacher = (props) => {
                 hidden={setHidden(age, 3)}
                 id="output3"
                 value={OP3}
-                onClick={() => toggle(3)}
+                onClick={() => toggle(3, "Output")}
                 type="text"
                 name="output3"
                 label="Output3"
               />
               <MyInput
+                id="input4"
+                value={IP4}
+                onClick={() => toggle(4, "Input")}  
                 hidden={setHidden(age, 4)}
                 type="text"
                 name="input4"
@@ -316,12 +354,15 @@ export const HomeworkTeacher = (props) => {
                 hidden={setHidden(age, 4)}
                 id="output4"
                 value={OP4}
-                onClick={() => toggle(4)}
+                onClick={() => toggle(4, "Output")}
                 type="text"
                 name="output4"
                 label="Output4"
               />
               <MyInput
+                id="input5"
+                value={IP5}
+                onClick={() => toggle(5, "Input")}  
                 hidden={setHidden(age, 5)}
                 type="text"
                 name="input5"
@@ -331,7 +372,7 @@ export const HomeworkTeacher = (props) => {
                 hidden={setHidden(age, 5)}
                 id="output5"
                 value={OP5}
-                onClick={() => toggle(5)}
+                onClick={() => toggle(5, "Output")}
                 type="text"
                 name="output5"
                 label="Output5"
@@ -357,7 +398,7 @@ export const HomeworkTeacher = (props) => {
             </Button>
             <Modal isOpen={modal} toggle={igNore} className="modalHistory">
               <ModalHeader toggle={igNore}>
-                {"Output" + localStorage.getItem("Output")}
+                {header + numberState}
               </ModalHeader>
               <ModalBody>
                 <CodeMirror
@@ -375,7 +416,7 @@ export const HomeworkTeacher = (props) => {
               <ModalFooter>
                 <Button
                   color="primary"
-                  onClick={() => setOutput(localStorage.getItem("Output"))}
+                  onClick={() => setOutput(header, numberState)}
                 >
                   Chấp nhận
                 </Button>

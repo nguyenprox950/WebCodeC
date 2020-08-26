@@ -44,6 +44,7 @@ const TableMark = (props) => {
   Position = dataMark.length
   if (Position !== 0) {
     GPA = dataMark[Position-1].GPA/dataMark[Position-1].Num
+    GPA = Math.round(GPA * 100) / 100
   }
   useEffect(()=>{
     dispatch(getMark())

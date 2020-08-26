@@ -20,6 +20,7 @@ export const getGPA = () => {
                             const Mark = childSnapshot.child('HistoryCode/'+Key+"/Mark").val()
                             if (Mark === null) Score = "Chưa làm bài"
                             else if (Mark === 'Vui lòng nhập điểm' || Mark === 'Điểm không hợp lệ') Score = "Chưa chấm điểm"
+                            else if (Mark === "Chưa chấm điểm") Score = "Chưa chấm điểm"
                             else {
                                 Score = Mark
                                 G = G + parseFloat(Mark)

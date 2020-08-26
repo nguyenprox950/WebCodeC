@@ -11,7 +11,7 @@ export const signUp = (values, handleSuccess) => {
                 'Bạn đã đăng ký thành công!',
                 'success'
             )
-            var emailID = values.email.slice(0, values.email.indexOf("."))
+            var emailID = values.email.split(".").join("-");
             firebaseApp.database().ref('userInform/' + emailID).set ({
                 fullName : values.fullName,
                 birthday: values.birthday, 
@@ -37,14 +37,13 @@ export const signIn = (values, handleSuccess) => {
     return dispatch => {
         firebaseApp.auth().signInWithEmailAndPassword(values.email, values.password)
             .then(() => {
-                var emailID = values.email.slice(0, values.email.indexOf("."))
+                var emailID = values.email.split(".").join("-");
                 firebaseApp.database().ref('userInform/' + emailID).on('value', function(snapshot) {
                     Swal.fire(
                         'Chào mừng \n' + snapshot.val().fullName,
                         'Đã đăng nhập thành công!',
                         'success'
                     )
-                    console.log(snapshot.val())
                     localStorage.setItem('user', JSON.stringify(snapshot.val()))
                     localStorage.setItem('emailID', emailID)
                     localStorage.setItem('role', snapshot.val().role)

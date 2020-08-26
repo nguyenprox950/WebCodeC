@@ -51,7 +51,7 @@ const AppHeader = (props) => {
             <NavItem>
               {localStorage.getItem("role") === "student" || localStorage.getItem("role") === "admin"? (
                 <NavLink className="item">
-                  <Link to="/studyc">Học C</Link>
+                  <Link to="/studyc">Tài liệu C</Link>
                 </NavLink>
               ) : null}
             </NavItem>

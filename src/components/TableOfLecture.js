@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
 import { Button } from "reactstrap";
 import { firebaseApp } from "./Firebase";
@@ -16,7 +16,7 @@ const getShow = (number) => {
     });
   if (isShow === true) return "Hiện";
   else if (isShow === false) return "Ẩn";
-  else return "Loading";
+  else return "Hiện";
 };
 
 const TableOfLecture = (props) => {
@@ -30,7 +30,7 @@ const TableOfLecture = (props) => {
   const [L8, setL8] = useState(getShow(8));
   const [L9, setL9] = useState(getShow(9));
   const [L10, setL10] = useState(getShow(10));
-
+ 
   const setShow = (number, isShow) => {
     if (number === 1 && isShow === true) setL1("Hiện");
     if (number === 1 && isShow === false) setL1("Ẩn");

@@ -3,8 +3,6 @@ import { Formik, Form } from "formik";
 import { MyInput } from "./MyInput";
 import * as yup from "yup";
 import "../css/SignUp.css";
-import { firebaseApp } from "../components/Firebase";
-import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { signUp } from "../redux/action/userAction";
 
@@ -13,7 +11,7 @@ const validationSchema = yup.object({
     .string()
     .required("Vui lòng nhập đầy đủ họ tên")
     .matches(/^([^0-9]*)$/, "Tên chỉ bao gồm ký tự từ a-z")
-    .max(21, "Tên quá dài")
+    .max(24, "Tên quá dài")
     .min(6, "Tên quá ngắn"),
 
   birthday: yup.date().required("Vui lòng nhập ngày sinh"),

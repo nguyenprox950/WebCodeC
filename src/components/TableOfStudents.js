@@ -149,7 +149,7 @@ const TableOfStudents = (props) => {
             <th>Thời gian code chạy</th>
             <th>Điểm</th>
             <th>Code nộp</th>
-            <th>Cho điểm</th>
+            <th>Chấm điểm</th>
           </tr>
         </thead>
         <tbody id="bodyTable">

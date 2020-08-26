@@ -119,7 +119,7 @@ const Compiler = (props) => {
       <div className="formikCode">
         <div className="language_id_form">{/* Ngôn ngữ */}</div>
         <div className="compiler">
-          <label>Write Your Code</label>
+          <label>Viết code của bạn</label>
           <CodeMirror
             id="source_code"
             value={source}
@@ -131,7 +131,7 @@ const Compiler = (props) => {
               setSource(source);
             }}
           />
-          <label>Input</label>
+          <label>Đầu vào</label>
           <textarea
             class="form-control"
             id="stdin"
@@ -139,7 +139,7 @@ const Compiler = (props) => {
             rows="3"
             cols="50"
           />
-          <label>Output</label>
+          <label>Đầu ra</label>
           <textarea
             class="form-control"
             id="output"

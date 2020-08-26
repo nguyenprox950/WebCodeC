@@ -109,7 +109,9 @@ const getExample = (Number) => {
     .child("Expected_Output/Expect1/Input")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
-        Input1 = snapshot.val();
+        Input1 = decode(snapshot.val());
+      } else {
+        Input1 = "";
       }
   });
   firebaseApp
@@ -253,12 +255,12 @@ export const CheckCode = (props) => {
           }
       })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (result.data.status.id <= 2) {
           setTimeout(getCode.bind(null, result.data.token, step));
         } else if (result.data.status.id === 3) {
           Right = Right + 1;
-          console.log(step + " " + Step + " " + Right);
+          // console.log(step + " " + Step + " " + Right);
           if (Right === Step) {
             setRight(true);
             document.getElementById("output").value = "Chính xác";
@@ -309,12 +311,12 @@ export const CheckCode = (props) => {
     data.source_code = source;
     var code = btoa(unescape(encodeURIComponent(data.source_code || "")));
     saveCode(code);
-    console.log(source)
+    // console.log(source)
     for (var i = 1; i <= Step; i++) {
       var dataSubmit = {
         source_code: data.source_code,
         language_id: 54,
-        stdin: (testcase[i-1].Input || ""),
+        stdin: (decode(testcase[i-1].Input) || ""),
         expected_output: decode(testcase[i-1].Output),
       };
       sendCode(dataSubmit, i);
@@ -332,11 +334,13 @@ export const CheckCode = (props) => {
             {Introduct}
           </p>
           <p>
-            <strong>Input: </strong>
-            {Input1}
+            <strong>Đầu vào: </strong>
           </p>
+          <div className="Output1">
+          <textarea rows="3" value={Input1} />
+          </div>
           <p>
-            <strong>Output: </strong>
+            <strong>Đầu ra: </strong>
           </p>
         </div>
       </div>

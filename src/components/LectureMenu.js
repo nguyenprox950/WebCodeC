@@ -94,7 +94,7 @@ const LectureMenu = () => {
       <p hidden>{count}</p>
       <div id="lectureMenu">
         <Menu onClick={handleClick} style={{ width: "360px" }} mode="inline">
-          <h4>Kỹ thuật lập trình C</h4>
+          <h4>Tài liệu C</h4>
           <Menu.Item key="1" hidden={setShow(1)}>
             <Link style={{ color: setColor(1) }} to="/studyc/lecture">
               Chương 1: Giới thiệu

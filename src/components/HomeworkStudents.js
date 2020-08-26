@@ -122,7 +122,9 @@ const getExample = (Number) => {
     .child("Expected_Output/Expect1/Input")
     .on("value", function (snapshot) {
       if (snapshot.exists) {
-        Input1 = snapshot.val();
+        Input1 = decode(snapshot.val());
+      } else {
+        Input1 = "";
       }
     });
   firebaseApp
@@ -313,7 +315,7 @@ export const HomeworkStudents = (props) => {
       var dataSubmit = {
         source_code: data.source_code,
         language_id: 54,
-        stdin: (testcaseHomework[i-1].Input || ""),
+        stdin: (decode(testcaseHomework[i-1].Input) || ""),
         expected_output: decode(testcaseHomework[i-1].Output),
       };
       sendCode(dataSubmit, i);
@@ -333,11 +335,13 @@ export const HomeworkStudents = (props) => {
                 {Introduct}
               </p>
               <p>
-                <strong>Input: </strong>
-                {Input1}
+                <strong>Đầu vào: </strong>
               </p>
+              <div className="Output1">
+              <textarea rows="3" value={Input1} />
+              </div>
               <p>
-                <strong>Output: </strong>
+                <strong>Đầu ra: </strong>
               </p>
             </div>
           </div>

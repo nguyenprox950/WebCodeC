@@ -6,7 +6,7 @@ import Service from './Service'
 export default class Home extends Component {
     render() {
         return (
-            <div>
+            <div style = {{  margin: "0 auto", paddingTop: "60px"}}>
                 <Carousel/>
                 {/* <Service/> */}
                 <Welcome/>

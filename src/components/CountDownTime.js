@@ -53,6 +53,12 @@ const getStop = (number) => {
       });
     return stop;
   };
+const startTime = () => {
+    countDown = countDown + 1000
+    setTimeout(function() {
+        startTime();
+    }, 1000);
+  }
 
 export const CountDownTime = () => {
 
@@ -73,7 +79,7 @@ export const CountDownTime = () => {
             var now = new Date().getTime();
             // Find the distance between now and the count down date
             var distance = countDownDate - now;           
-            countDown = countDown + 1000
+            // countDown = countDown + 1000
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -96,12 +102,13 @@ export const CountDownTime = () => {
     useEffect(() => {
         clearInterval(x);
         getCurrentTime();
+        // startTime()
         getDate(number);
         x = setInterval(function() {
             var now = new Date().getTime();
             // Find the distance between now and the count down date
             var distance = countDownDate - now;
-            countDown = countDown + 1000
+            // countDown = countDown + 1000
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

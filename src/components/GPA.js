@@ -53,13 +53,13 @@ function sortTable(n) {
       /* Check if the two rows should switch place,
       based on the direction, asc or desc: */
       if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase() || Number(x.innerHTML) > Number(y.innerHTML)) {
           // If so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase() || Number(x.innerHTML) < Number(y.innerHTML)) {
           // If so, mark as a switch and break the loop:
           shouldSwitch = true;
           break;
@@ -98,7 +98,7 @@ export const GPA = () => {
             table="table-to-xls"
             filename="GPA"
             sheet="tablexls"
-            buttonText="Download as XLS"/>
+            buttonText="Tải về Excel"/>
       <input type="text" id="myInput" onChange={()=>myFunction()} placeholder="Nhập MSSV muốn tìm...."/>
       <Table hover id="table-to-xls">
         <thead>
@@ -106,9 +106,9 @@ export const GPA = () => {
             <th onClick = {()=> sortTable(1)}>#</th>
             <th onClick = {()=> sortTable(0)}>Họ và tên</th>
             <th onClick = {()=> sortTable(1)}>MSSV</th>
-            <th>Ngày sinh</th>
-            <th>Điểm trung bình</th>
-            <th>Email</th>
+            <th onClick = {()=> sortTable(2)}>Ngày sinh</th>
+            <th onClick = {()=> sortTable(3)}>Điểm trung bình</th>
+            <th onClick = {()=> sortTable(4)}>Email</th>
           </tr>
         </thead>
         <tbody id ="bodyTable">
@@ -118,7 +118,7 @@ export const GPA = () => {
                 <td>{item.FullName}</td>
                 <td>{item.StudentID}</td>
                 <td>{item.Birthday}</td>
-                <td>{item.GPA}</td>
+                <td style={{fontWeight: 'bold'}}>{Math.round(item.GPA * 100) / 100}</td>
                 <td>{item.Email}</td>
 
             </tr>

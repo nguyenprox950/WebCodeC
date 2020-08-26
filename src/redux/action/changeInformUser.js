@@ -4,7 +4,7 @@ import { CHANGEINFORM } from '../constants/userConstants'
 
 export const changeInform = (values) => {
     return dispatch => {
-        var emailID = values.email.slice(0, values.email.indexOf("."))
+        var emailID = values.email.split(".").join("-");
         firebaseApp.database().ref('userInform/' + emailID).set ({
             fullName : values.fullName,
             birthday: values.birthday, 
@@ -29,7 +29,7 @@ export const changeInform = (values) => {
 export const changePassword = (values) => {
     return dispatch => {
         var user = firebaseApp.auth().currentUser;
-        var emailID = values.email.slice(0, values.email.indexOf("."))
+        var emailID = values.email.split(".").join("-");
 
         user.updatePassword(values.password2).then(function() {
             Swal.fire(
